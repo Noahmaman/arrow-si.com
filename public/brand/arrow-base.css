@@ -1,5 +1,5 @@
 /* Integrations only. Brand tokens and components come from Arrow's live home.css. */
-:root{--sans:'DM Sans Variable',sans-serif;--mono:'Geist Mono Variable',monospace}
+:root{--sans:'DM Sans Variable',sans-serif;--mono:'Geist Mono Variable',monospace;--heat:#2563eb;--heat-strong:#1d4ed8;--heat-4:rgba(37,99,235,.04);--heat-8:rgba(37,99,235,.08);--heat-12:rgba(37,99,235,.12);--heat-20:rgba(37,99,235,.20);--heat-40:rgba(37,99,235,.40);--sys:#2563eb;--sys-soft:rgba(37,99,235,.10)}
 *{box-sizing:border-box}[hidden]{display:none!important}
 .base-skip{position:fixed;top:8px;left:8px;z-index:200;background:var(--ink);color:white;padding:12px;transform:translateY(-150%)}.base-skip:focus{transform:none}
 .home-hero-blue::after{background:radial-gradient(closest-side at 38% 45%,var(--geo-soft),transparent 68%),radial-gradient(closest-side at 68% 40%,var(--geo-soft),transparent 70%)}
