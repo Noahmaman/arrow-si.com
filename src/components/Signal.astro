@@ -1,0 +1,13 @@
+---
+const { compact = false } = Astro.props;
+---
+<div class:list={['signal-visual', { compact }]} role="img" aria-label="Illustrative signal map connecting your expertise and trusted sources to AI answers.">
+  <div class="signal-grid" aria-hidden="true"></div>
+  <div class="signal-orbit orbit-one" aria-hidden="true"></div><div class="signal-orbit orbit-two" aria-hidden="true"></div><div class="signal-orbit orbit-three" aria-hidden="true"></div>
+  <div class="orbit-path" aria-hidden="true"><span></span></div>
+  <div class="signal-core" aria-hidden="true"><img src="/brand/arrow-app-icon.svg" alt="" width="114" height="114" /></div>
+  <div class="signal-node node-one"><span class="node-icon">✳</span> AI answers</div>
+  <div class="signal-node node-two"><span class="node-icon">⌘</span> Your expertise</div>
+  <div class="signal-node node-three"><span class="node-icon">◎</span> Trusted sources</div>
+  <div class="signal-caption"><span class="status-dot" aria-hidden="true"></span> FROM INFORMATION TO INFLUENCE</div>
+</div>

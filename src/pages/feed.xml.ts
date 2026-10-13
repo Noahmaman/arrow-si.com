@@ -1,0 +1,4 @@
+import type { APIRoute } from 'astro';
+import { articles, publicationDate } from '../data/articles';
+const xml = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+export const GET: APIRoute = () => new Response(`<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Arrow Signal Journal</title><link>https://arrow-si.com/blog/</link><description>Practical AI visibility and GEO intelligence from the Arrow ecosystem.</description><language>en</language>${articles.map(article => `<item><title>${xml(article.title)}</title><link>https://arrow-si.com/blog/${article.slug}/</link><guid isPermaLink="true">https://arrow-si.com/blog/${article.slug}/</guid><description>${xml(article.description)}</description><pubDate>${new Date(publicationDate + 'T12:00:00Z').toUTCString()}</pubDate></item>`).join('')}</channel></rss>`, { headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' } });

@@ -1,0 +1,25 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { articles } from '../../data/articles';
+const categories = [...new Set(articles.map(article => article.category))];
+---
+<Layout title="The Signal Journal — 15 AI Visibility & GEO Guides | Arrow" description="Explore 15 original guides to AI visibility, GEO, citation measurement, entity clarity and content strategy from Arrow Signal.">
+  <section class="section blog-intro"><span class="eyebrow">ARROW / EDITORIAL INTELLIGENCE</span><h1>The Signal<br /><em class="blue">Journal.</em></h1><p>Clear thinking for a new kind of discovery.<br />AI visibility, from the first question to the next decision.</p><div class="journal-stat"><span>15</span> ORIGINAL GUIDES <span class="stat-line"></span> ONE CLEAR DIRECTION</div></section>
+  <section class="section blog-library"><div class="blog-tools"><div class="filters" role="group" aria-label="Filter articles by topic"><button class="filter active" data-filter="All" aria-pressed="true">All signals</button>{categories.map(category => <button class="filter" data-filter={category} aria-pressed="false">{category}</button>)}</div><label class="article-search"><span class="sr-only">Search article titles</span><input type="search" placeholder="Find your signal…" id="article-search" /><span aria-hidden="true">⌕</span></label></div><p id="result-count" class="result-count" aria-live="polite">15 articles</p><div class="articles-grid">{articles.map((article, index) => <ArticleCard article={article} index={index} />)}</div><p class="no-results" hidden>No articles match this search. Try another topic or clear the search.</p></section>
+  <script>
+    let selected = 'All';
+    const search = document.querySelector<HTMLInputElement>('#article-search');
+    const cards = Array.from(document.querySelectorAll<HTMLElement>('.article-card'));
+    function filterArticles() {
+      const query = search?.value.trim().toLowerCase() || '';
+      let count = 0;
+      cards.forEach(card => { const visible = (selected === 'All' || card.dataset.category === selected) && (card.dataset.title || '').includes(query); card.hidden = !visible; if (visible) count++; });
+      const output = document.querySelector('#result-count');
+      if (output) output.textContent = `${count} article${count === 1 ? '' : 's'}`;
+      const empty = document.querySelector<HTMLElement>('.no-results'); if (empty) empty.hidden = count !== 0;
+    }
+    document.querySelectorAll<HTMLButtonElement>('.filter').forEach(button => button.addEventListener('click', () => { selected = button.dataset.filter || 'All'; document.querySelectorAll('.filter').forEach(filter => { const active = filter === button; filter.classList.toggle('active', active); filter.setAttribute('aria-pressed', String(active)); }); filterArticles(); }));
+    search?.addEventListener('input', filterArticles);
+  </script>
+</Layout>

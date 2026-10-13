@@ -1,0 +1,3 @@
+import type { APIRoute } from 'astro';
+import { articles } from '../data/articles';
+export const GET: APIRoute = () => new Response(`# Arrow Signal\n\n> AI visibility and GEO editorial intelligence from the Arrow ecosystem.\n\nThis site publishes practical, English-language guides. Recommendations are editorial guidance, not guarantees of inclusion in AI answers.\n\n## Journal\n\n${articles.map(article => `- [${article.title}](https://arrow-si.com/blog/${article.slug}/): ${article.description}`).join('\n')}\n\n## Arrow ecosystem\n\n- [Arrow AI](https://arrow-ai.us/)\n- [Arrow Answers](https://answers.arrow-ai.us/)\n- [Arrow AI Tech](https://arrow-ai.tech/)\n`, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } });
