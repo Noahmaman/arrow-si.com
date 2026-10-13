@@ -1,6 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Signal from '../components/Signal.astro';
+import SignalField from '../components/SignalField.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { articles } from '../data/articles';
 const faqs = [
@@ -13,14 +13,14 @@ const faqs = [
 const schema = { '@type': 'WebSite', name: 'Arrow Signal', url: 'https://arrow-si.com', description: 'AI visibility intelligence and practical GEO education from the Arrow ecosystem.', publisher: { '@id': 'https://arrow-si.com/#organization' } };
 ---
 <Layout title="Arrow Signal — AI Visibility & GEO Intelligence" description="Be the signal. Become the answer. Explore AI visibility, GEO and answer-led discovery with practical guides from the Arrow ecosystem." schema={schema}>
-  <section class="hero">
+  <section class="hero light-hero">
     <div class="hero-background" aria-hidden="true"></div>
-    <div class="hero-topline"><span class="eyebrow"><span class="status-dot" aria-hidden="true"></span> A NEW DIRECTION FOR DISCOVERY</span><span class="coordinates" aria-hidden="true">ARROW / SIGNAL INTELLIGENCE</span></div>
+    <div class="hero-topline"><span class="hero-pill"><span class="status-dot" aria-hidden="true"></span> ARROW SIGNAL / AI VISIBILITY INTELLIGENCE</span></div>
     <div class="hero-body">
-      <div class="hero-copy"><h1>Be the signal.<br /><span>Become</span><br /><em>the answer.</em></h1><p>Your next customer is asking AI.<br />Make your expertise part of the conversation.</p><div class="hero-actions"><a class="button" href="https://arrow-ai.us/geo-check/">Get your GEO check <span aria-hidden="true"><svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></span></a><a class="button button-ghost" href="#visibility">Follow the signal <span aria-hidden="true">↓</span></a></div></div>
-      <div class="hero-graphic"><Signal /><div class="graphic-note"><span>01 / DISCOVERY HAS A NEW INTERFACE</span><span>ILLUSTRATIVE SIGNAL MAP</span></div></div>
+      <div class="hero-copy"><h1>Your brand.<br /><em>The answer.</em></h1><p>The next era of discovery is a conversation.<br />Build the signal that puts your expertise in the picture.</p><div class="hero-actions"><a class="button" href="https://arrow-ai.us/geo-check/">Get your GEO check <svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></a><a class="button button-ghost" href="#visibility">Explore AI visibility <span aria-hidden="true">↓</span></a></div></div>
+      <SignalField />
     </div>
-    <div class="hero-bottom"><span>AI VISIBILITY, MADE CLEAR.</span><span>A focused editorial destination from Arrow.</span><a href="#visibility" aria-label="Scroll to AI visibility">↓</a></div>
+    <div class="hero-bottom"><span>LESS NOISE. MORE SIGNAL.</span><span>A new perspective. The same Arrow direction.</span><a href="#visibility" aria-label="Scroll to AI visibility">↓</a></div>
   </section>
   <div class="platform-strip"><span>WHERE QUESTIONS BECOME DECISIONS</span><div><span>ChatGPT</span><span>Perplexity</span><span>Gemini</span><span>AI search</span></div><small>Independent editorial coverage. No platform affiliation.</small></div>
   <section class="section film-section">

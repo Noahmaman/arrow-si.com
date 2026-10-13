@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '../styles/home.css';
 interface Props { title: string; description: string; schema?: object; noindex?: boolean }
 const { title, description, schema, noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
@@ -13,7 +14,7 @@ const home = Astro.url.pathname === '/';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#060b19" />
+    <meta name="theme-color" content={home ? "#ffffff" : "#060b19"} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/brand/arrow-app-icon.svg" />
@@ -24,7 +25,7 @@ const home = Astro.url.pathname === '/';
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content="https://arrow-si.com/og.png" />
-    <meta property="og:image:alt" content="Arrow Signal — Be the signal. Become the answer. Blue signal waves on a dark background." />
+    <meta property="og:image:alt" content="Arrow Signal — Your brand. The answer. Blue and lavender signal gradients on white." />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -35,7 +36,7 @@ const home = Astro.url.pathname === '/';
     <script type="application/ld+json" set:html={JSON.stringify(organization).replace(/</g, '\\u003c')} />
     {schema && <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', ...schema }).replace(/</g, '\\u003c')} />}
   </head>
-  <body>
+  <body class:list={{ 'home-light': home }}>
     <a class="skip" href="#main">Skip to content</a>
     <header class="site-header">
       <a href="/" class="brand" aria-label="Arrow Signal home"><img class="brand-logo" src="/brand/arrow-app-icon.svg" alt="" width="34" height="34" /><span>arrow<span class="brand-divider">/</span><span class="brand-light">signal</span></span></a>
