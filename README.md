@@ -1,53 +1,45 @@
-# Arrow Signal
+# Arrow Signal — arrow-si.com
 
-English editorial website for **arrow-si.com**, focused on AI visibility and generative engine optimization (GEO). Built with Astro, static HTML, locally hosted fonts and a small amount of progressive-enhancement JavaScript.
+The AI visibility hub of [Arrow AI](https://arrow-ai.us/). English, static, fast, built to be read by people and by AI engines.
 
-## Development
+- **Brand:** Arrow AI identity — GEO blue `#2563EB` with the violet gradient, heat-orange CTAs, DM Sans + Geist Mono, hairline borders and crosshair marks — with a darker "signal" twist (night sections, oscilloscope lines, blue glow).
+- **Story:** follows the Arrow film — *SEO ranked you → Enter GEO → Make AI recommend you → Build authority*.
+- **Ecosystem links:** [arrow-ai.us](https://arrow-ai.us/), [answers.arrow-ai.us](https://answers.arrow-ai.us/), [arrow-ai.tech](https://arrow-ai.tech/), with deep contextual links from every article.
+- **Socials:** LinkedIn, Instagram, YouTube, TikTok (footer, About page and `sameAs`).
 
-Use the existing checkout; cloud tasks are already isolated. No worktree is needed.
+## Stack
 
-Requirements: Node.js 24 (see `.nvmrc`) and npm. No database or application secrets are required to build or run the site.
+Astro 7, static output, no runtime dependencies. Motion is progressive enhancement (canvas signal field, scroll-driven oscilloscope, animated answer console, count-ups) and respects `prefers-reduced-motion`.
 
-```sh
-cd /workspace/arrow-si.com
-npm ci --cache /workspace/.npm-cache --no-audit --no-fund
-ASTRO_TELEMETRY_DISABLED=1 npm run dev -- --port 4321
+```
+src/
+  content/blog/*.md     15 articles (frontmatter: summary, takeaways, FAQ, sources, ecosystem links)
+  components/           Header, Footer, SignalField, SignalConsole, SignalDashboard, Oscilloscope, FilmSection, Ecosystem, ArticleCover…
+  layouts/Base.astro    SEO head + JSON-LD @graph (Organization @id shared with arrow-ai.us)
+  lib/                  site constants, article loader, glossary
+  pages/                home, /blog/, /blog/[slug]/, /glossary/, /about/, /privacy/, robots.txt, sitemap.xml, feed.xml, llms.txt, llms-full.txt
+public/media/           Arrow AI film (mp4/webm), poster, stills, captions
+public/og/              Open Graph images (generated)
 ```
 
-Production validation:
+## Commands
 
 ```sh
-ASTRO_TELEMETRY_DISABLED=1 npm run build
-npm test
-ASTRO_TELEMETRY_DISABLED=1 npm run preview -- --port 4322
+npm ci
+npm run dev            # http://localhost:4321
+npm run build          # → dist/
+npm test               # checks dist/: titles, descriptions, alts, JSON-LD, links, GEO files
+npm run og             # re-render public/og/*.jpg (needs Chromium; run after a build, then build again)
 ```
 
-`ASTRO_TELEMETRY_DISABLED=1` also avoids Astro writing telemetry configuration to a read-only home directory in cloud environments.
+## GEO / SEO checklist built in
 
-## Contents
+- Unique titles (≤ 70 chars) and descriptions, canonical URLs, Open Graph + Twitter cards with per-page images and alt text.
+- JSON-LD: Organization (`https://arrow-ai.us/#organization`, sameAs, disambiguation), WebSite, WebPage, VideoObject, BlogPosting, FAQPage, BreadcrumbList, DefinedTermSet, ItemList.
+- Answer-first articles: short answer, key takeaways, FAQ, primary sources, "Ask AI about this guide" links.
+- `robots.txt` welcoming search and AI crawlers, `sitemap.xml` with images, `feed.xml`, `llms.txt` and `llms-full.txt`.
+- Every image has alt text; decorative SVGs are `aria-hidden`; illustrations with sample data are labelled as such.
 
-- Animated signal homepage, responsive navigation and native FAQ disclosures.
-- 15 substantive original English articles in `src/data/articles.ts`, each with a direct answer, four topic sections, action checklist and primary reference links.
-- Searchable, filterable journal; related guides; article sharing and clipboard actions.
-- Unique titles, descriptions and canonical URLs; Organization, Article and BreadcrumbList JSON-LD.
-- Sitemap, RSS, robots.txt, social image and an experimental `llms.txt` reading index. No claim is made that `llms.txt` affects any engine's ranking or citation behavior.
-- Transparent backlinks to Arrow AI, Arrow Answers and Arrow AI Tech. Share buttons work independently of official social-profile links.
-- Reduced-motion support, semantic headings, keyboard navigation and no third-party tracking scripts.
+## Deployment
 
-## Brand sources
-
-Verified against `https://arrow-ai.us/`: official app icon, GEO blue `#2563eb`, DM Sans, LinkedIn `arrow-ai-us`, Instagram `arrowai.us` and YouTube `@Arrowaius`. The 36-second GEO film and poster are retained locally from Arrow's public assets, as authorized in the brief. The visual-summary text and description track were added for the signal site.
-
-The original site covers GEO, AI Systems and AI Studio; Arrow Signal intentionally focuses on AI visibility and directs visitors to Arrow's existing GEO check. The homepage reuses the current Arrow main-site stylesheet, retained as `public/brand/arrow-home.css`, with DM Sans and Geist Mono hosted locally. It follows the original neutral background, dotted grid, blue GEO emphasis, orange call to action, navigation and card styling. `arrow-base.css` supplies only integration rules for local content, access to the existing Arrow audit, and responsive navigation. No additional creative direction is applied to the homepage; future twists await user instructions. No supplied design attachments were visible in this session.
-
-The official site identifies `https://answers.arrow-ai.us/` (with a dot) as the answers destination, correcting the brief's hyphenated spelling. `arrow-ai.tech` is the interactive GEO demo. Owned ecosystem links are transparent, rather than presented as independent endorsements.
-
-## Vercel
-
-`vercel.json` sets the Astro framework, build command, static output and basic security headers. Import `Noahmaman/arrow-si.com` into the authorized Vercel account, create the project with the name `arrow-si`, and attach `arrow-si.com` in its domain settings. Use Vercel's actual DNS instructions; do not assume the domain is already connected.
-
-Programmatic deployment requires authorized Vercel access (a secure `VERCEL_TOKEN` binding or an authenticated integration), access to `api.vercel.com`, and the intended team scope if multiple teams are available. Never commit credentials or `.vercel` account metadata. Verify the deployed home, an article, sitemap and custom domain after deployment.
-
-## Content maintenance
-
-Keep article dates accurate when content changes. Do not refresh `dateModified` merely because the site builds. Add verified official social profiles to navigation and Organization `sameAs` only after confirming identity. Editorial claims should stay factual, sourced and free of guaranteed AI-placement promises.
+Vercel project `arrow-si`, connected to this repository, domain `arrow-si.com` (+ `www` redirect). `vercel.json` sets security and cache headers.

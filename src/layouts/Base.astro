@@ -1,0 +1,127 @@
+---
+import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/geist-mono';
+import '../styles/signal.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, ARROW, SOCIALS, ORGANIZATION_ID, absolute } from '../lib/site';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  schema?: Record<string, unknown>[];
+  noindex?: boolean;
+  published?: string;
+  modified?: string;
+  section?: string;
+  tags?: string[];
+  progress?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = SITE.ogImage,
+  imageAlt = 'Arrow Signal: be the signal in AI answers. Arrow AI blue signal waves converging on the Arrow logo.',
+  type = 'website',
+  schema = [],
+  noindex = false,
+  published,
+  modified,
+  section,
+  tags = [],
+  progress = false,
+} = Astro.props;
+
+const canonical = absolute(Astro.url.pathname);
+const ogImage = absolute(image);
+
+const organization = {
+  '@type': 'Organization',
+  '@id': ORGANIZATION_ID,
+  name: ARROW.name,
+  alternateName: 'arrow-ai.us',
+  url: ARROW.url,
+  disambiguatingDescription:
+    'Arrow AI (arrow-ai.us) builds GEO, AI Systems, and AI Studio for businesses. Independent from Arrow Electronics (arrow.com), ArrowAI (arrowai.com), Arrow Intelligent Systems, and Arrow AI GTM (getarrow.ai).',
+  logo: { '@type': 'ImageObject', url: absolute('/brand/arrow-icon-192.png'), width: 192, height: 192 },
+  sameAs: SOCIALS.map((s) => s.url),
+  knowsAbout: ['AI visibility', 'Generative Engine Optimization', 'GEO', 'Answer Engine Optimization', 'AI citations', 'AI share of voice', 'Google AI Overviews', 'ChatGPT search', 'Perplexity citations', 'Entity SEO', 'Structured data'],
+};
+const website = {
+  '@type': 'WebSite',
+  '@id': `${SITE.url}/#website`,
+  url: `${SITE.url}/`,
+  name: SITE.name,
+  alternateName: 'arrow-si.com',
+  description: SITE.description,
+  inLanguage: 'en',
+  publisher: { '@id': ORGANIZATION_ID },
+  about: { '@type': 'Thing', name: 'AI visibility' },
+};
+const graph = { '@context': 'https://schema.org', '@graph': [organization, website, ...schema] };
+const json = JSON.stringify(graph).replace(/</g, '\\u003c');
+---
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+    <meta name="theme-color" content="#04060e" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="author" content="Arrow AI" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="alternate" hreflang="en" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <link rel="icon" href="/favicon.ico" sizes="48x48" />
+    <link rel="icon" href="/brand/arrow-icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="alternate" type="application/rss+xml" title="Arrow Signal — AI visibility journal" href="/feed.xml" />
+    <link rel="alternate" type="text/plain" title="LLM-readable site summary" href="/llms.txt" />
+
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+    {type === 'article' && published && <meta property="article:published_time" content={published} />}
+    {type === 'article' && modified && <meta property="article:modified_time" content={modified} />}
+    {type === 'article' && section && <meta property="article:section" content={section} />}
+    {type === 'article' && tags.map((tag) => <meta property="article:tag" content={tag} />)}
+    {type === 'article' && <meta property="article:publisher" content={SOCIALS[0].url} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    <script type="application/ld+json" set:html={json} />
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Header progress={progress} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import { initReveal } from '../lib/reveal';
+      initReveal();
+    </script>
+  </body>
+</html>

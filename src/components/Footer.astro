@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import { ARROW, ANSWERS, DEMO, SOCIALS } from '../lib/site';
+const year = new Date().getFullYear();
+const icons = { LinkedIn: 'linkedin', Instagram: 'instagram', YouTube: 'youtube', TikTok: 'tiktok' } as const;
+---
+<footer class="site-footer">
+  <svg class="footer-signal" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="fs" x1="0" x2="1">
+        <stop offset="0" stop-color="#2563eb" stop-opacity="0" />
+        <stop offset=".5" stop-color="#5b8cff" stop-opacity=".9" />
+        <stop offset="1" stop-color="#655cff" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <path d="M0 150 C 120 150 160 60 240 60 S 360 190 480 150 S 640 30 720 110 S 860 200 960 140 S 1120 70 1200 120 S 1360 160 1440 140" fill="none" stroke="url(#fs)" stroke-width="1.4" />
+    <path d="M0 170 C 140 170 200 110 300 120 S 460 200 600 160 S 780 90 900 140 S 1100 190 1240 150 S 1380 150 1440 160" fill="none" stroke="url(#fs)" stroke-width="1" opacity=".5" />
+  </svg>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="brand" href="/" aria-label="Arrow Signal — home">
+          <img src="/brand/arrow-icon-192.png" alt="" width="28" height="28" loading="lazy" />
+          <span>Arrow</span><span class="sub">SIGNAL</span>
+        </a>
+        <p>The AI visibility hub of <a href={ARROW.url}>Arrow AI</a>. Less noise, more signal: get found, cited and recommended in AI answers.</p>
+        <div class="socials" aria-label="Follow Arrow AI">
+          {SOCIALS.map((s) => (
+            <a href={s.url} target="_blank" rel="noopener me" aria-label={`Arrow AI on ${s.name} (${s.handle})`} title={`Arrow AI on ${s.name}`}>
+              <Icon name={icons[s.name]} size={17} />
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="footer-col">
+        <h2>AI visibility</h2>
+        <a href="/blog/">The Signal Journal</a>
+        <a href="/blog/what-is-ai-visibility/">What is AI visibility?</a>
+        <a href="/blog/how-to-measure-ai-visibility/">Measure AI visibility</a>
+        <a href="/glossary/">AI visibility glossary</a>
+        <a href={ARROW.freeAudit}>Free AI visibility audit</a>
+      </div>
+      <div class="footer-col">
+        <h2>Arrow ecosystem</h2>
+        <a href={ARROW.url}>Arrow AI — GEO &amp; AI systems</a>
+        <a href={ANSWERS.url}>Arrow Answers — GEO guides</a>
+        <a href={DEMO.url}>Arrow GEO demo</a>
+        <a href={ARROW.ranking}>AI Visibility Index</a>
+        <a href={ARROW.pricing}>GEO plans &amp; pricing</a>
+      </div>
+      <div class="footer-col">
+        <h2>Company</h2>
+        <a href="/about/">About Arrow Signal</a>
+        <a href={ARROW.about}>About Arrow AI</a>
+        <a href={ARROW.call}>Book a call</a>
+        <a href={ARROW.contact}>Contact</a>
+        <a href="/privacy/">Privacy</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} Arrow AI. Arrow Signal (arrow-si.com) is part of Arrow AI (arrow-ai.us), independent from Arrow Electronics and other companies named Arrow.</span>
+      <span class="freq"><span class="live-dot" aria-hidden="true"></span>Broadcasting on #2563EB</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-brand p a { color: var(--night-text); }
+</style>

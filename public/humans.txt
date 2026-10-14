@@ -1,0 +1,10 @@
+/* TEAM */
+Publisher: Arrow AI
+Site: https://arrow-si.com
+Main site: https://arrow-ai.us
+Contact: https://arrow-ai.us/contact/
+
+/* SITE */
+Language: English
+Standards: HTML, CSS, schema.org JSON-LD
+Built with: Astro, DM Sans, Geist Mono

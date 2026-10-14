@@ -1,28 +1,541 @@
 ---
-import ArrowLayout from '../layouts/ArrowLayout.astro';
-import { articles } from '../data/articles';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import SignalField from '../components/SignalField.astro';
+import SignalConsole from '../components/SignalConsole.astro';
+import SignalDashboard from '../components/SignalDashboard.astro';
+import Oscilloscope from '../components/Oscilloscope.astro';
+import FilmSection from '../components/FilmSection.astro';
+import Ecosystem from '../components/Ecosystem.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { articles } from '../lib/articles';
+import { SITE, ARROW, ANSWERS, DEMO, ENGINES, ORGANIZATION_ID, askAiLinks, absolute } from '../lib/site';
+
+const title = 'AI Visibility & GEO: Be the Signal in AI Answers | Arrow Signal';
+const description =
+  'Get your brand found, cited and recommended in ChatGPT, Gemini, Perplexity, Claude and Google AI Overviews. AI visibility playbooks and a free audit from Arrow AI.';
+
 const faqs = [
-  ['What is AI visibility?', 'AI visibility is how often—and how accurately—your brand, expertise and content appear in AI-generated answers. It includes brand mentions, cited sources and recommendation context across the questions your audience asks.'],
-  ['How is GEO different from SEO?', 'Generative engine optimization focuses on representation in AI answers. SEO focuses on search discovery and performance. Both benefit from accessible pages, clear information and credible evidence, but their outcomes should be measured separately.'],
-  ['Can a website guarantee citations in AI answers?', 'No. Answer products use their own retrieval and selection systems, and results can vary between runs. Clear content and sound technical foundations can remove obstacles, but they do not guarantee a mention, citation or recommendation.'],
-  ['How should we measure AI visibility?', 'Start with a fixed set of real buyer questions. Record the answer, model or product, date, region and cited URLs. Track mentions, first-party citations and accuracy separately, and repeat comparable tests to understand variability.'],
-  ['How does Arrow Signal connect to Arrow AI?', 'Arrow Signal is the AI visibility editorial destination in the Arrow ecosystem. This site connects readers to the main Arrow AI website, Arrow Answers and Arrow AI Tech through clearly identified ecosystem links.'],
+  {
+    q: 'What is AI visibility?',
+    a: 'AI visibility is how often, and how accurately, a brand appears inside AI-generated answers — in ChatGPT, Gemini, Perplexity, Claude, Copilot and Google AI Overviews. It covers three signals: being mentioned by name, being cited as a source, and being recommended for a buyer’s need.',
+  },
+  {
+    q: 'How is AI visibility different from SEO?',
+    a: 'SEO earns a position in a list of links. AI visibility earns a place inside the answer itself. The foundations overlap — crawlable pages, clear content, credible evidence — but the outcome is measured differently: mentions, citations, recommendations and accuracy across a fixed set of buyer questions.',
+  },
+  {
+    q: 'What is GEO (Generative Engine Optimization)?',
+    a: 'GEO is the work of making a brand’s public information clear, accessible and well-sourced so that generative engines can find, understand and recommend it — then measuring how the brand actually appears in answers. Arrow AI runs GEO as a managed service, starting with a free audit.',
+  },
+  {
+    q: 'How do you measure AI visibility?',
+    a: 'Start with 20 to 50 real buyer questions. Run them on the AI tools your buyers use, record the full answer, the date, the cited URLs and whether your brand is mentioned, cited or recommended. Repeat on a schedule and track share of voice and accuracy over time.',
+  },
+  {
+    q: 'Can anyone guarantee that ChatGPT will recommend my brand?',
+    a: 'No. Each AI product controls its own answers, and answers vary by wording, location and date. What a GEO program controls is the source material — your pages, your entity data, your evidence — and an honest, dated measurement of what the answers say.',
+  },
+  {
+    q: 'How do I start with Arrow?',
+    a: 'Run the free Arrow AI visibility audit at arrow-ai.us/free-audit. The Arrow team reviews how AI engines talk about your brand and sends a clear plan. You can also book a 15-minute call, read the practical guides on Arrow Answers or explore the interactive GEO demo at arrow-ai.tech.',
+  },
 ];
-const schema = { '@type': 'WebSite', name: 'Arrow Signal', url: 'https://arrow-si.com', description: 'AI visibility intelligence and practical GEO education from the Arrow ecosystem.', publisher: { '@id': 'https://arrow-si.com/#organization' } };
+
+const signals = [
+  { n: '01', k: 'Mentioned', t: 'Your brand is named', d: 'The answer says your name when a buyer asks about your category, problem or alternatives.' },
+  { n: '02', k: 'Cited', t: 'Your page is the source', d: 'The answer links to your website as evidence — your facts, your framing, your URL.' },
+  { n: '03', k: 'Recommended', t: 'You make the shortlist', d: 'The answer suggests you for the buyer’s situation. This is the signal that moves pipeline.' },
+  { n: '04', k: 'Accurate', t: 'What AI says is true', d: 'Offer, pricing, locations and proof are described correctly — no outdated or invented facts.' },
+];
+
+const steps = [
+  { n: '01', k: 'Listen', t: 'Baseline the answers', d: 'Run your real buyer questions across the AI tools your market uses. Record answers, dates and cited sources — the dated baseline everything else is measured against.', href: '/blog/how-to-measure-ai-visibility/', link: 'Build a baseline' },
+  { n: '02', k: 'Decode', t: 'Find what blocks the signal', d: 'Crawler access, unclear entity data, missing answer pages, weak third-party evidence. Diagnose why an engine skips you before you publish anything.', href: '/blog/why-chatgpt-doesnt-mention-your-brand/', link: 'Diagnose the gaps' },
+  { n: '03', k: 'Amplify', t: 'Strengthen the source', d: 'Answer-ready pages, consistent entity facts, structured data that matches the page and credible sources beyond your own domain.', href: '/blog/content-ai-engines-cite/', link: 'Write citable content' },
+  { n: '04', k: 'Measure', t: 'Track and iterate monthly', d: 'Dated answer checks, share of voice, citations and AI referral traffic. Keep what moves the signal, fix what does not.', href: '/blog/ai-share-of-voice/', link: 'Track share of voice' },
+];
+
+const film = {
+  '@type': 'VideoObject',
+  '@id': `${SITE.url}/#geo-film`,
+  name: 'SEO ranked you. GEO gets you answered.',
+  description:
+    'Arrow AI motion film on the shift from search results to AI answers: why buyers stopped browsing ten blue links, what Generative Engine Optimization (GEO) is, and how brands become visible, cited and recommended inside ChatGPT, Gemini, Perplexity, Claude and Google AI Overviews.',
+  thumbnailUrl: [absolute('/media/arrow-ai-geo-film-poster.webp')],
+  uploadDate: '2026-08-18T09:00:00+02:00',
+  duration: 'PT36S',
+  contentUrl: absolute('/media/arrow-ai-geo-film.mp4'),
+  width: 1280,
+  height: 720,
+  inLanguage: 'en',
+  publisher: { '@id': ORGANIZATION_ID },
+};
+const schema = [
+  {
+    '@type': 'WebPage',
+    '@id': `${SITE.url}/#webpage`,
+    url: `${SITE.url}/`,
+    name: title,
+    description,
+    inLanguage: 'en',
+    isPartOf: { '@id': `${SITE.url}/#website` },
+    about: [{ '@type': 'Thing', name: 'AI visibility' }, { '@type': 'Thing', name: 'Generative Engine Optimization' }],
+    primaryImageOfPage: { '@type': 'ImageObject', url: absolute(SITE.ogImage), width: 1200, height: 630 },
+    video: { '@id': `${SITE.url}/#geo-film` },
+    datePublished: SITE.published,
+    dateModified: SITE.published,
+    publisher: { '@id': ORGANIZATION_ID },
+  },
+  film,
+  {
+    '@type': 'FAQPage',
+    '@id': `${SITE.url}/#faq`,
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+  {
+    '@type': 'ItemList',
+    '@id': `${SITE.url}/#journal`,
+    name: 'The Signal Journal — AI visibility guides',
+    itemListElement: articles.slice(0, 6).map((a, i) => ({ '@type': 'ListItem', position: i + 1, url: absolute(a.url), name: a.title })),
+  },
+];
+const featured = articles.slice(0, 6);
+const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
 ---
-<ArrowLayout title="Arrow Signal — AI Visibility & GEO Intelligence" description="AI visibility and GEO from Arrow AI. Learn how to be found, cited and recommended in AI answers, with 15 practical guides and a free GEO audit." schema={schema}>
-  <section class="section hero home-hero-blue">
-    <a class="hero-pill" href="https://arrow-ai.us/free-audit/"><span class="tag">New</span>Free GEO audit — see how AI engines talk about your brand<span class="arr" aria-hidden="true">→</span></a>
-    <h1 class="h-display">Make your brand visible in <span class="hero-accent">AI answers</span></h1>
-    <p class="lede">Arrow helps buyers discover your business in AI answers. <span class="lede-hl">Start with a free audit and a clear plan.</span></p>
-    <div class="base-check"><div class="base-check-head"><span>Free GEO check</span><span>YOUR NEXT STEP</span></div><a href="https://arrow-ai.us/geo-check/"><span>How visible is your business in AI answers?</span><strong>Start here <span aria-hidden="true">→</span></strong></a><p>Continue to Arrow AI to check your website or company.</p></div>
-    <a class="btn btn-heat" href="https://cal.com/noah-maman-arrow-ai/15min">Book a strategy call</a>
-    <figure class="base-film"><video controls playsinline preload="none" width="1280" height="720" poster="/brand/arrow-ai-geo-motion-poster.webp" aria-label="Arrow AI film: SEO ranked you. GEO gets you answered."><source src="/brand/arrow-ai-geo-motion-light.webm" type="video/webm"/><source src="/brand/arrow-ai-geo-motion-light.mp4" type="video/mp4"/><track kind="descriptions" src="/brand/geo-film.vtt" srclang="en" label="English visual descriptions"/></video><figcaption>SEO ranked you. GEO gets you answered — the original Arrow AI film. A brand perspective, not a guarantee of AI placement.</figcaption></figure>
-    <div class="base-engines"><span>AI VISIBILITY ACROSS</span><span>ChatGPT</span><span>Gemini</span><span>Perplexity</span><span>Claude</span></div>
+<Base title={title} description={description} schema={schema}>
+  <!-- ============ HERO ============ -->
+  <section class="hero night" aria-labelledby="hero-title">
+    <SignalField />
+    <div class="dot-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="streaks" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="wrap hero-inner">
+      <a class="hero-pill rise" href={ARROW.freeAudit}>
+        <span class="tag mono">Free</span>
+        <span>See how AI engines talk about your brand</span>
+        <Icon name="arrow" size={14} />
+      </a>
+      <h1 id="hero-title" class="display rise" style="--d:80ms">
+        <span class="h1-kicker mono">AI visibility by Arrow AI</span>
+        In every AI answer, <span class="grad">be the signal.</span>
+      </h1>
+      <p class="lede rise" style="--d:160ms">
+        SEO ranked you. GEO gets you answered. Arrow Signal helps brands get <strong>found, cited and recommended</strong> in ChatGPT, Gemini, Perplexity, Claude and Google AI Overviews.
+      </p>
+      <div class="btn-row hero-ctas rise" style="--d:240ms">
+        <a class="btn btn-heat" href={ARROW.freeAudit}>Get your free AI visibility audit <Icon name="arrow" size={16} /></a>
+        <a class="btn btn-ghost-dark" href="#film"><Icon name="play" size={14} /> Watch the 36-second film</a>
+      </div>
+      <p class="hero-note mono rise" style="--d:300ms">Free · 2-minute check · Reviewed by the Arrow AI team</p>
+    </div>
+    <div class="wrap console-stage" data-tilt>
+      <div class="console-wrap"><SignalConsole /></div>
+    </div>
+    <div class="engines-strip" aria-label="AI engines covered">
+      <span class="mono strip-label">Signal tracked across</span>
+      <div class="marquee">
+        <ul class="marquee-track">
+          {[...ENGINES, ...ENGINES].map((e, i) => <li aria-hidden={i >= ENGINES.length ? 'true' : undefined}><span class="e-dot" aria-hidden="true"></span>{e}</li>)}
+        </ul>
+      </div>
+    </div>
   </section>
-  <section id="visibility" class="section"><span class="cross is-left" aria-hidden="true"></span><span class="cross is-right" aria-hidden="true"></span><div class="base-section-head"><p class="kicker">The Arrow GEO system</p><h2 class="h-section">Be found, cited, and <span class="hl-blue">recommended.</span></h2><p class="lede">AI visibility is how your brand, expertise and content appear in generated answers. Build a clear identity, useful evidence and a site that can be understood.</p></div><div class="base-cards"><a class="base-card" href="/blog/entity-clarity-for-ai-search/"><span class="kicker">01 — Clarity</span><h3 class="h-card">Make your brand understood</h3><p>Clarify your offer, audience and expertise. Keep one consistent identity across the Arrow ecosystem.</p><span class="base-card-link">Explore entity clarity →</span></a><a class="base-card" href="/blog/answer-ready-content/"><span class="kicker">02 — Evidence</span><h3 class="h-card">Become a useful source</h3><p>Publish clear explanations and credible evidence that readers and retrieval systems can inspect.</p><span class="base-card-link">Build answer-ready content →</span></a><a class="base-card" href="/blog/ai-visibility-baseline/"><span class="kicker">03 — Measurement</span><h3 class="h-card">Know what the answers say</h3><p>Measure mentions, citations and recommendation context against the buying questions that matter.</p><span class="base-card-link">Build your baseline →</span></a></div></section>
-  <section id="approach" class="section"><div class="base-section-head"><p class="kicker">From audit to visibility</p><h2 class="h-section">A clear plan. <span class="hl-blue">A useful next step.</span></h2><p class="lede">Start with the evidence. Improve the information. Repeat comparable observations.</p></div><div class="base-method"><div><span class="kicker">01 — Observe</span><h3 class="h-card">Listen to the answers</h3><p>Record how AI products describe your brand and which sources they cite. Separate a mention from a recommendation.</p><a href="/blog/brand-mentions-vs-citations/">Understand the signals →</a></div><div><span class="kicker">02 — Strengthen</span><h3 class="h-card">Fix the missing information</h3><p>Connect useful content, credible sources and technically accessible pages around your audience's actual questions.</p><a href="/blog/technical-geo-checklist/">Check the technical foundation →</a></div><div><span class="kicker">03 — Review</span><h3 class="h-card">Choose the next action</h3><p>Repeat your baseline, document what changed and prioritize the gaps that matter to your business.</p><a href="/blog/30-day-ai-visibility-plan/">Plan your first cycle →</a></div></div></section>
-  <section class="section"><div class="base-section-head"><p class="kicker">Resources</p><h2 class="h-section">AI visibility, <span class="hl-blue">answered.</span></h2><p class="lede">15 practical English-language guides to GEO, AI visibility, technical access and content strategy.</p><a class="btn btn-blue" href="/blog/">Explore all 15 guides</a></div><div class="base-cards">{[articles[0],articles[2],articles[6]].map(article=><a class="base-card" href={`/blog/${article.slug}/`}><span class="kicker">{article.category}</span><h3 class="h-card">{article.title}</h3><p>{article.description}</p><span class="base-card-link">Read the guide →</span></a>)}</div></section>
-  <section id="faq" class="section"><div class="base-section-head"><p class="kicker">FAQ</p><h2 class="h-section">Arrow AI, <span class="hl-blue">answered.</span></h2></div><div class="faq-wrap">{faqs.map(([question,answer])=><details class="faq-item"><summary>{question}<span class="ico" aria-hidden="true"></span></summary><p class="faq-a">{answer}</p></details>)}</div></section>
-  <section class="section cta-final"><div class="cta-panel"><p class="kicker">One Arrow ecosystem</p><h2 class="h-section">Build your visibility in AI answers</h2><p class="lede">Start with Arrow AI. Keep learning with Arrow Answers. Explore the GEO demo.</p><div class="row"><a class="btn btn-heat" href="https://arrow-ai.us/">Explore Arrow AI</a><a class="btn btn-ghost" href="https://answers.arrow-ai.us/">Arrow Answers</a><a class="btn btn-ghost" href="https://arrow-ai.tech/">GEO demo</a></div></div></section>
-</ArrowLayout>
+
+  <!-- ============ 01 THE SHIFT ============ -->
+  <section class="section shift" id="visibility" aria-labelledby="shift-title">
+    <span class="cross" style="left:var(--pad);top:-8px" aria-hidden="true"></span>
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker reveal">Chapter 01 — The shift</p>
+        <h2 id="shift-title" class="h-section reveal" style="--d:60ms">
+          <span class="strike" data-strike>SEO ranked you.</span><br /><span class="grad">GEO gets you answered.</span>
+        </h2>
+        <p class="lede reveal" style="--d:120ms">
+          Buyers used to scan ten blue links. Now they ask one question and get one answer — a summary, a shortlist, a recommendation and a few sources. If your brand isn’t inside that answer, it isn’t inside the decision.
+        </p>
+      </div>
+      <div class="shift-visual">
+        <figure class="then card reveal" aria-labelledby="then-cap">
+          <figcaption id="then-cap" class="mono v-label">Before · ten blue links</figcaption>
+          <ol class="links" aria-hidden="true">
+            {Array.from({ length: 8 }, (_, i) => (
+              <li class:list={{ you: i === 6 }} style={`--i:${i}`}>
+                <span class="l-url">{i === 6 ? 'yourbrand.com › services' : `result-${i + 1}.example`}</span>
+                <span class="l-title"></span>
+                <span class="l-desc"></span>
+              </li>
+            ))}
+          </ol>
+          <p class="v-note">Your brand: result #7. One of many.</p>
+        </figure>
+        <div class="shift-arrow" aria-hidden="true">
+          <svg viewBox="0 0 120 40" aria-hidden="true"><path d="M0 20 Q 15 4 30 20 T 60 20 T 90 20" /><path class="head" d="M96 12 L110 20 L96 28" /></svg>
+        </div>
+        <figure class="now card reveal" style="--d:140ms" aria-labelledby="now-cap">
+          <figcaption id="now-cap" class="mono v-label is-blue">Now · one AI answer</figcaption>
+          <div class="q">Which partner should we choose for this?</div>
+          <div class="a">
+            <p>For your situation, <mark>Your Brand</mark> is the most recommended option: it specialises in this exact problem and publishes clear pricing and proof <sup>[1]</sup>. Alternatives include two larger generalists <sup>[2]</sup>.</p>
+            <div class="a-chips"><span class="chip is-ok">Mentioned</span><span class="chip is-ok">Cited</span><span class="chip is-ok">Recommended</span></div>
+            <div class="a-src mono"><span>[1] yourbrand.com/pricing</span><span>[2] review-site.example</span></div>
+          </div>
+        </figure>
+      </div>
+      <div class="facts">
+        <div class="fact reveal"><strong>1</strong><span>answer replaces the page of ten links</span></div>
+        <div class="fact reveal" style="--d:80ms"><strong>3</strong><span>signals decide if you’re in it: mention, citation, recommendation</span></div>
+        <div class="fact reveal" style="--d:160ms"><strong>0</strong><span>clicks needed for a buyer to form an opinion of you</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 THE SIGNALS ============ -->
+  <section class="section signals hairline-top" aria-labelledby="signals-title">
+    <div class="dot-grid is-light" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="section-head is-center">
+        <p class="kicker reveal">Chapter 02 — The signals</p>
+        <h2 id="signals-title" class="h-section reveal" style="--d:60ms">Make AI <span class="grad">recommend you.</span></h2>
+        <p class="lede reveal" style="--d:120ms">AI visibility isn’t one number. It’s four signals, and each one needs different work. Measure them separately or you’ll fix the wrong thing.</p>
+      </div>
+      <div class="signal-grid">
+        {signals.map((s, i) => (
+          <article class="card signal-card reveal" style={`--d:${i * 90}ms`}>
+            <div class="s-top"><span class="mono s-n">{s.n}</span><span class="chip is-blue">{s.k} <Icon name="check" size={11} /></span></div>
+            <h3 class="h-card">{s.t}</h3>
+            <p>{s.d}</p>
+            <div class:list={['s-visual', `v-${s.k.toLowerCase()}`]} aria-hidden="true">
+              {s.k === 'Mentioned' && <p class="sv-text">…the leading options are <b>Your Brand</b>, Northwind and Contoso…</p>}
+              {s.k === 'Cited' && <p class="sv-src"><span class="mono">[1]</span> yourbrand.com/guide <span class="ok">✓</span></p>}
+              {s.k === 'Recommended' && <ol class="sv-list"><li><b>Your Brand</b> ★</li><li>Competitor A</li><li>Competitor B</li></ol>}
+              {s.k === 'Accurate' && <ul class="sv-facts"><li><span class="ok">✓</span> Offer</li><li><span class="ok">✓</span> Pricing</li><li><span class="ok">✓</span> Locations</li></ul>}
+            </div>
+          </article>
+        ))}
+      </div>
+      <p class="center-link reveal"><a class="text-link" href="/blog/mentions-citations-recommendations/">Mentions, citations and recommendations explained <Icon name="arrow" size={15} /></a></p>
+    </div>
+  </section>
+
+  <!-- ============ 03 MEASURE (dark) ============ -->
+  <section class="section night measure" aria-labelledby="measure-title">
+    <div class="dot-grid" aria-hidden="true"></div>
+    <div class="measure-glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="measure-head">
+        <div class="section-head">
+          <p class="kicker reveal">Chapter 03 — The readout</p>
+          <h2 id="measure-title" class="h-section reveal" style="--d:60ms">Measure the signal, <span class="grad">not the noise.</span></h2>
+          <p class="lede reveal" style="--d:120ms">One screenshot of one answer proves nothing. AI visibility is a pattern across many questions, engines and dates — so that’s how it should be tracked.</p>
+        </div>
+        <a class="btn btn-ghost-dark reveal" href="/blog/how-to-measure-ai-visibility/">How to measure AI visibility <Icon name="arrow" size={15} /></a>
+      </div>
+      <SignalDashboard />
+      <p class="dash-note mono">Illustrative dashboard with sample data. A real Arrow audit uses your buyer questions, dated answer checks and the AI tools you agree on.</p>
+    </div>
+  </section>
+
+  <!-- ============ 04 METHOD ============ -->
+  <section class="section method" id="method" aria-labelledby="method-title">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker reveal">Chapter 04 — The method</p>
+        <h2 id="method-title" class="h-section reveal" style="--d:60ms">From noise <span class="grad">to signal.</span></h2>
+        <p class="lede reveal" style="--d:120ms">The Arrow way: start with evidence, fix what blocks the signal, strengthen the source, then measure on a fixed rhythm. No guesswork, no guaranteed-ranking promises.</p>
+      </div>
+      <Oscilloscope />
+      <ol class="steps">
+        {steps.map((s, i) => (
+          <li class="step reveal" style={`--d:${i * 90}ms`}>
+            <span class="mono step-k"><span>{s.n}</span> {s.k}</span>
+            <h3 class="h-card">{s.t}</h3>
+            <p>{s.d}</p>
+            <a class="text-link" href={s.href}>{s.link} <Icon name="arrow" size={14} /></a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ 05 FILM (dark) ============ -->
+  <section class="section night-2 film-section" id="film" aria-labelledby="film-title">
+    <div class="dot-grid" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="section-head is-center">
+        <p class="kicker reveal">The Arrow story</p>
+        <h2 id="film-title" class="h-section reveal" style="--d:60ms">Arrow AI in <span class="grad">36 seconds.</span></h2>
+        <p class="lede reveal" style="--d:120ms">From “SEO is dead” to “Make AI recommend you” — the shift Arrow was built for, told in one short film.</p>
+      </div>
+      <FilmSection />
+    </div>
+  </section>
+
+  <!-- ============ 06 ECOSYSTEM ============ -->
+  <section class="section ecosystem" aria-labelledby="eco-heading">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="kicker reveal">The Arrow ecosystem</p>
+        <h2 id="eco-heading" class="h-section reveal" style="--d:60ms">One signal. <span class="grad">Four frequencies.</span></h2>
+        <p class="lede reveal" style="--d:120ms">Arrow Signal is the AI visibility relay of Arrow AI. Learn here, go deeper in the guides, see it in the demo — and let the Arrow team build it for you.</p>
+      </div>
+      <Ecosystem />
+    </div>
+  </section>
+
+  <!-- ============ 07 JOURNAL ============ -->
+  <section class="section journal hairline-top" aria-labelledby="journal-title">
+    <div class="wrap">
+      <div class="journal-head">
+        <div class="section-head">
+          <p class="kicker reveal">The Signal Journal</p>
+          <h2 id="journal-title" class="h-section reveal" style="--d:60ms">Fifteen guides to <span class="grad">AI visibility.</span></h2>
+        </div>
+        <a class="btn btn-outline reveal" href="/blog/">Explore all 15 guides <Icon name="arrow" size={15} /></a>
+      </div>
+      <div class="journal-grid">
+        {featured.map((a, i) => <div class="reveal" style={`--d:${(i % 3) * 90}ms`}><ArticleCard article={a} uid="-home" /></div>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 08 FAQ ============ -->
+  <section class="section faq hairline-top" id="faq" aria-labelledby="faq-title">
+    <div class="wrap faq-layout">
+      <div class="section-head">
+        <p class="kicker reveal">FAQ</p>
+        <h2 id="faq-title" class="h-section reveal" style="--d:60ms">AI visibility, <span class="grad">answered.</span></h2>
+        <p class="lede reveal" style="--d:120ms">Straight answers. More in <a class="text-link" href={ANSWERS.url}>Arrow Answers</a>, the library of 105 practical GEO guides.</p>
+      </div>
+      <div class="faq-list">
+        {faqs.map((f, i) => (
+          <details class="faq-item reveal" style={`--d:${i * 60}ms`} open={i === 0}>
+            <summary><h3>{f.q}</h3><span class="plus" aria-hidden="true"></span></summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FINAL CTA ============ -->
+  <section class="section night final" aria-labelledby="final-title">
+    <SignalField lines={16} mode="calm" />
+    <div class="final-rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="wrap final-inner">
+      <p class="kicker reveal">Your next signal</p>
+      <h2 id="final-title" class="display reveal" style="--d:60ms">Your brand is already in the conversation. <span class="grad">Hear what AI says.</span></h2>
+      <p class="lede reveal" style="--d:120ms">Start with the free Arrow AI visibility audit. Get a clear picture of how AI engines describe you — and a plan to become the answer.</p>
+      <div class="btn-row center reveal" style="--d:180ms">
+        <a class="btn btn-heat" href={ARROW.freeAudit}>Run the free audit <Icon name="arrow" size={16} /></a>
+        <a class="btn btn-ghost-dark" href={ARROW.call}>Book 15 minutes with Noah</a>
+      </div>
+      <div class="ask-ai center reveal" style="--d:240ms">
+        <span class="label">Ask AI about Arrow Signal</span>
+        {ask.map((l) => <a href={l.url} target="_blank" rel="noopener">{l.name} <Icon name="arrow" size={12} /></a>)}
+      </div>
+      <p class="final-links mono reveal" style="--d:300ms">
+        <a href={ARROW.url}>arrow-ai.us</a><span>·</span><a href={ANSWERS.url}>answers.arrow-ai.us</a><span>·</span><a href={DEMO.url}>arrow-ai.tech</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ---------- hero ---------- */
+  .hero { position: relative; overflow: hidden; padding: clamp(72px, 11vw, 132px) 0 0; isolation: isolate; }
+  .hero-glow {
+    position: absolute; left: 50%; top: 38%; width: min(1100px, 140vw); height: 760px; transform: translate(-50%, -50%);
+    background: radial-gradient(closest-side, rgba(37, 99, 235, 0.42), rgba(101, 92, 255, 0.16) 55%, transparent 75%);
+    filter: blur(20px); pointer-events: none; z-index: -1;
+  }
+  .streaks i {
+    position: absolute; width: 1px; height: 260px; background: linear-gradient(transparent, rgba(91, 140, 255, 0.7), transparent);
+    transform: rotate(-28deg); animation: streak 7s linear infinite; opacity: 0;
+  }
+  .streaks i:nth-child(1) { left: 12%; top: -10%; }
+  .streaks i:nth-child(2) { left: 78%; top: 5%; animation-delay: 2.4s; }
+  .streaks i:nth-child(3) { left: 55%; top: -20%; animation-delay: 4.6s; }
+  @keyframes streak { 0% { opacity: 0; translate: 0 -40px; } 20% { opacity: 1; } 60% { opacity: 0; translate: 120px 260px; } 100% { opacity: 0; } }
+  .hero-inner { position: relative; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 6px; border-radius: 999px; text-decoration: none;
+    border: 1px solid var(--n16); background: rgba(255, 255, 255, 0.04); font-size: 0.88rem; color: var(--night-text);
+    backdrop-filter: blur(8px); transition: border-color 0.2s, background 0.2s;
+  }
+  .hero-pill:hover { border-color: rgba(255, 100, 47, 0.6); background: rgba(255, 100, 47, 0.08); }
+  .hero-pill .tag { background: var(--heat); color: #fff; padding: 3px 9px; border-radius: 999px; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .hero h1 { margin-top: 26px; max-width: 980px; }
+  .h1-kicker { display: block; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--blue-ice); margin-bottom: 18px; }
+  .hero .lede { margin: 24px auto 0; max-width: 680px; }
+  .hero .lede strong { color: var(--night-text); font-weight: 600; }
+  .hero-ctas { justify-content: center; margin-top: 34px; }
+  .hero-note { margin-top: 18px; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--night-faint); }
+  .console-stage { position: relative; margin-top: clamp(48px, 7vw, 80px); perspective: 1600px; }
+  .console-wrap {
+    max-width: 1040px; margin: 0 auto; transform-origin: 50% 0;
+    transform: rotateX(var(--rx, 14deg)) scale(var(--sc, 0.94)); transition: transform 0.1s linear;
+  }
+  .engines-strip { position: relative; display: flex; align-items: center; gap: 24px; padding: 36px 0 44px; margin-top: 40px; border-top: 1px solid var(--n10); }
+  .strip-label { flex-shrink: 0; padding-left: var(--pad); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--night-faint); }
+  .marquee { overflow: hidden; flex: 1; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .marquee-track { list-style: none; display: flex; gap: 48px; width: max-content; animation: marquee 32s linear infinite; }
+  .marquee-track li { display: inline-flex; align-items: center; gap: 10px; font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; color: var(--night-muted); white-space: nowrap; }
+  .e-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue-light); box-shadow: 0 0 10px var(--blue-glow); }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (max-width: 640px) { .strip-label { display: none; } }
+
+  /* ---------- shift ---------- */
+  .strike { position: relative; color: var(--faint); }
+  .strike::after {
+    content: ''; position: absolute; left: -2%; right: -2%; top: 54%; height: 0.09em; border-radius: 99px;
+    background: var(--blue); transform: scaleX(0) rotate(-2deg); transform-origin: 0 50%; transition: transform 0.9s var(--ease) 0.4s;
+    box-shadow: 0 0 14px rgba(37, 99, 235, 0.5);
+  }
+  .strike.is-struck::after { transform: scaleX(1) rotate(-2deg); }
+  .shift-visual { display: grid; grid-template-columns: 1fr auto 1.15fr; gap: 20px; align-items: center; }
+  .v-label { display: block; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-bottom: 16px; }
+  .v-label.is-blue { color: var(--blue); }
+  .links { list-style: none; display: grid; gap: 12px; }
+  .links li { display: grid; gap: 5px; opacity: 0.55; }
+  .links li.you { opacity: 1; padding: 8px 10px; margin: 0 -10px; border-radius: 8px; background: var(--blue-soft); }
+  .l-url { font-size: 0.72rem; color: var(--muted); font-family: var(--mono); }
+  .l-title { height: 9px; width: calc(70% - var(--i) * 3%); border-radius: 4px; background: #1a0dab; opacity: 0.4; }
+  .l-desc { height: 6px; width: 88%; border-radius: 4px; background: var(--a12); }
+  .you .l-title { background: var(--blue); opacity: 0.9; }
+  .v-note { margin-top: 16px; font-size: 0.86rem; color: var(--muted); }
+  .shift-arrow svg { width: 96px; height: 40px; }
+  .shift-arrow path { fill: none; stroke: var(--blue); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 6 6; animation: dash 1.2s linear infinite; }
+  .shift-arrow .head { stroke-dasharray: none; animation: none; }
+  @keyframes dash { to { stroke-dashoffset: -12; } }
+  .now { border-color: rgba(37, 99, 235, 0.3); box-shadow: 0 30px 80px -40px rgba(37, 99, 235, 0.55); }
+  .q { display: inline-block; padding: 10px 14px; border-radius: 14px 14px 4px 14px; background: var(--ink); color: #fff; font-size: 0.92rem; margin-left: auto; float: right; margin-bottom: 14px; }
+  .a { clear: both; padding: 16px 18px; border-radius: 14px; background: var(--bg); border: 1px solid var(--a8); }
+  .a p { font-size: 0.98rem; line-height: 1.55; }
+  .a mark { background: var(--heat); color: #fff; padding: 0 5px; border-radius: 4px; }
+  .a sup { color: var(--blue); font-family: var(--mono); font-size: 0.7em; }
+  .a-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .a-src { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 12px; font-size: 0.7rem; color: var(--faint); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: clamp(40px, 6vw, 64px); background: var(--a8); border: 1px solid var(--a8); border-radius: var(--r-lg); overflow: hidden; }
+  .fact { background: var(--bg); padding: 26px 26px 28px; display: grid; gap: 6px; }
+  .fact strong { font-size: clamp(2.4rem, 4vw, 3.2rem); font-weight: 600; letter-spacing: -0.05em; line-height: 1; background: var(--grad-blue); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .fact span { color: var(--muted); }
+  @media (max-width: 860px) {
+    .shift-visual { grid-template-columns: 1fr; }
+    .shift-arrow { justify-self: center; transform: rotate(90deg); }
+    .facts { grid-template-columns: 1fr; }
+  }
+
+  /* ---------- signals ---------- */
+  .signals { overflow: hidden; }
+  .signal-grid { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .signal-card { display: flex; flex-direction: column; gap: 10px; }
+  .signal-card:hover { transform: translateY(-4px); box-shadow: 0 22px 50px -30px rgba(37, 99, 235, 0.5); border-color: rgba(37, 99, 235, 0.3); }
+  .s-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .s-n { font-size: 0.72rem; color: var(--faint); letter-spacing: 0.1em; }
+  .signal-card p { color: var(--muted); font-size: 0.95rem; }
+  .s-visual { margin-top: auto; padding: 14px; border-radius: 12px; background: var(--bg); border: 1px dashed var(--a12); font-size: 0.86rem; min-height: 92px; display: flex; align-items: center; }
+  .s-visual p { color: var(--ink-soft); }
+  .sv-text b, .sv-list b { background: var(--heat); color: #fff; padding: 0 4px; border-radius: 4px; font-weight: 600; }
+  .sv-src { font-family: var(--mono); font-size: 0.78rem; }
+  .ok { color: var(--ok); font-weight: 700; }
+  .sv-list { padding-left: 18px; display: grid; gap: 3px; color: var(--muted); }
+  .sv-facts { list-style: none; display: grid; gap: 3px; }
+  .center-link { text-align: center; margin-top: 34px; }
+  @media (max-width: 1000px) { .signal-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .signal-grid { grid-template-columns: 1fr; } }
+
+  /* ---------- measure ---------- */
+  .measure { overflow: hidden; }
+  .measure-glow { position: absolute; right: -10%; top: -10%; width: 700px; height: 700px; background: radial-gradient(closest-side, rgba(37, 99, 235, 0.3), transparent); pointer-events: none; }
+  .measure-head { position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+  .measure-head .section-head { margin-bottom: clamp(32px, 4vw, 52px); }
+  .measure-head .btn { margin-bottom: clamp(32px, 4vw, 52px); }
+  .dash-note { position: relative; margin-top: 18px; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--night-faint); }
+
+  /* ---------- method ---------- */
+  .steps { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; counter-reset: s; }
+  .step { position: relative; padding: 24px 22px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--a8); display: flex; flex-direction: column; gap: 10px; }
+  .step::before { content: ''; position: absolute; left: 22px; right: 22px; top: -1px; height: 2px; background: var(--grad-blue); border-radius: 99px; transform: scaleX(0); transform-origin: 0; transition: transform 0.9s var(--ease) calc(var(--d, 0ms) + 300ms); }
+  .step.is-in::before { transform: scaleX(1); }
+  .step-k { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); display: inline-flex; gap: 8px; }
+  .step-k span { color: var(--faint); }
+  .step p { color: var(--muted); font-size: 0.95rem; flex: 1; }
+  @media (max-width: 1000px) { .steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .steps { grid-template-columns: 1fr; } }
+
+  /* ---------- film / journal / faq ---------- */
+  .film-section { overflow: hidden; }
+  .journal-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+  .journal-head .btn { margin-bottom: clamp(36px, 5vw, 60px); }
+  .journal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 960px) { .journal-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .journal-grid { grid-template-columns: 1fr; } }
+  .faq-layout { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: clamp(28px, 5vw, 72px); align-items: start; }
+  .faq-list { display: grid; gap: 10px; }
+  .faq-item { border: 1px solid var(--a8); border-radius: var(--r-md); background: #fff; transition: border-color 0.2s; }
+  .faq-item[open] { border-color: rgba(37, 99, 235, 0.3); }
+  .faq-item summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 20px; cursor: pointer; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
+  .faq-item p { padding: 0 20px 20px; color: var(--muted); }
+  .plus { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+  .plus::before, .plus::after { content: ''; position: absolute; background: var(--blue); border-radius: 2px; transition: transform 0.25s var(--ease); }
+  .plus::before { left: 0; right: 0; top: 6px; height: 2px; }
+  .plus::after { top: 0; bottom: 0; left: 6px; width: 2px; }
+  .faq-item[open] .plus::after { transform: scaleY(0); }
+  @media (max-width: 860px) { .faq-layout { grid-template-columns: 1fr; } }
+
+  /* ---------- final ---------- */
+  .final { overflow: hidden; text-align: center; padding: clamp(96px, 13vw, 168px) 0; isolation: isolate; }
+  .final-inner { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .final .display { font-size: clamp(2.3rem, 5.4vw, 4.4rem); max-width: 940px; }
+  .final .lede { margin: 22px auto 0; }
+  .btn-row.center, .ask-ai.center { justify-content: center; }
+  .final .btn-row { margin-top: 32px; }
+  .final .ask-ai { margin-top: 28px; }
+  .final-links { margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; font-size: 0.72rem; letter-spacing: 0.08em; color: var(--night-faint); }
+  .final-links a { color: var(--night-muted); text-decoration: none; }
+  .final-links a:hover { color: #fff; }
+  .final-rings { position: absolute; left: 50%; top: 50%; z-index: -1; }
+  .final-rings i {
+    position: absolute; left: 50%; top: 50%; width: 300px; height: 300px; border-radius: 50%; translate: -50% -50%;
+    border: 1px solid rgba(91, 140, 255, 0.35); animation: ring 6s var(--ease) infinite; opacity: 0;
+  }
+  .final-rings i:nth-child(2) { animation-delay: 1.5s; }
+  .final-rings i:nth-child(3) { animation-delay: 3s; }
+  .final-rings i:nth-child(4) { animation-delay: 4.5s; }
+  @keyframes ring { 0% { opacity: 0.8; scale: 0.4; } 100% { opacity: 0; scale: 3.4; } }
+</style>
+
+<script>
+  import { reducedMotion } from '../lib/reveal';
+
+  // Console tilts back to flat as it scrolls into view.
+  const stage = document.querySelector<HTMLElement>('[data-tilt]');
+  const wrap = stage?.querySelector<HTMLElement>('.console-wrap');
+  if (stage && wrap) {
+    if (reducedMotion()) {
+      wrap.style.setProperty('--rx', '0deg');
+      wrap.style.setProperty('--sc', '1');
+    } else {
+      let ticking = false;
+      const update = () => {
+        const r = stage.getBoundingClientRect();
+        const p = Math.min(1, Math.max(0, (innerHeight - r.top) / (innerHeight * 0.9)));
+        wrap.style.setProperty('--rx', `${(14 * (1 - p)).toFixed(2)}deg`);
+        wrap.style.setProperty('--sc', (0.94 + 0.06 * p).toFixed(3));
+        ticking = false;
+      };
+      addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      update();
+    }
+  }
+
+  // Draw the strike-through line on "SEO ranked you." when it enters view.
+  const strike = document.querySelector<HTMLElement>('[data-strike]');
+  if (strike) {
+    if (reducedMotion() || !('IntersectionObserver' in window)) strike.classList.add('is-struck');
+    else new IntersectionObserver(([e], o) => { if (e.isIntersecting) { strike.classList.add('is-struck'); o.disconnect(); } }, { threshold: 0.8 }).observe(strike);
+  }
+</script>

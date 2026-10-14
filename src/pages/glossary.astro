@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { glossary } from '../lib/glossary';
+import { SITE, ARROW, ORGANIZATION_ID } from '../lib/site';
+
+const title = 'AI Visibility Glossary: GEO & AI Search Terms | Arrow Signal';
+const description = 'Plain-English definitions of AI visibility and GEO terms: AI citations, share of voice, entity clarity, AI Overviews, query fan-out, AI crawlers, llms.txt and more.';
+const sorted = [...glossary].sort((a, b) => a.term.localeCompare(b.term));
+const letters = [...new Set(sorted.map((g) => g.term[0].toUpperCase()))];
+const url = `${SITE.url}/glossary/`;
+const schema = [
+  {
+    '@type': 'DefinedTermSet',
+    '@id': `${url}#terms`,
+    name: 'AI visibility glossary',
+    description,
+    url,
+    inLanguage: 'en',
+    publisher: { '@id': ORGANIZATION_ID },
+    hasDefinedTerm: sorted.map((g) => ({ '@type': 'DefinedTerm', '@id': `${url}#${g.slug}`, name: g.term, description: g.def, inDefinedTermSet: `${url}#terms` })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Glossary', item: url },
+    ],
+  },
+];
+---
+<Base title={title} description={description} image="/og/glossary.jpg" imageAlt="AI visibility glossary by Arrow Signal." schema={schema}>
+  <header class="page-hero night">
+    <div class="dot-grid" aria-hidden="true"></div>
+    <div class="glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Glossary</span></nav>
+      <p class="kicker rise">Glossary</p>
+      <h1 class="rise" style="--d:60ms">The language of <span class="grad">AI visibility.</span></h1>
+      <p class="lede rise" style="--d:120ms">{glossary.length} terms, defined plainly — from AI citations and share of voice to query fan-out and training crawlers. For more, see the <a class="text-link" href={ARROW.glossary}>Arrow AI glossary</a>.</p>
+      <nav class="letters mono rise" style="--d:180ms" aria-label="Jump to letter">
+        {letters.map((l) => <a href={`#letter-${l}`}>{l}</a>)}
+      </nav>
+    </div>
+  </header>
+  <section class="section is-tight">
+    <div class="wrap">
+      <dl class="terms">
+        {sorted.map((g, i) => {
+          const first = i === 0 || sorted[i - 1].term[0].toUpperCase() !== g.term[0].toUpperCase();
+          return (
+            <div class="term reveal" id={g.slug}>
+              {first && <span class="anchor" id={`letter-${g.term[0].toUpperCase()}`} aria-hidden="true"></span>}
+              <dt><a href={`#${g.slug}`}>{g.term}</a></dt>
+              <dd>
+                <p>{g.def}</p>
+                {g.link && <a class="text-link" href={g.link}>Read the guide <Icon name="arrow" size={13} /></a>}
+              </dd>
+            </div>
+          );
+        })}
+      </dl>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .letters { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 28px; }
+  .letters a { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 9px; border: 1px solid var(--n16); color: var(--night-text); text-decoration: none; font-size: 0.85rem; }
+  .letters a:hover { border-color: rgba(122, 162, 255, 0.6); background: rgba(37, 99, 235, 0.16); }
+  .terms { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .term { position: relative; padding: 22px 24px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--a8); scroll-margin-top: calc(var(--header-h) + 24px); }
+  .term:target { border-color: var(--blue); box-shadow: 0 0 0 3px var(--blue-soft); }
+  .anchor { position: absolute; top: calc(-1 * (var(--header-h) + 24px)); }
+  dt a { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+  dd p { margin-top: 8px; color: var(--muted); }
+  dd .text-link { margin-top: 10px; font-size: 0.9rem; }
+  @media (max-width: 760px) { .terms { grid-template-columns: 1fr; } }
+</style>

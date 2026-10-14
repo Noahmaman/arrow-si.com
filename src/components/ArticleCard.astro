@@ -1,7 +1,34 @@
 ---
-const { article, index = 0 } = Astro.props;
+import ArticleCover from './ArticleCover.astro';
+import Icon from './Icon.astro';
+import type { Article } from '../lib/articles';
+interface Props { article: Article; uid?: string; headingLevel?: 'h2' | 'h3' }
+const { article, uid = '', headingLevel = 'h3' } = Astro.props;
+const Heading = headingLevel;
 ---
-<a class="article-card" href={`/blog/${article.slug}/`} data-category={article.category} data-title={article.title.toLowerCase()}>
-  <div class:list={['article-art', `art-${index % 4}`]} aria-hidden="true"><div class="art-rings"></div><span class="art-symbol">{index % 4 === 0 ? (<svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg>) : ['◎', '◎', '✳', '⌘'][index % 4]}</span><span class="art-label">ARROW / SIGNAL {String(index + 1).padStart(2, '0')}</span></div>
-  <div class="article-card-body"><span class="eyebrow">{article.category} <span class="read-time">/ {article.minutes} MIN READ</span></span><h3>{article.title}</h3><p>{article.description}</p><span class="card-link">Read the signal <span aria-hidden="true"><svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></span></span></div>
+<a class="a-card" href={article.url} data-category={article.category} data-title={`${article.title} ${article.description}`.toLowerCase()}>
+  <div class="cover"><ArticleCover slug={article.slug} motif={article.motif} alt={article.coverAlt} label={`SIGNAL ${String(article.order).padStart(2, '0')}`} uid={uid} decorative /></div>
+  <div class="a-body">
+    <span class="a-meta mono">{article.category} · {article.minutes} min read</span>
+    <Heading class="a-title">{article.title}</Heading>
+    <p>{article.description}</p>
+    <span class="a-more">Read the guide <Icon name="arrow" size={15} /></span>
+  </div>
 </a>
+
+<style>
+  .a-card {
+    display: flex; flex-direction: column; height: 100%; text-decoration: none; border-radius: var(--r-lg); overflow: hidden;
+    background: #fff; border: 1px solid var(--a8);
+    transition: transform 0.35s var(--ease), box-shadow 0.35s ease, border-color 0.35s ease;
+  }
+  .a-card:hover { transform: translateY(-4px); border-color: rgba(37, 99, 235, 0.3); box-shadow: 0 24px 60px -28px rgba(37, 99, 235, 0.45); }
+  .a-card .cover { border-radius: 0; }
+  .a-card :global(svg) { transition: transform 0.8s var(--ease); }
+  .a-card:hover :global(svg) { transform: scale(1.04); }
+  .a-body { display: flex; flex-direction: column; gap: 8px; padding: 20px 22px 22px; flex: 1; }
+  .a-meta { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
+  .a-title { font-size: 1.16rem; font-weight: 600; line-height: 1.28; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+  .a-body p { color: var(--muted); font-size: 0.94rem; line-height: 1.55; }
+  .a-more { margin-top: auto; padding-top: 8px; display: inline-flex; align-items: center; gap: 6px; font-weight: 600; font-size: 0.9rem; color: var(--blue); }
+</style>

@@ -1,6 +1,23 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Base from '../layouts/Base.astro';
+import { ARROW } from '../lib/site';
 ---
-<Layout title="Privacy | Arrow Signal" description="Privacy information for the Arrow Signal editorial website and its outbound ecosystem and social sharing links.">
-  <section class="section legal"><span class="eyebrow">ARROW / SITE INFORMATION</span><h1>Privacy.</h1><p>This website is a static editorial publication. Its application code does not use analytics, advertising trackers, account registration or forms that collect personal information.</p><h2>Hosting and requests</h2><p>The hosting provider may process technical request information, such as IP addresses and server logs, to deliver and protect the site. Hosting policies apply to that processing. If the site is deployed on Vercel, consult <a href="https://vercel.com/legal/privacy-policy">Vercel’s privacy policy</a>.</p><h2>External destinations</h2><p>Links to Arrow AI, Arrow Answers, Arrow AI Tech, source documentation and social sharing destinations take you to other websites. Their own privacy policies apply. Social buttons open sharing URLs; this site does not embed social tracking widgets.</p><h2>Future changes</h2><p>If analytics or contact forms are introduced, this notice must be updated to describe those tools and the applicable choices before they are enabled.</p><p>For the main Arrow destination and its contact information, visit <a href="https://arrow-ai.us/">Arrow AI</a>.</p></section>
-</Layout>
+<Base title="Privacy | Arrow Signal" description="Privacy notice for arrow-si.com, the Arrow Signal AI visibility site by Arrow AI.">
+  <header class="page-hero night">
+    <div class="dot-grid" aria-hidden="true"></div>
+    <div class="wrap">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Privacy</span></nav>
+      <h1>Privacy</h1>
+      <p class="lede">Short version: this site doesn’t track you.</p>
+    </div>
+  </header>
+  <section class="section is-tight">
+    <div class="wrap prose" style="max-width:760px">
+      <p>Arrow Signal (arrow-si.com) is a static editorial website published by Arrow AI. It does not use cookies, advertising pixels or third-party analytics scripts, and it has no forms that collect personal data.</p>
+      <p>Our hosting provider processes standard technical request data (such as IP address and user agent) to deliver pages securely and protect the service.</p>
+      <p>Links to Arrow AI properties — including the free audit and booking pages — and to social networks take you to sites with their own privacy policies. For Arrow AI, see the <a href="https://arrow-ai.us/privacy/">Arrow AI privacy policy</a>.</p>
+      <p>Questions: <a href={ARROW.contact}>contact Arrow AI</a>.</p>
+      <p><em>Last updated: October 13, 2026.</em></p>
+    </div>
+  </section>
+</Base>

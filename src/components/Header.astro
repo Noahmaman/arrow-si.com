@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import { ARROW } from '../lib/site';
+interface Props { progress?: boolean }
+const { progress = false } = Astro.props;
+const path = Astro.url.pathname;
+const links = [
+  { href: '/#visibility', label: 'AI visibility' },
+  { href: '/#method', label: 'Method' },
+  { href: '/blog/', label: 'Journal', match: '/blog' },
+  { href: '/glossary/', label: 'Glossary', match: '/glossary' },
+  { href: '/about/', label: 'About', match: '/about' },
+];
+---
+<header class="site-header" data-header>
+  <div class="wrap">
+    <a class="brand" href="/" aria-label="Arrow Signal — home">
+      <img src="/brand/arrow-icon-192.png" alt="" width="28" height="28" />
+      <span>Arrow</span>
+      <span class="sub">SIGNAL</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      {links.map((l) => (
+        <a href={l.href} aria-current={l.match && path.startsWith(l.match) ? 'page' : undefined}>{l.label}</a>
+      ))}
+      <a class="ext" href={ARROW.url}>Arrow AI</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn btn-ghost-dark btn-sm hide-sm" href={ARROW.call}>Book a call</a>
+      <a class="btn btn-heat btn-sm" href={ARROW.freeAudit}>Free audit <Icon name="arrow" size={15} /></a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu"><span></span></button>
+    </div>
+  </div>
+  {progress && <div class="progress" data-progress aria-hidden="true"></div>}
+</header>
+<nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
+  {links.map((l) => <a href={l.href}>{l.label}</a>)}
+  <a href={ARROW.url}>Arrow AI ↗</a>
+  <a class="btn btn-heat" href={ARROW.freeAudit}>Get your free AI visibility audit</a>
+  <a class="btn btn-ghost-dark" href={ARROW.call}>Book 15 minutes with Noah</a>
+</nav>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.menu-btn');
+  const menu = document.getElementById('mobile-nav');
+  const setOpen = (open: boolean) => {
+    if (!btn || !menu) return;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.hidden = !open;
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+  btn?.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') { setOpen(false); btn.focus(); }
+  });
+  window.matchMedia('(min-width: 941px)').addEventListener('change', (e) => e.matches && setOpen(false));
+
+  const bar = document.querySelector<HTMLElement>('[data-progress]');
+  if (bar) {
+    const update = () => {
+      const max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.setProperty('--p', String(max > 0 ? Math.min(1, scrollY / max) : 0));
+    };
+    addEventListener('scroll', update, { passive: true });
+    update();
+  }
+</script>

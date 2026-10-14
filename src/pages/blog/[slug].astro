@@ -1,30 +1,302 @@
 ---
-import Layout from '../../layouts/Layout.astro';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import ArticleCover from '../../components/ArticleCover.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import { articles, publicationDate } from '../../data/articles';
-export function getStaticPaths() { return articles.map(article => ({ params: { slug: article.slug }, props: { article } })); }
-const { article } = Astro.props;
-const current = articles.findIndex(entry => entry.slug === article.slug);
-const related = [articles[(current + 1) % articles.length], articles[(current + 2) % articles.length], articles[(current + 3) % articles.length]];
-const url = `https://arrow-si.com/blog/${article.slug}/`;
-const sectionId = (index: number) => `section-${index + 1}`;
-const schema = { '@type': 'Article', headline: article.title, description: article.description, image: 'https://arrow-si.com/og.png', datePublished: publicationDate, dateModified: publicationDate, mainEntityOfPage: url, author: { '@type': 'Organization', name: 'Arrow Signal Editorial', url: 'https://arrow-si.com/blog/' }, publisher: { '@id': 'https://arrow-si.com/#organization' }, articleSection: article.category, inLanguage: 'en' };
-const breadcrumbs = { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Home', item: 'https://arrow-si.com/' }, { '@type': 'ListItem', position: 2, name: 'Journal', item: 'https://arrow-si.com/blog/' }, { '@type': 'ListItem', position: 3, name: article.title, item: url }] };
+import { articles, related, formatDate, type Article } from '../../lib/articles';
+import { SITE, ARROW, ORGANIZATION_ID, askAiLinks, absolute } from '../../lib/site';
+
+export function getStaticPaths() {
+  return articles.map((article) => ({ params: { slug: article.slug }, props: { article } }));
+}
+
+const { article } = Astro.props as { article: Article };
+const { Content } = article;
+const url = absolute(article.url);
+const ogImage = `/og/${article.slug}.jpg`;
+const next = related(article, 3);
+const toc = article.headings.filter((h) => h.depth === 2);
+const ask = askAiLinks(url, `“${article.title}”`);
+const share = {
+  linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
+  x: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(article.title)}`,
+};
+
+const schema = [
+  {
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: article.title,
+    alternativeHeadline: article.seoTitle,
+    description: article.description,
+    abstract: article.summary,
+    image: [{ '@type': 'ImageObject', url: absolute(ogImage), width: 1200, height: 630, caption: article.coverAlt }],
+    datePublished: article.published,
+    dateModified: article.updated,
+    inLanguage: 'en',
+    wordCount: article.words,
+    timeRequired: `PT${article.minutes}M`,
+    articleSection: article.category,
+    keywords: article.keywords.join(', '),
+    author: { '@id': ORGANIZATION_ID },
+    publisher: { '@id': ORGANIZATION_ID },
+    isPartOf: { '@type': 'Blog', '@id': `${SITE.url}/blog/#blog`, name: 'The Signal Journal', url: `${SITE.url}/blog/` },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    about: article.keywords.slice(0, 3).map((k) => ({ '@type': 'Thing', name: k })),
+    citation: article.sources.map((s) => ({ '@type': 'CreativeWork', name: s.title, url: s.url })),
+    speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.short-answer p'] },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'The Signal Journal', item: `${SITE.url}/blog/` },
+      { '@type': 'ListItem', position: 3, name: article.title, item: url },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    '@id': `${url}#faq`,
+    mainEntity: article.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
 ---
-<Layout title={`${article.title} | Arrow Signal`} description={article.description} schema={schema}>
-  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs).replace(/</g, '\\u003c')} />
+<Base
+  title={`${article.seoTitle} | Arrow Signal`}
+  description={article.description}
+  image={ogImage}
+  imageAlt={`${article.title} — Arrow Signal journal cover: ${article.coverAlt}`}
+  type="article"
+  published={`${article.published}T09:00:00Z`}
+  modified={`${article.updated}T09:00:00Z`}
+  section={article.category}
+  tags={article.keywords}
+  schema={schema}
+  progress
+>
   <article>
-    <header class="section article-header"><nav aria-label="Breadcrumb" class="breadcrumbs"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Journal</a><span aria-hidden="true">/</span><span>{article.category}</span></nav><span class="eyebrow">{article.category} / THE SIGNAL JOURNAL</span><h1>{article.title}</h1><p class="article-deck">{article.description}</p><div class="article-meta"><span class="byline-mark" aria-hidden="true"><svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></span><span>Arrow Signal Editorial</span><span>·</span><time datetime={publicationDate}>October 13, 2026</time><span>·</span><span>{article.minutes} min read</span></div></header>
-    <div class="section article-layout"><aside class="article-toc"><span class="eyebrow">IN THIS SIGNAL</span><a href="#takeaway">The direct answer</a>{article.sections.map((section, index) => <a href={`#${sectionId(index)}`}>{section.heading}</a>)}<a href="#checklist">Your next steps</a><a href="#sources">Source notes</a><a class="back-link" href="/blog/">← All signals</a></aside><div class="article-content"><section id="takeaway" class="takeaway"><span class="eyebrow">THE DIRECT ANSWER</span><p>{article.takeaway}</p></section>{article.sections.map((section, index) => <section id={sectionId(index)}><h2>{section.heading}</h2>{section.paragraphs.map(paragraph => <p>{paragraph}</p>)}</section>)}<section id="checklist" class="checklist"><span class="eyebrow">TURN INSIGHT INTO ACTION</span><h2>Your next steps</h2><ul>{article.checklist.map(item => <li>{item}</li>)}</ul></section><section id="sources" class="source-notes"><h2>Source notes & further reading</h2><p>These primary references support the technical and editorial context. The practical recommendations above are Arrow Signal’s editorial interpretation, not platform guarantees.</p><ul>{article.sources.map(source => <li><a href={source.url}>{source.title} <span aria-hidden="true"><svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></span></a></li>)}</ul></section><div class="article-share"><span class="eyebrow">SHARE THIS SIGNAL</span><a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`} target="_blank" rel="noopener noreferrer">LinkedIn <svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></a><a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(article.title)}`} target="_blank" rel="noopener noreferrer">X <svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></a><button id="copy-link" data-url={url}>Copy link</button><span id="copy-status" role="status"></span></div></div></div>
+    <header class="page-hero night article-hero">
+      <div class="dot-grid" aria-hidden="true"></div>
+      <div class="glow" aria-hidden="true"></div>
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <nav class="crumbs" aria-label="Breadcrumb">
+            <a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Journal</a><span aria-hidden="true">/</span><span aria-current="page">{article.category}</span>
+          </nav>
+          <p class="kicker">{article.category} · Signal {String(article.order).padStart(2, '0')}</p>
+          <h1 class="rise">{article.title}</h1>
+          <p class="lede rise" style="--d:80ms">{article.description}</p>
+          <div class="meta mono rise" style="--d:140ms">
+            <span class="by"><img src="/brand/arrow-icon-192.png" alt="" width="22" height="22" />By <a href={ARROW.about}>Arrow AI</a></span>
+            <span>Published <time datetime={article.published}>{formatDate(article.published)}</time></span>
+            {article.updated !== article.published && <span>Updated <time datetime={article.updated}>{formatDate(article.updated)}</time></span>}
+            <span>{article.minutes} min read</span>
+          </div>
+        </div>
+        <figure class="hero-cover rise" style="--d:120ms">
+          <div class="cover"><ArticleCover slug={article.slug} motif={article.motif} alt={article.coverAlt} label={`ARROW SIGNAL / ${String(article.order).padStart(2, '0')}`} /></div>
+          <figcaption class="mono">{article.coverAlt}</figcaption>
+        </figure>
+      </div>
+    </header>
+
+    <div class="wrap article-layout">
+      <aside class="toc" aria-label="On this page">
+        <div class="toc-inner">
+          <p class="mono toc-title">On this page</p>
+          <ol>
+            <li><a href="#short-answer">Short answer</a></li>
+            {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#sources">Sources</a></li>
+          </ol>
+          <a class="btn btn-heat btn-sm toc-cta" href={ARROW.freeAudit}>Free AI visibility audit <Icon name="arrow" size={13} /></a>
+        </div>
+      </aside>
+
+      <div class="article-main">
+        <section class="short-answer" id="short-answer" aria-labelledby="sa-title">
+          <h2 id="sa-title" class="mono sa-label"><Icon name="spark" size={11} /> Short answer</h2>
+          <p>{article.summary}</p>
+        </section>
+
+        <section class="takeaways" aria-labelledby="kt-title">
+          <h2 id="kt-title" class="mono">Key takeaways</h2>
+          <ul>
+            {article.takeaways.map((t) => <li><span class="tick" aria-hidden="true"><Icon name="check" size={12} /></span>{t}</li>)}
+          </ul>
+        </section>
+
+        <div class="prose">
+          <Content />
+        </div>
+
+        <section class="faq-block" id="faq" aria-labelledby="faq-title">
+          <h2 id="faq-title">Frequently asked questions</h2>
+          {article.faq.map((f) => (
+            <div class="qa">
+              <h3>{f.q}</h3>
+              <p>{f.a}</p>
+            </div>
+          ))}
+        </section>
+
+        <section class="eco-block" aria-labelledby="eco-title">
+          <p class="kicker">Go deeper in the Arrow ecosystem</p>
+          <h2 id="eco-title" class="sr-only">Related resources from Arrow AI</h2>
+          <ul>
+            {article.ecosystem.map((e) => (
+              <li>
+                <a href={e.url}>
+                  <span class="mono eco-note">{e.note}</span>
+                  <span class="eco-title">{e.title}</span>
+                  <Icon name="arrow" size={16} />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="sources" id="sources" aria-labelledby="src-title">
+          <h2 id="src-title">Sources &amp; further reading</h2>
+          <ol>
+            {article.sources.map((s) => <li><a href={s.url} rel="noopener">{s.title}</a></li>)}
+          </ol>
+          <p class="note">Recommendations in this guide are Arrow Signal’s editorial view based on the sources above and Arrow AI’s GEO practice. AI engines control their own answers; no tactic guarantees a mention, citation or recommendation.</p>
+        </section>
+
+        <div class="share-row">
+          <div class="ask-ai">
+            <span class="label">Ask AI about this guide</span>
+            {ask.map((l) => <a href={l.url} target="_blank" rel="noopener">{l.name} <Icon name="arrow" size={12} /></a>)}
+          </div>
+          <div class="ask-ai">
+            <span class="label">Share</span>
+            <a href={share.linkedin} target="_blank" rel="noopener" aria-label="Share this guide on LinkedIn"><Icon name="linkedin" size={14} /> LinkedIn</a>
+            <a href={share.x} target="_blank" rel="noopener" aria-label="Share this guide on X"><Icon name="x" size={13} /> X</a>
+            <button class="share-btn" type="button" data-copy={url}><Icon name="link" size={14} /> <span>Copy link</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
   </article>
-  <section class="article-cta section"><div><span class="eyebrow">CONTINUE YOUR DIRECTION</span><h2>Follow the signal<br />into the <span class="serif">Arrow ecosystem.</span></h2></div><div class="article-cta-links"><a href="https://arrow-ai.us/">Explore Arrow AI <svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></a><a href="https://answers.arrow-ai.us/">Continue to Arrow Answers <svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></a><a href="https://arrow-ai.tech/">Explore Arrow AI Tech <svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></a></div></section>
-  <section class="section related-section"><div class="journal-heading"><h2>Your next <span class="serif blue">signal.</span></h2><a href="/blog/" class="text-link">All 15 articles <svg class="icon-arrow" aria-hidden="true" viewBox="0 0 24 24" fill="none"><path d="M5 19 19 5M5 5h14v14" stroke="currentColor" stroke-width="1.6" /></svg></a></div><div class="articles-grid">{related.map((entry, index) => <ArticleCard article={entry} index={index} />)}</div></section>
-  <script>
-    document.querySelector<HTMLButtonElement>('#copy-link')?.addEventListener('click', async event => {
-      const button = event.currentTarget as HTMLButtonElement;
-      const status = document.querySelector('#copy-status');
-      try { await navigator.clipboard.writeText(button.dataset.url || location.href); if (status) status.textContent = 'Link copied.'; }
-      catch { if (status) status.textContent = 'Copy the page address from your browser.'; }
+
+  <section class="night article-cta section is-tight" aria-labelledby="cta-title">
+    <div class="dot-grid" aria-hidden="true"></div>
+    <div class="wrap cta-inner">
+      <div>
+        <p class="kicker">Your next signal</p>
+        <h2 id="cta-title" class="h-section">See how AI engines talk about <span class="grad">your brand.</span></h2>
+      </div>
+      <div class="btn-row">
+        <a class="btn btn-heat" href={ARROW.freeAudit}>Run the free audit <Icon name="arrow" size={16} /></a>
+        <a class="btn btn-ghost-dark" href="https://arrow-ai.tech/">Explore the GEO demo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section is-tight" aria-labelledby="next-title">
+    <div class="wrap">
+      <div class="next-head">
+        <h2 id="next-title" class="h-section">Keep reading the <span class="grad">signal.</span></h2>
+        <a class="text-link" href="/blog/">All 15 guides <Icon name="arrow" size={14} /></a>
+      </div>
+      <div class="next-grid">
+        {next.map((a) => <ArticleCard article={a} uid="-rel" />)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .article-hero { padding-bottom: clamp(40px, 6vw, 64px); }
+  .hero-grid { position: relative; display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+  .hero-copy h1 { font-size: clamp(2.1rem, 4.4vw, 3.4rem); }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 26px; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--night-muted); }
+  .meta .by { display: inline-flex; align-items: center; gap: 8px; color: var(--night-text); }
+  .meta .by img { border-radius: 6px; }
+  .meta a { color: inherit; }
+  .hero-cover .cover { border: 1px solid var(--n16); box-shadow: 0 40px 100px -40px rgba(37, 99, 235, 0.6); }
+  .hero-cover figcaption { margin-top: 10px; font-size: 0.66rem; letter-spacing: 0.04em; color: var(--night-faint); line-height: 1.5; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+
+  .article-layout { display: grid; grid-template-columns: 240px minmax(0, 720px); gap: clamp(32px, 5vw, 72px); justify-content: center; padding-top: clamp(40px, 6vw, 72px); padding-bottom: clamp(56px, 8vw, 96px); }
+  .toc { position: relative; }
+  .toc-inner { position: sticky; top: calc(var(--header-h) + 28px); }
+  .toc-title { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-bottom: 12px; }
+  .toc ol { list-style: none; display: grid; gap: 2px; border-left: 1px solid var(--a8); }
+  .toc ol a { display: block; padding: 6px 0 6px 14px; margin-left: -1px; border-left: 2px solid transparent; font-size: 0.88rem; line-height: 1.4; color: var(--muted); text-decoration: none; transition: color 0.2s, border-color 0.2s; }
+  .toc ol a:hover { color: var(--ink); }
+  .toc ol a.is-active { color: var(--blue); border-left-color: var(--blue); font-weight: 600; }
+  .toc-cta { margin-top: 22px; }
+  @media (max-width: 1000px) { .article-layout { grid-template-columns: minmax(0, 1fr); } .toc { display: none; } }
+
+  .short-answer {
+    position: relative; padding: 22px 24px; border-radius: var(--r-lg); color: var(--night-text);
+    background: linear-gradient(135deg, #0b1330, #070b1a); border: 1px solid rgba(91, 140, 255, 0.3);
+    box-shadow: 0 24px 60px -30px rgba(37, 99, 235, 0.6);
+  }
+  .sa-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-ice); font-weight: 500; }
+  .short-answer p { margin-top: 10px; font-size: 1.08rem; line-height: 1.65; }
+  .takeaways { margin-top: 18px; padding: 22px 24px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--a8); }
+  .takeaways h2 { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); font-weight: 500; }
+  .takeaways ul { list-style: none; margin-top: 12px; display: grid; gap: 10px; }
+  .takeaways li { display: flex; gap: 12px; color: var(--ink-soft); }
+  .tick { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--blue-soft); color: var(--blue); margin-top: 2px; }
+  .prose { margin-top: 36px; }
+
+  .faq-block { margin-top: 56px; }
+  .faq-block > h2, .sources h2 { font-size: clamp(1.55rem, 2.6vw, 1.95rem); letter-spacing: -0.03em; font-weight: 600; }
+  .qa { margin-top: 14px; padding: 18px 20px; border-radius: var(--r-md); background: #fff; border: 1px solid var(--a8); }
+  .qa h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
+  .qa p { margin-top: 6px; color: var(--muted); }
+
+  .eco-block { margin-top: 48px; padding: 24px; border-radius: var(--r-lg); background: linear-gradient(120deg, rgba(37, 99, 235, 0.08), rgba(101, 92, 255, 0.05)); border: 1px solid rgba(37, 99, 235, 0.2); }
+  .eco-block ul { list-style: none; display: grid; gap: 8px; }
+  .eco-block a { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 12px; padding: 14px 16px; border-radius: var(--r-md); background: #fff; border: 1px solid var(--a8); text-decoration: none; transition: border-color 0.2s, transform 0.25s var(--ease); }
+  .eco-block a:hover { border-color: rgba(37, 99, 235, 0.4); transform: translateX(3px); }
+  .eco-note { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); }
+  .eco-title { grid-column: 1; font-weight: 600; color: var(--ink); }
+  .eco-block a :global(svg) { grid-row: 1 / span 2; grid-column: 2; align-self: center; color: var(--blue); }
+
+  .sources { margin-top: 48px; }
+  .sources ol { margin-top: 14px; padding-left: 1.3em; display: grid; gap: 8px; }
+  .sources a { color: var(--blue); }
+  .sources .note { margin-top: 16px; font-size: 0.88rem; color: var(--muted); }
+  .share-row { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--a8); display: grid; gap: 14px; }
+
+  .cta-inner { position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; flex-wrap: wrap; }
+  .cta-inner .h-section { max-width: 640px; }
+  .next-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
+  .next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 960px) { .next-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 620px) { .next-grid { grid-template-columns: 1fr; } }
+</style>
+
+<script>
+  // Table of contents scroll-spy
+  const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc a[href^="#"]'));
+  const targets = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter(Boolean) as HTMLElement[];
+  if (targets.length && 'IntersectionObserver' in window) {
+    const setActive = (id: string) => links.forEach((a) => a.classList.toggle('is-active', a.hash === `#${id}`));
+    const io = new IntersectionObserver((entries) => {
+      const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible[0]) setActive(visible[0].target.id);
+    }, { rootMargin: '-15% 0px -70% 0px' });
+    targets.forEach((t) => io.observe(t));
+  }
+
+  // Copy link
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const label = btn.querySelector('span');
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy || location.href);
+        if (label) label.textContent = 'Link copied';
+      } catch {
+        if (label) label.textContent = 'Copy from the address bar';
+      }
+      setTimeout(() => { if (label) label.textContent = 'Copy link'; }, 2400);
     });
-  </script>
-</Layout>
+  });
+</script>

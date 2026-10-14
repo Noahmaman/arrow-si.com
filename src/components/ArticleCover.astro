@@ -1,0 +1,68 @@
+---
+// Deterministic, generated cover art for each article — a different "signal"
+// motif per topic, always in Arrow blue on the night background.
+interface Props { slug: string; motif: string; alt: string; label?: string; uid?: string; decorative?: boolean }
+const { slug, motif, alt, label = '', uid = '', decorative = false } = Astro.props;
+
+let seed = 0;
+for (const ch of slug) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+const rand = () => {
+  seed = (seed * 1664525 + 1013904223) >>> 0;
+  return seed / 4294967296;
+};
+const id = `cv-${slug}${uid}`;
+const W = 800, H = 450;
+
+const waves = Array.from({ length: 14 }, (_, i) => {
+  const amp = 8 + rand() * 46 * (1 - Math.abs(i - 7) / 8);
+  const freq = 1.5 + rand() * 2.5;
+  const ph = rand() * 6.28;
+  const y0 = 120 + i * 16;
+  let d = '';
+  for (let x = 0; x <= W; x += 16) {
+    const lock = Math.min(1, x / (W * 0.7));
+    const y = y0 + Math.sin((x / W) * Math.PI * 2 * freq + ph) * amp * lock + (rand() - 0.5) * 22 * (1 - lock);
+    d += `${x ? 'L' : 'M'}${x} ${y.toFixed(1)}`;
+  }
+  return { d, o: 0.15 + (1 - Math.abs(i - 7) / 7) * 0.7 };
+});
+const bars = Array.from({ length: 46 }, (_, i) => {
+  const peak = Math.exp(-Math.pow((i - 23 - (rand() - 0.5) * 6) / 9, 2));
+  return { x: 40 + i * 16, h: 18 + peak * 230 + rand() * 40 };
+});
+const nodes = Array.from({ length: 18 }, () => ({ x: 60 + rand() * 680, y: 60 + rand() * 330, r: 2 + rand() * 4 }));
+const blips = Array.from({ length: 7 }, () => ({ a: rand() * Math.PI * 2, d: 40 + rand() * 150 }));
+const grid = Array.from({ length: 12 * 7 }, (_, i) => ({ x: 90 + (i % 12) * 56, y: 70 + Math.floor(i / 12) * 50, on: rand() }));
+---
+<svg viewBox={`0 0 ${W} ${H}`} role={decorative ? undefined : 'img'} aria-label={decorative ? undefined : alt} aria-hidden={decorative ? 'true' : undefined} preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id={`${id}-l`} x1="0" x2="1"><stop offset="0" stop-color="#2563eb" stop-opacity="0" /><stop offset=".45" stop-color="#5b8cff" /><stop offset="1" stop-color="#655cff" /></linearGradient>
+    <radialGradient id={`${id}-g`} cx=".62" cy=".45" r=".6"><stop offset="0" stop-color="#2563eb" stop-opacity=".55" /><stop offset="1" stop-color="#04060e" stop-opacity="0" /></radialGradient>
+    <pattern id={`${id}-d`} width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="1" fill="#96afff" fill-opacity=".14" /></pattern>
+  </defs>
+  <rect width={W} height={H} fill="#060914" />
+  <rect width={W} height={H} fill={`url(#${id}-d)`} />
+  <rect width={W} height={H} fill={`url(#${id}-g)`} />
+  {(motif === 'wave' || motif === 'scope') && waves.map((w) => <path d={w.d} fill="none" stroke={`url(#${id}-l)`} stroke-width="1.4" stroke-opacity={w.o} />)}
+  {motif === 'scope' && <line x1="0" y1="232" x2={W} y2="232" stroke="#96afff" stroke-opacity=".2" stroke-dasharray="4 8" />}
+  {motif === 'bars' && bars.map((b) => <rect x={b.x} y={380 - b.h} width="8" height={b.h} rx="4" fill={`url(#${id}-l)`} opacity=".85" />)}
+  {motif === 'rings' && (
+    <g>
+      {[50, 100, 150, 200, 250].map((r) => <circle cx="500" cy="225" r={r} fill="none" stroke="#5b8cff" stroke-opacity={0.5 - r / 600} />)}
+      <path d="M500 225 L700 120 A 225 225 0 0 1 720 225 Z" fill="#2563eb" fill-opacity=".22" />
+      {blips.map((b) => <circle cx={500 + Math.cos(b.a) * b.d} cy={225 + Math.sin(b.a) * b.d} r="5" fill="#a9c1ff" />)}
+      <circle cx="500" cy="225" r="7" fill="#fff" />
+    </g>
+  )}
+  {motif === 'nodes' && (
+    <g>
+      {nodes.map((n, i) => nodes.slice(i + 1, i + 3).map((m) => <line x1={n.x} y1={n.y} x2={m.x} y2={m.y} stroke="#5b8cff" stroke-opacity=".35" />))}
+      <line x1="400" y1="225" x2={nodes[0].x} y2={nodes[0].y} stroke="#655cff" stroke-opacity=".6" />
+      <line x1="400" y1="225" x2={nodes[3].x} y2={nodes[3].y} stroke="#655cff" stroke-opacity=".6" />
+      {nodes.map((n) => <circle cx={n.x} cy={n.y} r={n.r} fill="#a9c1ff" />)}
+      <circle cx="400" cy="225" r="16" fill="#2563eb" stroke="#fff" stroke-width="3" />
+    </g>
+  )}
+  {motif === 'grid' && grid.map((g) => <rect x={g.x} y={g.y} width="30" height="30" rx="8" fill={g.on > 0.72 ? '#2563eb' : g.on > 0.5 ? '#5b8cff' : '#96afff'} fill-opacity={g.on > 0.72 ? 0.95 : g.on > 0.5 ? 0.45 : 0.08} />)}
+  {label && <text x="32" y="420" font-family="Geist Mono Variable, ui-monospace, monospace" font-size="14" letter-spacing="2" fill="#a9c1ff" fill-opacity=".8">{label}</text>}
+</svg>
