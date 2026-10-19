@@ -3,23 +3,24 @@ import { ARROW } from '../lib/site';
 const path = Astro.url.pathname;
 const links = [
   { href: '/blog/', label: 'Guides', match: '/blog' },
+  { href: '/#method', label: 'Method' },
   { href: '/glossary/', label: 'Glossary', match: '/glossary' },
   { href: '/about/', label: 'About', match: '/about' },
   { href: ARROW.url, label: 'Arrow AI' },
 ];
 ---
 <header class="site-header">
-  <div class="wrap">
+  <div class="bar">
     <a class="brand" href="/" aria-label="Arrow Signal home">
-      <img src="/brand/arrow-icon-192.png" alt="" width="28" height="28" />
-      Arrow <span>Signal</span>
+      <img src="/brand/arrow-icon-192.png" alt="" width="26" height="26" />
+      Arrow <span class="sub" aria-hidden="true">SIGNAL</span>
     </a>
     <nav class="nav" aria-label="Primary">
       {links.map((l) => <a href={l.href} aria-current={l.match && path.startsWith(l.match) ? 'page' : undefined}>{l.label}</a>)}
     </nav>
     <div class="header-actions">
-      <a class="btn btn-secondary btn-sm hide-sm" href={ARROW.call}>Book a call</a>
-      <a class="btn btn-primary btn-sm" href={ARROW.freeAudit}>Free audit</a>
+      <a class="btn btn-blue btn-sm hide-sm" href={ARROW.freeAudit}>Free audit</a>
+      <a class="btn btn-dark btn-sm hide-sm" href={ARROW.call}>Book a call</a>
       <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
         <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" /></svg>
       </button>
@@ -28,8 +29,8 @@ const links = [
 </header>
 <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
   {links.map((l) => <a href={l.href}>{l.label}</a>)}
-  <a class="btn btn-primary" href={ARROW.freeAudit}>Get a free AI visibility audit</a>
-  <a class="btn btn-secondary" href={ARROW.call}>Book a 15-minute call</a>
+  <a class="btn btn-heat" href={ARROW.freeAudit}>Get a free AI visibility audit</a>
+  <a class="btn btn-ghost" href={ARROW.call}>Book a 15-minute call</a>
 </nav>
 
 <script>

@@ -1,0 +1,100 @@
+---
+// Arrow-style "geo scan" console (light), as on arrow-ai.us. Sample data,
+// labelled as an illustrative example.
+const rows = [
+  { k: '[ ENTITY ]', v: 'structured', tone: 'ok' },
+  { k: '[ CHATGPT ]', v: 'cited ✓', tone: 'ok' },
+  { k: '[ GEMINI ]', v: 'recommended ✓', tone: 'ok' },
+  { k: '[ PERPLEXITY ]', v: 'source linked ✓', tone: 'ok' },
+  { k: '[ AI OVERVIEWS ]', v: 'not cited yet', tone: 'heat' },
+];
+---
+<div class="console" data-console role="img" aria-label="Illustrative Arrow GEO scan of yourbrand.com: entity structured, cited by ChatGPT, recommended by Gemini, source linked in Perplexity, not yet cited in Google AI Overviews, visibility 87 out of 100.">
+  <div class="c-bar">
+    <span class="c-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="c-tabs mono"><span class="on">geo · citation check</span><span>answers</span><span>sources</span></span>
+    <span class="c-note mono">illustrative example</span>
+  </div>
+  <div class="c-term mono">
+    <div class="ln cmd"><span class="t-dim">$</span> <span data-type>arrow geo scan yourbrand.com</span><span class="cursor" aria-hidden="true"></span></div>
+    {rows.map((r, i) => (
+      <div class="ln row" style={`--i:${i}`}><span class="t-key">{r.k}</span><span class="leader" aria-hidden="true"></span><span class:list={['t-val', r.tone]}>{r.v}</span></div>
+    ))}
+    <div class="ln row total" style={`--i:${rows.length}`}><span class="t-key">visibility</span><span class="leader" aria-hidden="true"></span><span class="t-val"><strong data-score>87</strong>/100</span></div>
+  </div>
+</div>
+
+<style>
+  .console {
+    max-width: 760px; margin: 0 auto; text-align: left; border-radius: 20px; overflow: hidden;
+    border: 1px solid transparent;
+    background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box, linear-gradient(160deg, rgba(37, 99, 235, 0.35), var(--a10) 40%, rgba(255, 100, 47, 0.3)) border-box;
+    box-shadow: 0 1px 2px rgba(18, 20, 40, 0.05), 0 24px 60px -28px rgba(18, 20, 40, 0.28);
+  }
+  .c-bar { display: flex; align-items: center; gap: 14px; padding: 11px 16px; border-bottom: 1px solid var(--a8); background: linear-gradient(180deg, #fff, #fbfbfc); }
+  .c-dots { display: inline-flex; gap: 6px; }
+  .c-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--a10); }
+  .c-dots i:first-child { background: var(--heat); }
+  .c-tabs { display: flex; gap: 4px; font-size: 0.72rem; flex: 1; min-width: 0; overflow: hidden; }
+  .c-tabs span { padding: 4px 10px; border-radius: 6px; color: var(--faint); white-space: nowrap; }
+  .c-tabs .on { background: var(--a4); color: var(--ink); }
+  .c-note { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
+  .c-term { padding: 18px 22px 22px; font-size: 0.82rem; line-height: 2; color: var(--ink-soft); background: linear-gradient(180deg, transparent, var(--a2)); min-height: 240px; }
+  .ln { display: flex; align-items: center; gap: 10px; }
+  .t-dim { color: var(--faint); }
+  .t-key { color: var(--geo); white-space: nowrap; }
+  .leader { flex: 1; border-bottom: 1px dotted var(--a24); transform: translateY(-4px); min-width: 20px; }
+  .t-val { white-space: nowrap; }
+  .t-val.ok { color: var(--ok); }
+  .t-val.heat { color: var(--heat-strong); }
+  .total { margin-top: 4px; padding-top: 6px; border-top: 1px dashed var(--a10); }
+  .total .t-key { color: var(--ink); }
+  .total strong { color: var(--ink); font-weight: 600; }
+  .cursor { display: inline-block; width: 7px; height: 15px; margin-left: 2px; background: var(--heat); animation: blink 1s steps(1) infinite; vertical-align: -2px; }
+  @keyframes blink { 50% { opacity: 0; } }
+  /* rows appear one by one once the command is typed */
+  :global(html:not(.no-js)) .console.armed .row { opacity: 0; transform: translateY(4px); }
+  :global(html:not(.no-js)) .console.play .row { animation: rowIn 0.45s var(--ease) forwards; animation-delay: calc(var(--i) * 0.32s); }
+  @keyframes rowIn { to { opacity: 1; transform: none; } }
+  @media (max-width: 560px) {
+    .c-term { padding: 14px; font-size: 0.72rem; }
+    .c-tabs span:not(.on), .c-note { display: none; }
+  }
+</style>
+
+<script>
+  import { reduced } from '../lib/motion';
+  document.querySelectorAll<HTMLElement>('[data-console]').forEach((c) => {
+    if (reduced() || !('IntersectionObserver' in window)) return;
+    const typed = c.querySelector<HTMLElement>('[data-type]')!;
+    const score = c.querySelector<HTMLElement>('[data-score]')!;
+    const full = typed.textContent || '';
+    c.classList.add('armed');
+    typed.textContent = '';
+    score.textContent = '0';
+    const io = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      io.disconnect();
+      let i = 0;
+      const step = () => {
+        typed.textContent = full.slice(0, ++i);
+        if (i < full.length) setTimeout(step, 38);
+        else {
+          c.classList.add('play');
+          const rows = c.querySelectorAll('.row').length;
+          setTimeout(() => {
+            const start = performance.now();
+            const tick = (now: number) => {
+              const t = Math.min(1, (now - start) / 1000);
+              score.textContent = String(Math.round(87 * (1 - Math.pow(1 - t, 3))));
+              if (t < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+          }, (rows - 1) * 320);
+        }
+      };
+      setTimeout(step, 400);
+    }, { threshold: 0.4 });
+    io.observe(c);
+  });
+</script>

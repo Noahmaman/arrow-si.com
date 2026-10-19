@@ -1,5 +1,6 @@
 ---
 import '@fontsource-variable/dm-sans';
+import '@fontsource-variable/geist-mono';
 import '../styles/site.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
@@ -63,7 +64,7 @@ const graph = { '@context': 'https://schema.org', '@graph': [organization, websi
 const json = JSON.stringify(graph).replace(/</g, '\\u003c');
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-js">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -71,7 +72,7 @@ const json = JSON.stringify(graph).replace(/</g, '\\u003c');
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="theme-color" content="#f7f7f9" />
     <meta name="author" content="Arrow AI" />
     <meta name="generator" content={Astro.generator} />
     <link rel="alternate" hreflang="en" href={canonical} />
@@ -106,13 +107,20 @@ const json = JSON.stringify(graph).replace(/</g, '\\u003c');
     <meta name="twitter:image:alt" content={imageAlt} />
 
     <script type="application/ld+json" set:html={json} />
+    <script is:inline>document.documentElement.classList.remove('no-js');</script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <Header />
-    <main id="main" tabindex="-1">
-      <slot />
-    </main>
+    <div class="frame">
+      <main id="main" tabindex="-1">
+        <slot />
+      </main>
+    </div>
     <Footer />
+    <script>
+      import { initMotion } from '../lib/motion';
+      initMotion();
+    </script>
   </body>
 </html>

@@ -29,14 +29,15 @@ const schema = [
 ---
 <Base title={title} description={description} image="/og/glossary.jpg" imageAlt="AI visibility glossary from Arrow Signal." schema={schema}>
   <header class="page-head">
-    <div class="wrap">
+    <div>
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Glossary</span></nav>
-      <h1>AI visibility glossary</h1>
+      <p class="kicker blue">Glossary</p>
+      <h1>The language of <span class="hl">AI visibility</span></h1>
       <p class="lede">{glossary.length} terms you will meet when working on AI visibility, each with a short definition. Arrow AI keeps a longer <a class="link" href={ARROW.glossary}>GEO glossary</a> too.</p>
     </div>
   </header>
-  <section class="section">
-    <div class="wrap narrow">
+  <section class="section tight">
+    <div class="narrow">
       <dl class="terms">
         {sorted.map((g) => (
           <div class="term" id={g.slug}>
@@ -53,10 +54,13 @@ const schema = [
 </Base>
 
 <style>
-  .terms { border-top: 1px solid var(--line); }
-  .term { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 16px); }
-  .term:target dt { color: var(--blue); }
-  dt { font-weight: 600; color: var(--ink); }
+  .narrow { max-width: 860px; }
+  .terms { border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--a8); padding: 0 24px; }
+  .term { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--a6); scroll-margin-top: calc(var(--header-h) + 16px); }
+  .term:last-child { border-bottom: 0; }
+  .term:target dt { color: var(--geo); }
+  dt { font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
+  dd { color: var(--ink-soft); }
   dd .link { font-size: 0.93rem; white-space: nowrap; }
   @media (max-width: 640px) { .term { grid-template-columns: 1fr; gap: 6px; } }
 </style>

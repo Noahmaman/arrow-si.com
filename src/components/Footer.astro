@@ -5,55 +5,53 @@ const year = new Date().getFullYear();
 const icons = { LinkedIn: 'linkedin', Instagram: 'instagram', YouTube: 'youtube', TikTok: 'tiktok' } as const;
 ---
 <footer class="site-footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div>
-        <a class="brand" href="/" aria-label="Arrow Signal home">
-          <img src="/brand/arrow-icon-192.png" alt="" width="28" height="28" loading="lazy" />
-          Arrow <span>Signal</span>
-        </a>
-        <p>Guides on AI visibility from Arrow AI: how brands get found, cited and recommended in AI answers.</p>
-        <div class="socials">
-          {SOCIALS.map((s) => (
-            <a href={s.url} target="_blank" rel="noopener me" aria-label={`Arrow AI on ${s.name}`} title={`${s.name} ${s.handle}`}>
-              <Icon name={icons[s.name]} size={16} />
-            </a>
-          ))}
-        </div>
-      </div>
-      <div>
-        <h2>Guides</h2>
-        <ul>
-          <li><a href="/blog/">All guides</a></li>
-          <li><a href="/blog/what-is-ai-visibility/">What is AI visibility?</a></li>
-          <li><a href="/blog/how-to-measure-ai-visibility/">Measuring AI visibility</a></li>
-          <li><a href="/glossary/">Glossary</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2>Arrow AI</h2>
-        <ul>
-          <li><a href={ARROW.url}>arrow-ai.us</a></li>
-          <li><a href={ARROW.geo}>GEO service</a></li>
-          <li><a href={ANSWERS.url}>Arrow Answers</a></li>
-          <li><a href={DEMO.url}>GEO demo</a></li>
-          <li><a href={ARROW.pricing}>Pricing</a></li>
-        </ul>
-      </div>
-      <div>
-        <h2>Company</h2>
-        <ul>
-          <li><a href="/about/">About this site</a></li>
-          <li><a href={ARROW.freeAudit}>Free audit</a></li>
-          <li><a href={ARROW.call}>Book a call</a></li>
-          <li><a href={ARROW.contact}>Contact</a></li>
-          <li><a href="/privacy/">Privacy</a></li>
-        </ul>
+  <div class="footer-grid">
+    <div>
+      <a class="brand" href="/" aria-label="Arrow Signal home">
+        <img src="/brand/arrow-icon-192.png" alt="" width="26" height="26" loading="lazy" />
+        Arrow <span class="sub" aria-hidden="true">SIGNAL</span>
+      </a>
+      <p>AI visibility guides from Arrow AI: how brands get found, cited and recommended in AI answers.</p>
+      <div class="socials">
+        {SOCIALS.map((s) => (
+          <a href={s.url} target="_blank" rel="noopener me" aria-label={`Arrow AI on ${s.name}`} title={`${s.name} ${s.handle}`}>
+            <Icon name={icons[s.name]} size={16} />
+          </a>
+        ))}
       </div>
     </div>
-    <div class="footer-bottom">
-      <span>© {year} Arrow AI. All rights reserved.</span>
-      <span>Arrow AI (arrow-ai.us) is independent from Arrow Electronics and other companies named Arrow.</span>
+    <div>
+      <h2>Guides</h2>
+      <ul>
+        <li><a href="/blog/">All 15 guides</a></li>
+        <li><a href="/blog/what-is-ai-visibility/">What is AI visibility?</a></li>
+        <li><a href="/blog/how-to-measure-ai-visibility/">Measuring AI visibility</a></li>
+        <li><a href="/glossary/">Glossary</a></li>
+      </ul>
     </div>
+    <div>
+      <h2>Arrow ecosystem</h2>
+      <ul>
+        <li><a href={ARROW.url}>Arrow AI</a></li>
+        <li><a href={ARROW.geo}>GEO service</a></li>
+        <li><a href={ANSWERS.url}>Arrow Answers</a></li>
+        <li><a href={DEMO.url}>GEO demo</a></li>
+        <li><a href={ARROW.pricing}>GEO pricing</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2>Company</h2>
+      <ul>
+        <li><a href="/about/">About this site</a></li>
+        <li><a href={ARROW.freeAudit}>Free audit</a></li>
+        <li><a href={ARROW.call}>Book a call</a></li>
+        <li><a href={ARROW.contact}>Contact</a></li>
+        <li><a href="/privacy/">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© {year} Arrow AI. Arrow AI (arrow-ai.us) is independent from Arrow Electronics and other companies named Arrow.</span>
+    <span class="mono">GEO · AI visibility · arrow-si.com</span>
   </div>
 </footer>

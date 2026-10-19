@@ -1,0 +1,102 @@
+---
+// Bento grid of the four AI visibility signals, each with a small animated
+// illustration (sample data).
+---
+<div class="bento" data-bento>
+  <article class="tile wide reveal" data-spot>
+    <div class="t-copy">
+      <span class="mono t-num">01 · Mentioned</span>
+      <h3>Your brand is named in the answer</h3>
+      <p>When buyers ask about your category or their problem, the answer says your name.</p>
+    </div>
+    <div class="t-vis answer" aria-hidden="true">
+      <span class="who mono">ChatGPT · answer</span>
+      <p>The strongest options for a 20-person team are <mark>Your Brand</mark>, Northwind and Contoso. Your Brand focuses on startups and publishes clear pricing.</p>
+    </div>
+  </article>
+
+  <article class="tile reveal" style="--d:80ms" data-spot>
+    <div class="t-copy">
+      <span class="mono t-num">02 · Cited</span>
+      <h3>Your page is the source</h3>
+      <p>The answer links to your site as evidence.</p>
+    </div>
+    <ul class="t-vis sources" aria-hidden="true">
+      <li><span>review-site.example</span></li>
+      <li class="you"><span>yourbrand.com/pricing</span><span class="chip ok">cited ✓</span></li>
+      <li><span>industry-news.example</span></li>
+    </ul>
+  </article>
+
+  <article class="tile reveal" style="--d:120ms" data-spot>
+    <div class="t-copy">
+      <span class="mono t-num">03 · Recommended</span>
+      <h3>You make the shortlist</h3>
+      <p>The answer suggests you for the buyer’s situation.</p>
+    </div>
+    <ol class="t-vis rank" aria-hidden="true">
+      <li class="r-you"><span class="pos mono">1</span>Your Brand <span class="star">★</span></li>
+      <li class="r-a"><span class="pos mono">2</span>Competitor A</li>
+      <li class="r-b"><span class="pos mono">3</span>Competitor B</li>
+    </ol>
+  </article>
+
+  <article class="tile wide reveal" style="--d:160ms" data-spot>
+    <div class="t-copy">
+      <span class="mono t-num">04 · Accurate</span>
+      <h3>What AI says about you is true</h3>
+      <p>Offer, prices and locations match your site. Outdated facts get fixed at the source.</p>
+    </div>
+    <ul class="t-vis facts" aria-hidden="true">
+      <li><span>Core offer</span><span class="chip ok">correct</span></li>
+      <li><span>Locations served</span><span class="chip ok">correct</span></li>
+      <li class="fix"><span>Pricing</span><span class="swap"><span class="chip heat old">2024 price</span><span class="chip ok new">updated ✓</span></span></li>
+    </ul>
+  </article>
+</div>
+
+<style>
+  .bento { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .tile { position: relative; display: grid; gap: 18px; padding: 24px; border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--a8); overflow: hidden; }
+  .tile::before { content: ''; position: absolute; inset: 0; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, -30%), rgba(37, 99, 235, 0.07), transparent 60%); pointer-events: none; }
+  .tile.wide { grid-column: span 2; grid-template-columns: 1fr 1.15fr; align-items: center; }
+  .t-num { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--geo); }
+  .tile h3 { margin-top: 8px; font-size: 1.2rem; letter-spacing: -0.02em; line-height: 1.25; }
+  .tile p { margin-top: 6px; color: var(--muted); font-size: 0.94rem; }
+  .t-vis { position: relative; border-radius: var(--r-md); background: var(--bg); border: 1px solid var(--a8); padding: 14px; font-size: 0.88rem; }
+
+  .answer .who { font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+  .answer p { margin-top: 6px; color: var(--ink-soft); font-size: 0.9rem; }
+  .answer mark { color: #fff; background: linear-gradient(var(--heat), var(--heat)) no-repeat 0 0 / 0% 100%; color: var(--ink); padding: 0 3px; border-radius: 3px; transition: background-size 0.9s var(--ease) 0.5s, color 0.3s ease 0.9s; }
+  .tile.in .answer mark { background-size: 100% 100%; color: #fff; }
+
+  .sources { list-style: none; display: grid; gap: 6px; }
+  .sources li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--a8); font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+  .sources li.you { position: relative; color: var(--ink); border-color: transparent; background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box, conic-gradient(from var(--a, 0deg), var(--geo), var(--violet), var(--heat), var(--geo)) border-box; animation: beam 4s linear infinite; }
+  @property --a { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  @keyframes beam { to { --a: 360deg; } }
+
+  .rank { list-style: none; display: grid; gap: 6px; }
+  .rank li { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--a8); color: var(--muted); transition: transform 0.9s var(--ease) 0.4s; }
+  .rank .pos { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; font-size: 0.68rem; background: var(--a4); color: var(--ink-soft); }
+  .rank .r-you { color: var(--ink); font-weight: 600; border-color: rgba(37, 99, 235, 0.3); background: var(--geo-soft); }
+  .rank .r-you .pos { background: var(--geo); color: #fff; }
+  .star { color: var(--heat); margin-left: auto; }
+  /* start with Your Brand at the bottom, then it climbs to #1 */
+  :global(html:not(.no-js)) .rank .r-you { transform: translateY(calc(200% + 12px)); }
+  :global(html:not(.no-js)) .rank .r-a, :global(html:not(.no-js)) .rank .r-b { transform: translateY(calc(-100% - 6px)); }
+  :global(html:not(.no-js)) .tile.in .rank li { transform: none; }
+
+  .facts { list-style: none; display: grid; gap: 6px; }
+  .facts li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; background: var(--bg-card); border: 1px solid var(--a8); color: var(--ink-soft); }
+  .swap { display: grid; }
+  .swap > * { grid-area: 1 / 1; justify-self: end; transition: opacity 0.4s ease 1.4s, transform 0.4s var(--ease) 1.4s; }
+  .swap .new { opacity: 0; transform: translateY(6px); }
+  .tile.in .swap .old { opacity: 0; transform: translateY(-6px); }
+  .tile.in .swap .new { opacity: 1; transform: none; }
+  :global(.no-js) .swap .old { opacity: 0; }
+  :global(.no-js) .swap .new { opacity: 1; transform: none; }
+
+  @media (max-width: 960px) { .bento { grid-template-columns: 1fr 1fr; } .tile.wide { grid-column: span 2; } }
+  @media (max-width: 640px) { .bento { grid-template-columns: 1fr; } .tile.wide { grid-column: auto; grid-template-columns: 1fr; } }
+</style>

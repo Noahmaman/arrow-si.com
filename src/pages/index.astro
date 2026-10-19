@@ -1,58 +1,39 @@
 ---
 import Base from '../layouts/Base.astro';
+import GeoConsole from '../components/GeoConsole.astro';
+import SignalBento from '../components/SignalBento.astro';
+import MethodTabs from '../components/MethodTabs.astro';
+import EcoBeam from '../components/EcoBeam.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { articles } from '../lib/articles';
-import { SITE, ARROW, ANSWERS, DEMO, ORGANIZATION_ID, askAiLinks, absolute } from '../lib/site';
+import { glossary } from '../lib/glossary';
+import { SITE, ARROW, ANSWERS, ENGINES, ORGANIZATION_ID, askAiLinks, absolute } from '../lib/site';
 
 const title = 'AI Visibility Guides: Get Your Brand Into AI Answers | Arrow Signal';
 const description =
   'Practical guides from Arrow AI on getting your brand mentioned, cited and recommended in ChatGPT, Gemini, Perplexity, Claude and Google AI Overviews.';
 
 const faqs = [
-  {
-    q: 'What is AI visibility?',
-    a: 'AI visibility is how often, and how accurately, your brand appears in answers written by AI tools such as ChatGPT, Gemini, Perplexity, Claude, Copilot and Google AI Overviews. It covers being mentioned by name, being cited as a source and being recommended for a buyer’s need.',
-  },
-  {
-    q: 'How is it different from SEO?',
-    a: 'SEO earns a position in a list of search results. AI visibility is about the answer itself, which usually names only a few companies. The groundwork overlaps (crawlable pages, clear content, credible evidence), but the results are measured differently.',
-  },
-  {
-    q: 'What is GEO?',
-    a: 'Generative engine optimization (GEO) is the work of making your public information clear, accessible and well sourced so AI tools can find, understand and recommend you, then checking what their answers actually say. Arrow AI offers GEO as a managed service.',
-  },
-  {
-    q: 'How do you measure AI visibility?',
-    a: 'Write 20 to 50 real buyer questions, run them on the AI tools your customers use, and record each full answer with its date and sources. Note whether you are mentioned, cited and recommended, and whether the facts are right. Repeat every month with the same questions.',
-  },
-  {
-    q: 'Can anyone guarantee that ChatGPT will recommend us?',
-    a: 'No. Each AI company controls its own answers, and answers change with wording, location and time. What you can control is your own information and an honest record of what the answers say.',
-  },
-  {
-    q: 'How do I get started with Arrow?',
-    a: 'Request the free AI visibility audit on arrow-ai.us. The Arrow AI team reviews how AI tools describe your business and sends you a plan. You can also book a 15-minute call.',
-  },
+  { q: 'What is AI visibility?', a: 'AI visibility is how often, and how accurately, your brand appears in answers written by AI tools such as ChatGPT, Gemini, Perplexity, Claude, Copilot and Google AI Overviews. It covers being mentioned by name, being cited as a source and being recommended for a buyer’s need.' },
+  { q: 'How is it different from SEO?', a: 'SEO earns a position in a list of search results. AI visibility is about the answer itself, which usually names only a few companies. The groundwork overlaps (crawlable pages, clear content, credible evidence), but the results are measured differently.' },
+  { q: 'What is GEO?', a: 'Generative engine optimization (GEO) is the work of making your public information clear, accessible and well sourced so AI tools can find, understand and recommend you, then checking what their answers actually say. Arrow AI offers GEO as a managed service.' },
+  { q: 'How do you measure AI visibility?', a: 'Write 20 to 50 real buyer questions, run them on the AI tools your customers use, and record each full answer with its date and sources. Note whether you are mentioned, cited and recommended, and whether the facts are right. Repeat every month with the same questions.' },
+  { q: 'Can anyone guarantee that ChatGPT will recommend us?', a: 'No. Each AI company controls its own answers, and answers change with wording, location and time. What you can control is your own information and an honest record of what the answers say.' },
+  { q: 'How do I get started with Arrow?', a: 'Request the free AI visibility audit on arrow-ai.us. The Arrow AI team reviews how AI tools describe your business and sends you a plan. You can also book a 15-minute call.' },
 ];
 
-const signals = [
-  { t: 'Mentioned', d: 'The answer names your brand when buyers ask about your category or problem.' },
-  { t: 'Cited', d: 'The answer links to one of your pages as a source for what it says.' },
-  { t: 'Recommended', d: 'The answer suggests you as a good choice for the buyer’s situation.' },
-  { t: 'Accurate', d: 'What the answer says about your offer, prices and locations is correct.' },
+const chapters = [
+  { t: 0, label: '0:00', title: 'SEO is dead', img: '/media/film-seo-is-dead.webp', alt: 'Film still: the words “SEO is dead.” struck through by a blue line on a dark background.' },
+  { t: 16, label: '0:16', title: 'Enter GEO', img: '/media/film-enter-geo.webp', alt: 'Film still: “Enter GEO, Generative Engine Optimization” in Arrow blue.' },
+  { t: 20, label: '0:20', title: 'Make AI recommend you', img: '/media/film-make-ai-recommend-you.webp', alt: 'Film still: an AI answer card where a citation names Arrow AI as the most recommended option.' },
+  { t: 24, label: '0:24', title: 'Build authority', img: '/media/film-build-authority.webp', alt: 'Film still: “Build synthetic authority” with badges reading Cited, Recommended and Source linked.' },
 ];
 
-const steps = [
-  { t: 'Baseline', d: 'Run 20 to 50 real buyer questions on the AI tools your customers use. Record the answers, the dates and the sources.', href: '/blog/how-to-measure-ai-visibility/', link: 'How to build a baseline' },
-  { t: 'Fix access and facts', d: 'Make sure crawlers can reach your pages and that your business is described the same way everywhere.', href: '/blog/technical-ai-visibility-checklist/', link: 'Technical checklist' },
-  { t: 'Publish answer pages', d: 'Write pages that answer pricing, comparison and “is this right for me” questions directly, with evidence.', href: '/blog/content-ai-engines-cite/', link: 'Writing pages AI can cite' },
-  { t: 'Measure every month', d: 'Re-run the same questions, compare with the baseline and choose what to work on next.', href: '/blog/ai-share-of-voice/', link: 'Tracking share of voice' },
-];
-
-const ecosystem = [
-  { name: 'Arrow AI', host: 'arrow-ai.us', url: ARROW.url, d: 'The team behind this site. GEO, AI systems and AI Studio for businesses.', cta: 'Visit Arrow AI' },
-  { name: 'Arrow Answers', host: 'answers.arrow-ai.us', url: ANSWERS.url, d: 'Short, specific answers to more than a hundred GEO questions.', cta: 'Browse Arrow Answers' },
-  { name: 'GEO demo', host: 'arrow-ai.tech', url: DEMO.url, d: 'An interactive walkthrough from a website to a cited AI answer.', cta: 'Try the demo' },
+const stats = [
+  { n: articles.length, label: 'practical guides on this site' },
+  { n: 105, label: 'short answers on Arrow Answers' },
+  { n: glossary.length, label: 'terms in the glossary' },
+  { n: ENGINES.length, label: 'AI surfaces covered' },
 ];
 
 const schema = [
@@ -85,177 +66,160 @@ const schema = [
     inLanguage: 'en',
     publisher: { '@id': ORGANIZATION_ID },
   },
-  {
-    '@type': 'FAQPage',
-    '@id': `${SITE.url}/#faq`,
-    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-  },
-  {
-    '@type': 'ItemList',
-    '@id': `${SITE.url}/#guides`,
-    name: 'AI visibility guides',
-    itemListElement: articles.slice(0, 6).map((a, i) => ({ '@type': 'ListItem', position: i + 1, url: absolute(a.url), name: a.title })),
-  },
+  { '@type': 'FAQPage', '@id': `${SITE.url}/#faq`, mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  { '@type': 'ItemList', '@id': `${SITE.url}/#guides`, name: 'AI visibility guides', itemListElement: articles.slice(0, 6).map((a, i) => ({ '@type': 'ListItem', position: i + 1, url: absolute(a.url), name: a.title })) },
 ];
 const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
 ---
 <Base title={title} description={description} schema={schema}>
-  <section class="hero">
-    <div class="wrap hero-grid">
-      <div>
-        <span class="eyebrow">AI visibility guides from Arrow AI</span>
-        <h1>Get your brand into AI answers</h1>
-        <p class="lede">Buyers now ask ChatGPT, Gemini and Perplexity which company to choose, and the answer usually names two or three. These guides explain how those answers are put together and what you can do to be one of the names.</p>
-        <div class="btn-row">
-          <a class="btn btn-primary" href={ARROW.freeAudit}>Get a free AI visibility audit</a>
-          <a class="btn btn-secondary" href="/blog/">Read the guides</a>
-        </div>
-        <p class="hero-note">Covers ChatGPT, Google AI Overviews and AI Mode, Gemini, Perplexity, Claude and Copilot.</p>
+  <!-- HERO -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="grid-bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+    <div class="hero-inner">
+      <a class="hero-pill reveal" href={ARROW.freeAudit}><span class="tag">Free</span>See how AI engines talk about your brand <span class="arr" aria-hidden="true">→</span></a>
+      <h1 id="hero-title" class="h-display reveal" style="--d:60ms">Get your brand into <span class="hl">AI answers</span></h1>
+      <p class="lede reveal" style="--d:120ms">Buyers now ask ChatGPT, Gemini and Perplexity which company to choose, and the answer names two or three. <span class="lede-hl">Learn how those answers are built, and how to be one of the names.</span></p>
+      <div class="btn-row center reveal" style="--d:180ms">
+        <a class="btn btn-heat" href={ARROW.freeAudit}>Get a free AI visibility audit <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-blue" href="/blog/">Read the guides</a>
       </div>
-      <figure class="answer" aria-labelledby="answer-cap">
-        <figcaption id="answer-cap">Example of an AI answer</figcaption>
-        <p class="q">Which accounting firm should a 20-person startup in Austin use?</p>
-        <div class="a">
-          <p>For a team that size, <strong>Northpeak Accounting</strong> is a good fit. It works mostly with venture-backed startups and publishes fixed monthly pricing.<sup>1</sup> Two larger firms are also worth comparing.<sup>2</sup></p>
+      <p class="hero-note mono reveal" style="--d:220ms">Free · 2-minute check · reviewed by the Arrow AI team</p>
+      <div class="console-wrap reveal" style="--d:260ms"><GeoConsole /></div>
+      <div class="engines">
+        <span class="mono e-label">AI visibility across</span>
+        <div class="marquee">
+          <ul class="track">
+            {[...ENGINES, ...ENGINES].map((e, i) => <li aria-hidden={i >= ENGINES.length ? 'true' : undefined}>{e}</li>)}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="section tight stats" aria-label="Arrow Signal in numbers">
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <ul>
+      {stats.map((s, i) => <li class="reveal" style={`--d:${i * 70}ms`}><strong data-count={s.n}>{s.n}</strong><span>{s.label}</span></li>)}
+    </ul>
+  </section>
+
+  <!-- SHIFT -->
+  <section class="section" id="visibility" aria-labelledby="shift-title">
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <div class="shift">
+      <div>
+        <p class="kicker blue reveal">What changed</p>
+        <h2 id="shift-title" class="h-section reveal" style="--d:60ms"><span class="strike">SEO ranked you.</span><br /><span class="hl">GEO gets you answered.</span></h2>
+        <p class="lede reveal" style="--d:120ms">Rankings still matter: Google’s AI Overviews and Microsoft Copilot are built on search indexes, and ChatGPT and Perplexity read web pages. But someone reading an AI answer sees a short list, not a page of results. GEO is the work of earning a place on that list.</p>
+        <a class="link reveal" style="--d:160ms" href="/blog/geo-vs-seo/">GEO and SEO compared <span class="arr" aria-hidden="true">→</span></a>
+      </div>
+      <div class="compare reveal" style="--d:120ms">
+        <div class="c-col before">
+          <span class="mono c-h">Search results</span>
           <ol>
-            <li>northpeak.example/pricing</li>
-            <li>review-site.example/austin</li>
+            {Array.from({ length: 6 }, (_, i) => <li class:list={{ you: i === 4 }}><span class="mono">{i === 4 ? 'yourbrand.com' : `result-${i + 1}.example`}</span><i></i></li>)}
           </ol>
+          <span class="c-foot">You are result #5. One of ten.</span>
         </div>
-        <p class="answer-note">Northpeak is mentioned, cited and recommended. That is what these guides help you work toward.</p>
-      </figure>
-    </div>
-  </section>
-
-  <section class="section soft" id="visibility" aria-labelledby="shift-title">
-    <div class="wrap two-col">
-      <div>
-        <span class="eyebrow">What changed</span>
-        <h2 id="shift-title">Search used to be a list. Now it is an answer.</h2>
-        <p>Rankings still matter. Google’s AI Overviews and Microsoft Copilot are built on search indexes, and ChatGPT and Perplexity read web pages. But someone reading an AI answer sees a short list, not a page of results.</p>
-        <p>Arrow puts it simply: <em>SEO ranked you. GEO gets you answered.</em> Generative engine optimization is the work of earning a place on that short list.</p>
-        <a class="link" href="/blog/geo-vs-seo/">GEO and SEO compared</a>
-      </div>
-      <div class="table-wrap">
-        <table class="compare">
-          <caption class="sr-only">Search results compared with AI answers</caption>
-          <thead><tr><th scope="col"></th><th scope="col">Search results</th><th scope="col">AI answers</th></tr></thead>
-          <tbody>
-            <tr><th scope="row">What people see</th><td>Ten links and ads</td><td>A written answer with a few sources</td></tr>
-            <tr><th scope="row">What counts</th><td>Your ranking</td><td>Being named, cited and recommended</td></tr>
-            <tr><th scope="row">How to measure</th><td>Rankings and clicks</td><td>Answers to a fixed set of buyer questions</td></tr>
-          </tbody>
-        </table>
+        <div class="c-col after">
+          <span class="mono c-h">AI answer</span>
+          <p class="bubble">Which firm should we choose?</p>
+          <p class="reply">For your situation, <mark>Your Brand</mark> is the best fit. It specialises in this and publishes clear pricing.<sup>1</sup></p>
+          <div class="c-chips"><span class="chip ok">mentioned</span><span class="chip ok">cited</span><span class="chip ok">recommended</span></div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- SIGNALS -->
   <section class="section" aria-labelledby="signals-title">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">What to measure</span>
-        <h2 id="signals-title">Four things to check in every answer</h2>
-        <p>Measure them separately. A brand can be cited often and still never be recommended, and the fix is different each time.</p>
-      </div>
-      <ol class="cols">
-        {signals.map((s, i) => (
-          <li>
-            <span class="num">{i + 1}</span>
-            <h3>{s.t}</h3>
-            <p>{s.d}</p>
-          </li>
-        ))}
-      </ol>
-      <p class="after"><a class="link" href="/blog/mentions-citations-recommendations/">Mentions, citations and recommendations explained</a></p>
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <div class="section-head">
+      <p class="kicker blue reveal">What to measure</p>
+      <h2 id="signals-title" class="h-section reveal" style="--d:60ms">Four signals in every answer. <span class="hl">Track them separately.</span></h2>
+      <p class="lede reveal" style="--d:120ms">A brand can be cited often and still never be recommended. Each signal needs different work, so a single score hides the real problem.</p>
     </div>
+    <SignalBento />
+    <p class="after"><a class="link" href="/blog/mentions-citations-recommendations/">Mentions, citations and recommendations explained <span class="arr" aria-hidden="true">→</span></a></p>
   </section>
 
+  <!-- METHOD -->
   <section class="section" id="method" aria-labelledby="method-title">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">How Arrow works</span>
-        <h2 id="method-title">A simple monthly routine</h2>
-        <p>Start with what the answers say today, fix what stops AI tools from using your site, then check again on the same questions.</p>
-      </div>
-      <ol class="cols steps">
-        {steps.map((s, i) => (
-          <li>
-            <span class="num">{i + 1}</span>
-            <h3>{s.t}</h3>
-            <p>{s.d}</p>
-            <a class="link" href={s.href}>{s.link}</a>
-          </li>
-        ))}
-      </ol>
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <div class="section-head">
+      <p class="kicker reveal">How Arrow works</p>
+      <h2 id="method-title" class="h-section reveal" style="--d:60ms">From audit to <span class="hl">answers.</span></h2>
+      <p class="lede reveal" style="--d:120ms">Start with what the answers say today, fix what stops AI tools from using your site, then check again on the same questions every month.</p>
     </div>
+    <div class="reveal" style="--d:160ms"><MethodTabs /></div>
   </section>
 
-  <section class="section soft" id="film" aria-labelledby="film-title">
-    <div class="wrap film">
-      <div>
-        <span class="eyebrow">The film</span>
-        <h2 id="film-title">Arrow AI in 36 seconds</h2>
-        <p>A short film on the shift from ranking in search to being named in the answer, and what Arrow does about it.</p>
-        <details class="transcript">
-          <summary>Read the transcript</summary>
-          <p>SEO is dead. Your brand used to be one result among ten. Enter GEO: generative engine optimization. Make AI recommend you, so that when a buyer asks for the best option in your category, the answer names you and cites your page. Build authority: cited, recommended, source linked. Arrow AI, arrow-ai.us.</p>
-        </details>
-      </div>
-      <video controls playsinline preload="none" width="1280" height="720" poster="/media/arrow-ai-geo-film-poster.webp" aria-label="Arrow AI film, 36 seconds: SEO ranked you. GEO gets you answered.">
+  <!-- FILM -->
+  <section class="section" id="film" aria-labelledby="film-title">
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <div class="section-head center">
+      <p class="kicker reveal">The Arrow story</p>
+      <h2 id="film-title" class="h-section reveal" style="--d:60ms">Arrow AI in <span class="hl">36 seconds.</span></h2>
+    </div>
+    <div class="film reveal" style="--d:100ms">
+      <video data-film controls playsinline preload="none" width="1280" height="720" poster="/media/arrow-ai-geo-film-poster.webp" aria-label="Arrow AI film, 36 seconds: SEO ranked you. GEO gets you answered.">
         <source src="/media/arrow-ai-geo-film.webm" type="video/webm" />
         <source src="/media/arrow-ai-geo-film.mp4" type="video/mp4" />
         <track kind="captions" src="/media/arrow-ai-geo-film.en.vtt" srclang="en" label="English" />
       </video>
     </div>
+    <ol class="chapters">
+      {chapters.map((c, i) => (
+        <li class="reveal" style={`--d:${i * 70}ms`}>
+          <button type="button" data-seek={c.t} aria-label={`Play from ${c.label}: ${c.title}`}>
+            <img src={c.img} alt={c.alt} width="1280" height="720" loading="lazy" decoding="async" />
+            <span><span class="mono">{c.label}</span>{c.title}</span>
+          </button>
+        </li>
+      ))}
+    </ol>
   </section>
 
+  <!-- GUIDES -->
   <section class="section" aria-labelledby="guides-title">
-    <div class="wrap">
-      <div class="head-row">
-        <div class="section-head">
-          <span class="eyebrow">Guides</span>
-          <h2 id="guides-title">Start with these</h2>
-        </div>
-        <a class="link" href="/blog/">All 15 guides</a>
-      </div>
-      <ul class="post-list">
-        {articles.slice(0, 6).map((a) => <ArticleCard article={a} />)}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="eco-title">
-    <div class="wrap">
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <div class="head-row">
       <div class="section-head">
-        <span class="eyebrow">Part of Arrow AI</span>
-        <h2 id="eco-title">Where to go next</h2>
+        <p class="kicker blue reveal">Guides</p>
+        <h2 id="guides-title" class="h-section reveal" style="--d:60ms">Start with <span class="hl">these.</span></h2>
       </div>
-      <ul class="eco">
-        {ecosystem.map((e) => (
-          <li>
-            <a href={e.url}>
-              <span class="host">{e.host}</span>
-              <h3>{e.name}</h3>
-              <p>{e.d}</p>
-              <span class="link">{e.cta}</span>
-            </a>
-          </li>
-        ))}
-      </ul>
+      <a class="btn btn-blue reveal" href="/blog/">All 15 guides <span class="arr" aria-hidden="true">→</span></a>
     </div>
+    <ul class="guide-grid">
+      {articles.slice(0, 6).map((a) => <ArticleCard article={a} />)}
+    </ul>
   </section>
 
+  <!-- ECOSYSTEM -->
+  <section class="section" aria-labelledby="eco-title">
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <div class="section-head">
+      <p class="kicker reveal">The Arrow ecosystem</p>
+      <h2 id="eco-title" class="h-section reveal" style="--d:60ms">Three Arrow sites. <span class="hl">One goal.</span></h2>
+      <p class="lede reveal" style="--d:120ms">Learn here, go deeper on Arrow Answers, see the process in the demo, and let the Arrow AI team do the work.</p>
+    </div>
+    <EcoBeam />
+  </section>
+
+  <!-- FAQ -->
   <section class="section" id="faq" aria-labelledby="faq-title">
-    <div class="wrap two-col faq-layout">
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <div class="faq-layout">
       <div>
-        <span class="eyebrow">FAQ</span>
-        <h2 id="faq-title">Common questions</h2>
-        <p class="muted">More in <a class="link" href={ANSWERS.url}>Arrow Answers</a>.</p>
+        <p class="kicker reveal">FAQ</p>
+        <h2 id="faq-title" class="h-section reveal" style="--d:60ms">AI visibility, <span class="hl">answered.</span></h2>
+        <p class="lede reveal" style="--d:120ms">More in <a class="link" href={ANSWERS.url}>Arrow Answers</a>.</p>
       </div>
       <div class="faq">
-        {faqs.map((f) => (
-          <details>
-            <summary>{f.q}</summary>
+        {faqs.map((f, i) => (
+          <details class="reveal" style={`--d:${i * 50}ms`} open={i === 0}>
+            <summary>{f.q}<span class="plus" aria-hidden="true"></span></summary>
             <p>{f.a}</p>
           </details>
         ))}
@@ -263,100 +227,150 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
     </div>
   </section>
 
-  <section class="cta">
-    <div class="wrap cta-inner">
-      <div>
-        <h2>See what AI says about your brand</h2>
-        <p>The free audit shows how AI tools describe your business today, with a clear plan for what to fix first.</p>
+  <!-- CTA -->
+  <section class="section" aria-labelledby="cta-title">
+    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+    <div class="cta reveal">
+      <p class="kicker">Work with Arrow</p>
+      <h2 id="cta-title" class="h-section">See what AI says <span class="hl">about your brand.</span></h2>
+      <p class="lede">The free audit shows how AI tools describe your business today, with a clear plan for what to fix first.</p>
+      <div class="btn-row center">
+        <a class="btn btn-heat" href={ARROW.freeAudit}>Get the free audit <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn btn-ghost" href={ARROW.call}>Book 15 minutes with Noah</a>
       </div>
-      <div class="cta-side">
-        <div class="btn-row">
-          <a class="btn btn-primary" href={ARROW.freeAudit}>Get the free audit</a>
-          <a class="btn btn-secondary" href={ARROW.call}>Book a 15-minute call</a>
-        </div>
-        <div class="inline-links">
-          <span class="label">Ask about this site in</span>
-          {ask.map((l) => <a href={l.url} target="_blank" rel="noopener">{l.name}</a>)}
-        </div>
+      <div class="inline-links center-row">
+        <span class="label">Ask AI about this site</span>
+        {ask.map((l) => <a href={l.url} target="_blank" rel="noopener">{l.name}</a>)}
       </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .hero { padding: clamp(56px, 9vw, 104px) 0 clamp(56px, 8vw, 96px); }
-  .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 6vw, 72px); align-items: center; }
-  .hero h1 { font-size: clamp(2.4rem, 5vw, 3.6rem); line-height: 1.08; letter-spacing: -0.03em; }
-  .lede { margin-top: 20px; font-size: 1.15rem; color: var(--text); max-width: 560px; }
-  .hero .btn-row { margin-top: 28px; }
-  .hero-note { margin-top: 20px; font-size: 0.9rem; color: var(--muted); }
+  /* hero */
+  .hero { position: relative; padding: clamp(64px, 10vw, 120px) var(--pad) clamp(40px, 6vw, 64px); text-align: center; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; top: -220px; left: 50%; transform: translateX(-50%); width: min(980px, 130vw); height: 520px; background: radial-gradient(closest-side at 36% 45%, rgba(255, 100, 47, 0.13), transparent 68%), radial-gradient(closest-side at 66% 40%, rgba(37, 99, 235, 0.12), transparent 70%); pointer-events: none; }
+  .grid-bg { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--a6) 1px, transparent 1px), linear-gradient(90deg, var(--a6) 1px, transparent 1px); background-size: 56px 56px; background-position: center top; mask-image: radial-gradient(ellipse 70% 55% at 50% 25%, #000 25%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 25%, #000 25%, transparent 75%); }
+  .grid-bg i { position: absolute; display: block; }
+  .grid-bg .b1, .grid-bg .b3 { height: 1px; width: 160px; background: linear-gradient(90deg, transparent, var(--geo), transparent); animation: beamX 7s linear infinite; }
+  .grid-bg .b1 { top: 168px; }
+  .grid-bg .b3 { top: 336px; animation-delay: 3.5s; animation-direction: reverse; }
+  .grid-bg .b2 { width: 1px; height: 160px; left: calc(50% + 140px); background: linear-gradient(180deg, transparent, var(--heat), transparent); animation: beamY 6s linear infinite 1.5s; }
+  @keyframes beamX { from { left: -200px; } to { left: 110%; } }
+  @keyframes beamY { from { top: -200px; } to { top: 110%; } }
+  .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
+  .hero-pill { display: inline-flex; align-items: center; gap: 10px; font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; padding: 7px 14px 7px 8px; border-radius: 100px; border: 1px solid var(--a10); background: rgba(255, 255, 255, 0.75); margin-bottom: 28px; transition: border-color 0.16s, background 0.16s; }
+  .hero-pill:hover { border-color: rgba(255, 100, 47, 0.4); background: #fff; }
+  .hero-pill .tag { font-family: var(--mono); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--heat); padding: 3px 8px; border-radius: 100px; }
+  .hero-pill .arr { color: var(--heat-strong); transition: transform 0.16s; }
+  .hero-pill:hover .arr { transform: translateX(3px); }
+  .hero h1 { max-width: 860px; }
+  .hero .lede { margin: 20px auto 0; max-width: 640px; }
+  .lede-hl { color: var(--ink); font-weight: 500; }
+  .hero .btn-row { margin-top: 30px; }
+  .hero-note { margin-top: 16px; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+  .console-wrap { width: 100%; margin-top: clamp(40px, 6vw, 60px); }
+  .engines { width: 100%; max-width: 760px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--a6); display: flex; align-items: center; gap: 20px; }
+  .e-label { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
+  .marquee { flex: 1; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
+  .track { list-style: none; display: flex; gap: 40px; width: max-content; animation: marquee 28s linear infinite; }
+  .track li { font-weight: 600; font-size: 0.98rem; color: var(--ink-soft); white-space: nowrap; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (max-width: 560px) { .e-label { display: none; } }
 
-  .answer { border: 1px solid var(--line); border-radius: 12px; padding: 20px; background: #fff; }
-  .answer figcaption { font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
-  .q { margin-top: 14px; margin-left: auto; width: fit-content; max-width: 90%; padding: 10px 14px; border-radius: 12px 12px 2px 12px; background: var(--bg-soft); border: 1px solid var(--line); font-size: 0.95rem; color: var(--ink); }
-  .a { margin-top: 14px; font-size: 0.97rem; }
-  .a strong { color: var(--ink); background: var(--blue-tint); padding: 0 3px; border-radius: 3px; }
-  .a sup { color: var(--blue); font-size: 0.7em; font-weight: 600; margin-left: 1px; }
-  .a ol { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); padding-left: 1.2em; font-size: 0.82rem; color: var(--muted); }
-  .answer-note { margin-top: 14px; font-size: 0.85rem; color: var(--muted); }
-  @media (max-width: 860px) { .hero-grid { grid-template-columns: 1fr; } }
+  /* stats */
+  .stats ul { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--a8); border: 1px solid var(--a8); border-radius: var(--r-lg); overflow: hidden; }
+  .stats li { background: var(--bg-card); padding: 22px 24px; display: grid; gap: 4px; }
+  .stats strong { font-size: clamp(2rem, 3.6vw, 2.8rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stats span { color: var(--muted); font-size: 0.92rem; }
+  @media (max-width: 760px) { .stats ul { grid-template-columns: 1fr 1fr; } }
 
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 72px); align-items: start; }
-  .two-col h2 { font-size: clamp(1.75rem, 3.2vw, 2.4rem); }
-  .two-col p { margin-top: 14px; }
-  .two-col .link { display: inline-block; margin-top: 18px; }
-  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
-  .compare { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
-  .compare th, .compare td { text-align: left; padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
-  .compare thead th { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
-  .compare tbody th { color: var(--ink); font-weight: 600; width: 32%; }
-  .compare tr:last-child th, .compare tr:last-child td { border-bottom: 0; }
-  .compare td:last-child { color: var(--ink); }
-  @media (max-width: 860px) { .two-col { grid-template-columns: 1fr; } }
+  /* shift */
+  .shift { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+  .shift .lede { margin-top: 18px; }
+  .shift .link { margin-top: 20px; }
+  .strike { position: relative; color: var(--faint); }
+  .strike::after { content: ''; position: absolute; left: -2%; right: -2%; top: 55%; height: 0.08em; border-radius: 99px; background: var(--geo); transform: scaleX(0) rotate(-2deg); transform-origin: 0 50%; transition: transform 0.8s var(--ease) 0.5s; }
+  .h-section.in .strike::after { transform: scaleX(1) rotate(-2deg); }
+  :global(.no-js) .strike::after { transform: scaleX(1) rotate(-2deg); }
+  .compare { display: grid; grid-template-columns: 1fr 1.15fr; gap: 12px; }
+  .c-col { padding: 18px; border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--a8); display: flex; flex-direction: column; gap: 10px; }
+  .c-col.after { border-color: transparent; background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box, linear-gradient(160deg, var(--geo), var(--violet) 50%, var(--heat)) border-box; box-shadow: 0 20px 50px -30px rgba(37, 99, 235, 0.5); }
+  .c-h { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }
+  .c-col ol { list-style: none; display: grid; gap: 8px; }
+  .c-col li { display: grid; gap: 4px; opacity: 0.55; }
+  .c-col li .mono { font-size: 0.66rem; color: var(--muted); }
+  .c-col li i { height: 7px; border-radius: 4px; background: var(--a10); width: 85%; }
+  .c-col li.you { opacity: 1; padding: 6px 8px; margin: 0 -8px; border-radius: 8px; background: var(--geo-soft); }
+  .c-col li.you i { background: var(--geo); }
+  .c-foot { font-size: 0.8rem; color: var(--muted); margin-top: auto; }
+  .bubble { align-self: flex-end; padding: 8px 12px; border-radius: 12px 12px 2px 12px; background: var(--ink); color: #fff; font-size: 0.85rem; }
+  .reply { font-size: 0.9rem; color: var(--ink-soft); }
+  .reply mark { background: var(--heat); color: #fff; padding: 0 4px; border-radius: 4px; }
+  .reply sup { color: var(--geo); font-weight: 600; }
+  .c-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+  @media (max-width: 900px) { .shift { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .compare { grid-template-columns: 1fr; } }
+  .after { margin-top: 28px; }
 
-  .cols { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
-  .cols li { border-top: 2px solid var(--ink); padding-top: 18px; display: flex; flex-direction: column; }
-  .cols .num { font-size: 0.9rem; font-weight: 600; color: var(--blue); }
-  .cols h3 { margin-top: 8px; font-size: 1.15rem; }
-  .cols p { margin-top: 8px; color: var(--muted); font-size: 0.97rem; flex: 1; }
-  .steps .link { margin-top: 14px; font-size: 0.93rem; }
-  .after { margin-top: 32px; }
-  @media (max-width: 900px) { .cols { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .cols { grid-template-columns: 1fr; } }
+  /* film */
+  .film { max-width: 920px; margin: 0 auto; border-radius: 20px; padding: 6px; background: linear-gradient(160deg, rgba(37, 99, 235, 0.5), var(--a10) 45%, rgba(255, 100, 47, 0.45)); box-shadow: 0 30px 80px -40px rgba(18, 20, 40, 0.45); }
+  .film video { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 15px; background: #000; }
+  .chapters { list-style: none; max-width: 920px; margin: 14px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .chapters button { width: 100%; text-align: left; border-radius: var(--r-md); overflow: hidden; background: var(--bg-card); border: 1px solid var(--a8); transition: transform 0.2s var(--ease), border-color 0.2s; }
+  .chapters button:hover, .chapters button.on { transform: translateY(-2px); border-color: var(--geo); }
+  .chapters img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .chapters button > span { display: grid; gap: 1px; padding: 8px 10px 10px; font-size: 0.85rem; font-weight: 600; }
+  .chapters .mono { font-size: 0.64rem; font-weight: 500; color: var(--heat-strong); letter-spacing: 0.08em; }
+  @media (max-width: 700px) { .chapters { grid-template-columns: 1fr 1fr; } }
 
-  .film { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
-  .film h2 { font-size: clamp(1.75rem, 3.2vw, 2.4rem); }
-  .film p { margin-top: 14px; color: var(--muted); }
-  .film video { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 12px; background: #000; border: 1px solid var(--line); }
-  .transcript { margin-top: 18px; }
-  .transcript summary { cursor: pointer; color: var(--blue); font-weight: 600; font-size: 0.95rem; }
-  @media (max-width: 860px) { .film { grid-template-columns: 1fr; } }
-
+  /* guides */
   .head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
-  .head-row .section-head { margin-bottom: 24px; }
-  .head-row .link { margin-bottom: 28px; }
+  .head-row .btn { margin-bottom: clamp(36px, 5vw, 56px); }
 
-  .eco { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .eco a { display: flex; flex-direction: column; height: 100%; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; transition: border-color 0.15s; }
-  .eco a:hover { border-color: var(--blue); }
-  .host { font-size: 0.85rem; color: var(--muted); }
-  .eco h3 { margin-top: 6px; font-size: 1.2rem; }
-  .eco p { margin-top: 8px; color: var(--muted); flex: 1; }
-  .eco .link { margin-top: 16px; font-size: 0.95rem; }
-  @media (max-width: 860px) { .eco { grid-template-columns: 1fr; } }
-
-  .faq { border-top: 1px solid var(--line); }
-  .faq details { border-bottom: 1px solid var(--line); }
-  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-weight: 600; color: var(--ink); }
+  /* faq */
+  .faq-layout { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .faq-layout .lede { margin-top: 14px; }
+  .faq { display: grid; gap: 8px; }
+  .faq details { border-radius: var(--r-md); background: var(--bg-card); border: 1px solid var(--a8); transition: border-color 0.2s; }
+  .faq details[open] { border-color: var(--a16); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 18px; font-weight: 600; letter-spacing: -0.01em; }
   .faq summary::-webkit-details-marker { display: none; }
-  .faq summary::after { content: '+'; color: var(--blue); font-size: 1.3rem; line-height: 1; }
-  .faq details[open] summary::after { content: '−'; }
-  .faq details p { padding: 0 0 18px; color: var(--text); margin: 0; }
+  .faq details p { padding: 0 18px 18px; color: var(--muted); }
+  .plus { position: relative; width: 12px; height: 12px; flex-shrink: 0; }
+  .plus::before, .plus::after { content: ''; position: absolute; background: var(--heat); border-radius: 2px; transition: transform 0.2s var(--ease); }
+  .plus::before { left: 0; right: 0; top: 5px; height: 2px; }
+  .plus::after { top: 0; bottom: 0; left: 5px; width: 2px; }
+  .faq details[open] .plus::after { transform: scaleY(0); }
+  @media (max-width: 860px) { .faq-layout { grid-template-columns: 1fr; } }
 
-  .cta { background: var(--blue-tint); border-top: 1px solid var(--blue-line); padding: clamp(48px, 7vw, 80px) 0; }
-  .cta-inner { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; }
-  .cta h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); }
-  .cta p { margin-top: 10px; color: var(--text); max-width: 560px; }
-  .cta-side { display: grid; gap: 16px; }
-  @media (max-width: 860px) { .cta-inner { grid-template-columns: 1fr; } }
+  /* cta */
+  .cta { position: relative; text-align: center; padding: clamp(48px, 7vw, 80px) clamp(20px, 5vw, 64px); border-radius: 24px; background: var(--bg-card); border: 1px solid var(--a8); overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+  .cta::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(var(--a8) 1px, transparent 1px); background-size: 22px 22px; mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 20%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 20%, transparent 75%); }
+  .cta::after { content: ''; position: absolute; bottom: -260px; left: 50%; transform: translateX(-50%); width: 760px; height: 420px; background: radial-gradient(closest-side at 40% 50%, rgba(255, 100, 47, 0.14), transparent 70%), radial-gradient(closest-side at 62% 50%, rgba(37, 99, 235, 0.12), transparent 70%); pointer-events: none; }
+  .cta > * { position: relative; z-index: 1; }
+  .cta .lede { margin: 16px auto 0; }
+  .cta .btn-row { margin-top: 28px; }
+  .center-row { justify-content: center; margin-top: 22px; }
 </style>
+
+<script>
+  import { reduced } from '../lib/motion';
+  const video = document.querySelector<HTMLVideoElement>('[data-film]');
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-seek]');
+  buttons.forEach((btn) => btn.addEventListener('click', () => {
+    if (!video) return;
+    video.preload = 'auto';
+    video.currentTime = Number(btn.dataset.seek);
+    video.play().catch(() => {});
+    video.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
+  }));
+  video?.addEventListener('timeupdate', () => {
+    const t = video.currentTime;
+    buttons.forEach((b, i) => {
+      const start = Number(b.dataset.seek);
+      const next = buttons[i + 1] ? Number(buttons[i + 1].dataset.seek) : Infinity;
+      b.classList.toggle('on', t >= start && t < next);
+    });
+  });
+</script>
