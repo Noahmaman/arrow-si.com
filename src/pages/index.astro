@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import GeoConsole from '../components/GeoConsole.astro';
+import HeroSignal from '../components/HeroSignal.astro';
 import SignalBento from '../components/SignalBento.astro';
 import MethodTabs from '../components/MethodTabs.astro';
 import EcoBeam from '../components/EcoBeam.astro';
@@ -72,29 +72,7 @@ const schema = [
 const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
 ---
 <Base title={title} description={description} schema={schema}>
-  <!-- HERO -->
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="grid-bg" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
-    <div class="hero-inner">
-      <a class="hero-pill reveal" href={ARROW.freeAudit}><span class="tag">Free</span>See how AI engines talk about your brand <span class="arr" aria-hidden="true">→</span></a>
-      <h1 id="hero-title" class="h-display reveal" style="--d:60ms">Get your brand into <span class="hl">AI answers</span></h1>
-      <p class="lede reveal" style="--d:120ms">Buyers now ask ChatGPT, Gemini and Perplexity which company to choose, and the answer names two or three. <span class="lede-hl">Learn how those answers are built, and how to be one of the names.</span></p>
-      <div class="btn-row center reveal" style="--d:180ms">
-        <a class="btn btn-heat" href={ARROW.freeAudit}>Get a free AI visibility audit <span class="arr" aria-hidden="true">→</span></a>
-        <a class="btn btn-blue" href="/blog/">Read the guides</a>
-      </div>
-      <p class="hero-note mono reveal" style="--d:220ms">Free · 2-minute check · reviewed by the Arrow AI team</p>
-      <div class="console-wrap reveal" style="--d:260ms"><GeoConsole /></div>
-      <div class="engines">
-        <span class="mono e-label">AI visibility across</span>
-        <div class="marquee">
-          <ul class="track">
-            {[...ENGINES, ...ENGINES].map((e, i) => <li aria-hidden={i >= ENGINES.length ? 'true' : undefined}>{e}</li>)}
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+  <HeroSignal />
 
   <!-- STATS -->
   <section class="section tight stats" aria-label="Arrow Signal in numbers">
@@ -247,37 +225,6 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
 </Base>
 
 <style>
-  /* hero */
-  .hero { position: relative; padding: clamp(64px, 10vw, 120px) var(--pad) clamp(40px, 6vw, 64px); text-align: center; overflow: hidden; }
-  .hero::after { content: ''; position: absolute; top: -220px; left: 50%; transform: translateX(-50%); width: min(980px, 130vw); height: 520px; background: radial-gradient(closest-side at 36% 45%, rgba(255, 100, 47, 0.13), transparent 68%), radial-gradient(closest-side at 66% 40%, rgba(37, 99, 235, 0.12), transparent 70%); pointer-events: none; }
-  .grid-bg { position: absolute; inset: 0; pointer-events: none; background-image: linear-gradient(var(--a6) 1px, transparent 1px), linear-gradient(90deg, var(--a6) 1px, transparent 1px); background-size: 56px 56px; background-position: center top; mask-image: radial-gradient(ellipse 70% 55% at 50% 25%, #000 25%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 70% 55% at 50% 25%, #000 25%, transparent 75%); }
-  .grid-bg i { position: absolute; display: block; }
-  .grid-bg .b1, .grid-bg .b3 { height: 1px; width: 160px; background: linear-gradient(90deg, transparent, var(--geo), transparent); animation: beamX 7s linear infinite; }
-  .grid-bg .b1 { top: 168px; }
-  .grid-bg .b3 { top: 336px; animation-delay: 3.5s; animation-direction: reverse; }
-  .grid-bg .b2 { width: 1px; height: 160px; left: calc(50% + 140px); background: linear-gradient(180deg, transparent, var(--heat), transparent); animation: beamY 6s linear infinite 1.5s; }
-  @keyframes beamX { from { left: -200px; } to { left: 110%; } }
-  @keyframes beamY { from { top: -200px; } to { top: 110%; } }
-  .hero-inner { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; }
-  .hero-pill { display: inline-flex; align-items: center; gap: 10px; font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); text-decoration: none; padding: 7px 14px 7px 8px; border-radius: 100px; border: 1px solid var(--a10); background: rgba(255, 255, 255, 0.75); margin-bottom: 28px; transition: border-color 0.16s, background 0.16s; }
-  .hero-pill:hover { border-color: rgba(255, 100, 47, 0.4); background: #fff; }
-  .hero-pill .tag { font-family: var(--mono); font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; background: var(--heat); padding: 3px 8px; border-radius: 100px; }
-  .hero-pill .arr { color: var(--heat-strong); transition: transform 0.16s; }
-  .hero-pill:hover .arr { transform: translateX(3px); }
-  .hero h1 { max-width: 860px; }
-  .hero .lede { margin: 20px auto 0; max-width: 640px; }
-  .lede-hl { color: var(--ink); font-weight: 500; }
-  .hero .btn-row { margin-top: 30px; }
-  .hero-note { margin-top: 16px; font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
-  .console-wrap { width: 100%; margin-top: clamp(40px, 6vw, 60px); }
-  .engines { width: 100%; max-width: 760px; margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--a6); display: flex; align-items: center; gap: 20px; }
-  .e-label { font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
-  .marquee { flex: 1; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-  .track { list-style: none; display: flex; gap: 40px; width: max-content; animation: marquee 28s linear infinite; }
-  .track li { font-weight: 600; font-size: 0.98rem; color: var(--ink-soft); white-space: nowrap; }
-  @keyframes marquee { to { transform: translateX(-50%); } }
-  @media (max-width: 560px) { .e-label { display: none; } }
-
   /* stats */
   .stats ul { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--a8); border: 1px solid var(--a8); border-radius: var(--r-lg); overflow: hidden; }
   .stats li { background: var(--bg-card); padding: 22px 24px; display: grid; gap: 4px; }

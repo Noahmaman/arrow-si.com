@@ -50,7 +50,7 @@ const highlight = (t) => {
 };
 
 const jobs = [
-  { file: 'home', label: 'AI visibility guides', title: 'Get your brand into AI answers' },
+  { file: 'home', label: 'AI visibility by Arrow AI', title: 'Be the answer in ChatGPT, Gemini and Perplexity' },
   { file: 'blog', label: 'Guides', title: '15 practical guides to AI visibility and GEO' },
   { file: 'glossary', label: 'Glossary', title: 'AI visibility glossary' },
 ];

@@ -2,7 +2,7 @@
 
 The AI visibility hub of [Arrow AI](https://arrow-ai.us/). English, static, fast, built to be read by people and by AI engines.
 
-- **Design:** the arrow-ai.us design language (neutral base, framed column with `+` marks, Geist Mono micro-labels, GEO blue gradient highlight, orange CTA) with light, lively components inspired by 21st.dev patterns: animated grid hero, typing GEO console, signals bento, auto-advancing method tabs, animated-beam ecosystem diagram, number tickers and an engine marquee. Motion respects `prefers-reduced-motion`.
+- **Design:** the arrow-ai.us design language (neutral base, framed column with `+` marks, Geist Mono micro-labels, GEO blue gradient highlight, orange CTA) with light, lively components inspired by 21st.dev patterns: saturated Arrow-blue hero with a rotating engine name, a synced AI answer, floating proof cards and crossing ribbons, signals bento, auto-advancing method tabs, animated-beam ecosystem diagram, number tickers and an engine marquee. Motion respects `prefers-reduced-motion`.
 - **Ecosystem links:** [arrow-ai.us](https://arrow-ai.us/), [answers.arrow-ai.us](https://answers.arrow-ai.us/), [arrow-ai.tech](https://arrow-ai.tech/), with contextual links from every guide.
 - **Socials:** LinkedIn, Instagram, YouTube, TikTok (footer, About page and `sameAs`).
 
@@ -13,7 +13,7 @@ Astro 7, static output, small vanilla scripts only (reveals, counters, console, 
 ```
 src/
   content/blog/*.md     15 articles (frontmatter: summary, takeaways, FAQ, sources, ecosystem links)
-  components/           Header, Footer, GeoConsole, SignalBento, MethodTabs, EcoBeam, ArticleCard, Icon
+  components/           Header, Footer, HeroSignal, SignalBento, MethodTabs, EcoBeam, ArticleCard, Icon
   layouts/Base.astro    SEO head + JSON-LD @graph (Organization @id shared with arrow-ai.us)
   lib/                  site constants, article loader, glossary
   pages/                home, /blog/, /blog/[slug]/, /glossary/, /about/, /privacy/, robots.txt, sitemap.xml, feed.xml, llms.txt, llms-full.txt

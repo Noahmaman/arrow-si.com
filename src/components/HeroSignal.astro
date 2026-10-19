@@ -1,0 +1,283 @@
+---
+// Homepage hero: saturated Arrow-blue panel, rotating engine name in the
+// headline, a live-feeling AI answer synced with it, floating proof cards and
+// crossing ribbons. All examples are illustrative.
+import { ARROW } from '../lib/site';
+
+const scenes = [
+  { eng: 'ChatGPT', q: 'Best accounting firm for a startup in Austin?', a: 'For a 20-person startup, <mark>Your Brand</mark> is the strongest fit. It works mostly with venture-backed teams and publishes fixed monthly pricing.', cite: 'yourbrand.com/pricing' },
+  { eng: 'Gemini', q: 'Which GEO agency should a B2B SaaS hire?', a: '<mark>Your Brand</mark> stands out for B2B SaaS: dated answer checks, clear pricing and published case studies.', cite: 'yourbrand.com/case-studies' },
+  { eng: 'Perplexity', q: 'Most reliable clinic software for small practices?', a: 'Reviewers most often recommend <mark>Your Brand</mark> for practices under 10 staff, citing fast setup and support.', cite: 'review-site.example/clinics' },
+  { eng: 'Claude', q: 'Who can help us appear in AI answers?', a: '<mark>Your Brand</mark> is a good option. It focuses on AI visibility and explains its method openly.', cite: 'yourbrand.com/method' },
+  { eng: 'AI Overviews', q: 'boutique hotel near the beach with parking', a: '<mark>Your Brand</mark> is frequently mentioned for beachfront access, on-site parking and recent guest reviews.', cite: 'yourbrand.com/amenities' },
+];
+const first = scenes[0];
+const ribbon = ['Mentioned', 'Cited', 'Recommended', 'Accurate', 'Found by AI'];
+---
+<section class="hx" aria-labelledby="hero-title" data-hero>
+  <div class="panel">
+    <div class="bg" aria-hidden="true">
+      <span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span>
+      <span class="lines"></span><span class="grain"></span>
+    </div>
+
+    <div class="copy">
+      <a class="pill" href={ARROW.freeAudit}><span class="live" aria-hidden="true"></span>Free AI visibility audit <span class="arr" aria-hidden="true">→</span></a>
+      <p class="kick mono">AI visibility by Arrow AI</p>
+      <h1 id="hero-title" class="title">
+        <span class="sr-only">Be the answer in ChatGPT, Gemini, Perplexity, Claude and Google AI Overviews</span>
+        <span aria-hidden="true"><span class="l1">Be the answer</span><br />in <span class="rot" data-rot><span class="rot-track">{scenes.map((s) => <span class="w">{s.eng}</span>)}</span></span></span>
+      </h1>
+      <p class="sub">Your buyers ask AI before they ask you. The answer names two or three companies. Arrow Signal shows you how to be one of them.</p>
+      <div class="ctas">
+        <a class="btn-w" href={ARROW.freeAudit}>Get your free audit <span class="arr" aria-hidden="true">→</span></a>
+        <a class="btn-o" href="/blog/">Read the 15 guides</a>
+      </div>
+      <ul class="proof mono" aria-label="What the audit checks">
+        <li>ChatGPT</li><li>Gemini</li><li>Perplexity</li><li>Claude</li><li>AI Overviews</li>
+      </ul>
+    </div>
+
+    <div class="stage" data-stage aria-hidden="true">
+      <div class="chat" data-chat>
+        <div class="chat-top">
+          <span class="eng-dot"></span><span class="eng" data-eng>{first.eng}</span>
+          <span class="ex mono">example</span>
+        </div>
+        <div class="msg user"><span data-q>{first.q}</span><span class="caret"></span></div>
+        <div class="msg ai">
+          <span class="ai-mark"><img src="/brand/arrow-icon-192.png" alt="" width="20" height="20" /></span>
+          <div>
+            <p data-a set:html={first.a} />
+            <span class="cite mono" data-cite><span class="n">1</span><span data-cite-text>{first.cite}</span></span>
+          </div>
+        </div>
+        <div class="badges" data-badges>
+          <span class="badge">Mentioned ✓</span><span class="badge">Cited ✓</span><span class="badge">Recommended ✓</span>
+        </div>
+      </div>
+      <div class="float f1 depth" style="--z:24">
+        <span class="t-ic">↗</span>
+        <span><strong>New citation</strong><span class="mono">yourbrand.com/pricing</span></span>
+      </div>
+      <div class="float f2 depth" style="--z:40">
+        <span class="mono lbl">Share of voice</span>
+        <strong>34%<em>+12</em></strong>
+        <span class="bars"><i style="--h:30%"></i><i style="--h:45%"></i><i style="--h:52%"></i><i style="--h:70%"></i><i style="--h:100%"></i></span>
+      </div>
+      <div class="float f3 depth" style="--z:16">
+        <span class="score"><span>87</span></span>
+        <span class="mono lbl">Signal score</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ribbons" aria-hidden="true">
+    <div class="rb back"><div class="rb-track">{[...ribbon, ...ribbon, ...ribbon, ...ribbon].map((r) => <span>{r} <b>✦</b></span>)}</div></div>
+    <div class="rb front"><div class="rb-track">{[...ribbon, ...ribbon, ...ribbon, ...ribbon].map((r) => <span>{r} <b>✦</b></span>)}</div></div>
+  </div>
+</section>
+
+<script define:vars={{ scenes }}>
+  window.__heroScenes = scenes;
+</script>
+
+<style>
+  .hx { position: relative; padding: 14px 14px 0; }
+  .panel {
+    position: relative; overflow: hidden; border-radius: 28px; color: #fff; isolation: isolate;
+    display: grid; grid-template-columns: 1.12fr 0.88fr; align-items: center; gap: clamp(24px, 3vw, 40px);
+    padding: clamp(40px, 5.5vw, 72px) clamp(22px, 4.5vw, 60px) clamp(92px, 9vw, 116px);
+    background: linear-gradient(135deg, #1d4fd7 0%, #2563eb 38%, #4b5cff 70%, #655cff 100%);
+    box-shadow: 0 40px 90px -50px rgba(37, 99, 235, 0.8);
+  }
+  /* background: drifting brand blobs, fine grid, film grain */
+  .bg { position: absolute; inset: 0; z-index: -1; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.9; animation: drift 16s ease-in-out infinite alternate; }
+  .b1 { width: 520px; height: 520px; right: -140px; bottom: -220px; background: #ff642f; opacity: 0.75; }
+  .b2 { width: 460px; height: 460px; left: -160px; top: -200px; background: #7fb0ff; opacity: 0.55; animation-duration: 20s; }
+  .b3 { width: 340px; height: 340px; left: 42%; top: 30%; background: #8a7dff; opacity: 0.45; animation-duration: 24s; }
+  @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(40px, -30px) scale(1.12); } }
+  .lines { position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px); background-size: 64px 64px; mask-image: radial-gradient(ellipse 80% 80% at 30% 40%, #000 20%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 80% 80% at 30% 40%, #000 20%, transparent 75%); }
+  .grain { position: absolute; inset: 0; opacity: 0.18; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  /* copy */
+  .copy { position: relative; z-index: 2; }
+  .pill { display: inline-flex; align-items: center; gap: 10px; padding: 7px 14px 7px 10px; border-radius: 999px; background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.28); color: #fff; font-size: 0.86rem; font-weight: 500; text-decoration: none; backdrop-filter: blur(8px); transition: background 0.2s; }
+  .pill:hover { background: rgba(255, 255, 255, 0.22); }
+  .live { width: 8px; height: 8px; border-radius: 50%; background: #ff8a5c; box-shadow: 0 0 0 0 rgba(255, 138, 92, 0.7); animation: ping 1.8s infinite; }
+  @keyframes ping { 70% { box-shadow: 0 0 0 9px rgba(255, 138, 92, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 138, 92, 0); } }
+  .pill .arr { transition: transform 0.2s; }
+  .pill:hover .arr { transform: translateX(3px); }
+  .kick { margin-top: 28px; font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); }
+  .title { margin-top: 12px; color: #fff; font-size: clamp(2.6rem, 5.1vw, 4.6rem); line-height: 1.02; letter-spacing: -0.05em; font-weight: 700; }
+  @media (min-width: 961px) { .l1 { white-space: nowrap; } }
+  .rot { position: relative; display: inline-block; vertical-align: bottom; height: 1.1em; overflow: hidden; margin-top: 0.08em; padding: 0 0.22em; border-radius: 0.18em; background: #fff; color: var(--geo); transform: rotate(-2deg); box-shadow: 0 14px 30px -12px rgba(18, 20, 40, 0.45); transition: width 0.55s var(--ease); }
+  .rot-track { display: flex; flex-direction: column; transition: transform 0.6s cubic-bezier(0.7, 0, 0.2, 1); }
+  .rot .w { display: block; width: max-content; height: 1.1em; line-height: 1.1em; white-space: nowrap; }
+  .sub { margin-top: 26px; max-width: 520px; font-size: clamp(1.02rem, 1.4vw, 1.16rem); line-height: 1.6; color: rgba(255, 255, 255, 0.88); }
+  .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+  .btn-w, .btn-o { display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: transform 0.18s var(--ease), box-shadow 0.18s, background 0.18s; }
+  .btn-w { background: #fff; color: var(--ink); box-shadow: 0 10px 24px -10px rgba(18, 20, 40, 0.5); }
+  .btn-w:hover { transform: translateY(-2px); box-shadow: 0 16px 30px -12px rgba(18, 20, 40, 0.55); }
+  .btn-w .arr { color: var(--heat); transition: transform 0.18s; }
+  .btn-w:hover .arr { transform: translateX(3px); }
+  .btn-o { color: #fff; border: 1px solid rgba(255, 255, 255, 0.45); }
+  .btn-o:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); }
+  .proof { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 30px; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255, 255, 255, 0.7); }
+  .proof li::before { content: '✓ '; color: #ffb08f; }
+
+  /* stage */
+  .stage { position: relative; z-index: 1; min-height: 470px; display: grid; place-items: center; perspective: 1200px; }
+  .chat { position: relative; width: min(100%, 400px); padding: 18px; border-radius: 20px; background: #fff; color: var(--ink); box-shadow: 0 40px 80px -30px rgba(18, 20, 40, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.4); transform: rotate(1.5deg) translate3d(var(--px, 0), var(--py, 0), 0); transition: transform 0.3s ease-out; }
+  .chat-top { display: flex; align-items: center; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--a8); }
+  .eng-dot { width: 8px; height: 8px; border-radius: 50%; background: #0c8a4d; box-shadow: 0 0 0 3px rgba(12, 138, 77, 0.15); }
+  .eng { font-weight: 700; font-size: 0.95rem; }
+  .ex { margin-left: auto; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }
+  .msg { margin-top: 14px; font-size: 0.93rem; line-height: 1.5; }
+  .user { margin-left: auto; width: fit-content; max-width: 88%; padding: 10px 14px; border-radius: 14px 14px 4px 14px; background: var(--ink); color: #fff; min-height: 42px; }
+  .caret { display: inline-block; width: 2px; height: 1em; margin-left: 2px; background: #fff; vertical-align: -2px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .ai { display: grid; grid-template-columns: 28px 1fr; gap: 10px; min-height: 104px; }
+  .ai-mark img { width: 24px; height: 24px; border-radius: 7px; }
+  .ai p { color: var(--ink-soft); }
+  .ai :global(mark) { background: #ff642f; color: #fff; padding: 0 4px; border-radius: 4px; font-weight: 600; }
+  .cite { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; padding: 4px 10px 4px 4px; border-radius: 999px; background: var(--geo-soft); color: var(--geo); font-size: 0.7rem; transition: opacity 0.3s, transform 0.4s var(--ease); }
+  .cite .n { width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; background: var(--geo); color: #fff; font-size: 0.62rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--a10); }
+  .badge { font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 5px 9px; border-radius: 999px; color: #0c8a4d; background: rgba(12, 138, 77, 0.08); border: 1px solid rgba(12, 138, 77, 0.25); transition: opacity 0.3s, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  /* hidden states used while a scene plays */
+  .chat.is-typing .cite, .chat.is-typing .badge { opacity: 0; transform: scale(0.6); }
+  .chat.show-cite .cite { opacity: 1; transform: none; }
+  .chat .badge.on { opacity: 1; transform: none; }
+
+  .float { position: absolute; z-index: 2; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 14px; background: rgba(255, 255, 255, 0.95); color: var(--ink); box-shadow: 0 20px 40px -18px rgba(18, 20, 40, 0.55); font-size: 0.82rem; animation: bob 6s ease-in-out infinite; }
+  .depth { translate: calc(var(--px, 0px) * var(--z) / 20) calc(var(--py, 0px) * var(--z) / 20); transition: translate 0.3s ease-out; }
+  @keyframes bob { 50% { transform: translateY(-10px) rotate(var(--rot, 0deg)); } }
+  .f1 { top: 0; right: -3%; --rot: 3deg; transform: rotate(3deg); }
+  .f1 .t-ic { width: 28px; height: 28px; border-radius: 9px; display: grid; place-items: center; background: #ff642f; color: #fff; font-weight: 700; }
+  .f1 strong { display: block; font-size: 0.82rem; }
+  .f1 .mono { font-size: 0.66rem; color: var(--muted); }
+  .f2 { bottom: -1%; right: -5%; flex-direction: column; align-items: flex-start; gap: 4px; animation-delay: -2s; --rot: 2deg; transform: rotate(2deg); }
+  .f2 .lbl, .f3 .lbl { font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+  .f2 strong { font-size: 1.6rem; letter-spacing: -0.04em; line-height: 1; }
+  .f2 em { font-style: normal; font-size: 0.75rem; color: #0c8a4d; margin-left: 6px; letter-spacing: 0; }
+  .bars { display: flex; align-items: flex-end; gap: 4px; height: 28px; }
+  .bars i { width: 10px; height: var(--h); border-radius: 3px; background: linear-gradient(180deg, #655cff, #2563eb); }
+  .bars i:last-child { background: linear-gradient(180deg, #ff642f, #2563eb); }
+  .f3 { bottom: 1%; left: -7%; animation-delay: -4s; --rot: -2deg; transform: rotate(-2deg); }
+  .score { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(#2563eb 0 87%, var(--a8) 0); }
+  .score span { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: #fff; font-weight: 700; font-size: 0.85rem; }
+
+  /* crossing ribbons */
+  .ribbons { position: relative; height: 0; z-index: 3; }
+  .rb { position: absolute; left: -4%; right: -4%; top: -64px; overflow: hidden; padding: 12px 0; white-space: nowrap; }
+  .rb.front { background: #ff642f; color: #fff; transform: rotate(-2.2deg); box-shadow: 0 14px 30px -14px rgba(255, 100, 47, 0.8); }
+  .rb.back { background: var(--ink); color: rgba(255, 255, 255, 0.85); transform: rotate(1.6deg); top: -58px; }
+  .rb-track { display: inline-flex; gap: 28px; animation: rb 26s linear infinite; font-family: var(--mono); font-size: 0.85rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+  .rb.back .rb-track { animation-direction: reverse; animation-duration: 32s; }
+  .rb-track b { color: rgba(255, 255, 255, 0.6); margin-left: 24px; font-weight: 400; }
+  @keyframes rb { to { transform: translateX(-50%); } }
+
+  @media (max-width: 960px) {
+    .panel { grid-template-columns: 1fr; }
+    .stage { min-height: 380px; margin-top: 8px; }
+    .f1 { right: 0; }
+    .f3 { left: 0; }
+    .f2 { right: 0; }
+  }
+  @media (max-width: 560px) {
+    .hx { padding: 8px 8px 0; }
+    .panel { border-radius: 20px; }
+    .stage { min-height: 360px; }
+    .chat { padding: 14px; }
+    .f3, .f1 { display: none; }
+    .f2 { bottom: -4%; right: -2%; padding: 8px 12px; }
+    .f2 strong { font-size: 1.3rem; }
+    .rb-track { font-size: 0.72rem; }
+  }
+</style>
+
+<script>
+  import { reduced } from '../lib/motion';
+  type Scene = { eng: string; q: string; a: string; cite: string };
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  const scenes = (window as unknown as { __heroScenes: Scene[] }).__heroScenes;
+  if (hero && scenes && !reduced()) {
+    const rot = hero.querySelector<HTMLElement>('[data-rot]')!;
+    const track = rot.querySelector<HTMLElement>('.rot-track')!;
+    const words = Array.from(track.querySelectorAll<HTMLElement>('.w'));
+    const chat = hero.querySelector<HTMLElement>('[data-chat]')!;
+    const eng = chat.querySelector<HTMLElement>('[data-eng]')!;
+    const q = chat.querySelector<HTMLElement>('[data-q]')!;
+    const a = chat.querySelector<HTMLElement>('[data-a]')!;
+    const citeText = chat.querySelector<HTMLElement>('[data-cite-text]')!;
+    const badges = Array.from(chat.querySelectorAll<HTMLElement>('.badge'));
+    const stage = hero.querySelector<HTMLElement>('[data-stage]')!;
+    let index = 0;
+    let timers: number[] = [];
+    let running = false;
+    const later = (fn: () => void, ms: number) => timers.push(window.setTimeout(fn, ms));
+    const clear = () => { timers.forEach(clearTimeout); timers = []; };
+
+    // width of the white word box follows the current word
+    const sizeRot = (i: number) => {
+      const w = words[i];
+      rot.style.width = `${w.scrollWidth / parseFloat(getComputedStyle(rot).fontSize) + 0.44}em`;
+      track.style.transform = `translateY(${-i * 1.1}em)`;
+    };
+
+    const play = () => {
+      clear();
+      const s = scenes[index];
+      sizeRot(index);
+      eng.textContent = s.eng;
+      chat.classList.add('is-typing');
+      chat.classList.remove('show-cite');
+      badges.forEach((b) => b.classList.remove('on'));
+      q.textContent = '';
+      a.innerHTML = '';
+      citeText.textContent = s.cite;
+      let c = 0;
+      const typeQ = () => {
+        q.textContent = s.q.slice(0, ++c);
+        if (c < s.q.length) later(typeQ, 26);
+        else later(streamA, 380);
+      };
+      // stream the answer word by word, keeping the <mark> intact
+      const tokens = s.a.split(/(<mark>.*?<\/mark>|\s+)/).filter((t) => t && !/^\s+$/.test(t));
+      let k = 0;
+      const streamA = () => {
+        a.innerHTML = tokens.slice(0, ++k).join(' ');
+        if (k < tokens.length) later(streamA, 55);
+        else {
+          later(() => chat.classList.add('show-cite'), 250);
+          badges.forEach((b, i) => later(() => b.classList.add('on'), 600 + i * 220));
+          later(() => { index = (index + 1) % scenes.length; play(); }, 3600);
+        }
+      };
+      later(typeQ, 450);
+    };
+
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !running) { running = true; play(); }
+      else if (!e.isIntersecting && running) { running = false; clear(); }
+    }, { threshold: 0.25 }).observe(hero);
+    addEventListener('resize', () => sizeRot(index));
+
+    // subtle parallax on the stage
+    hero.addEventListener('pointermove', (e) => {
+      const r = stage.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width - 0.5) * 14;
+      const y = ((e.clientY - r.top) / r.height - 0.5) * 14;
+      stage.querySelectorAll<HTMLElement>('.chat, .depth').forEach((el) => {
+        el.style.setProperty('--px', `${x}px`);
+        el.style.setProperty('--py', `${y}px`);
+      });
+    });
+    hero.addEventListener('pointerleave', () => {
+      stage.querySelectorAll<HTMLElement>('.chat, .depth').forEach((el) => { el.style.setProperty('--px', '0px'); el.style.setProperty('--py', '0px'); });
+    });
+    document.fonts?.ready.then(() => sizeRot(index));
+  }
+</script>
