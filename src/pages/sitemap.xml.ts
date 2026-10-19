@@ -6,8 +6,8 @@ const esc = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replac
 
 export const GET: APIRoute = () => {
   const pages = [
-    { loc: '/', lastmod: SITE.published, priority: '1.0', image: { loc: '/og/home.jpg', title: 'Arrow Signal — be the signal in AI answers' } },
-    { loc: '/blog/', lastmod: SITE.published, priority: '0.9', image: { loc: '/og/blog.jpg', title: 'The Signal Journal — 15 AI visibility guides' } },
+    { loc: '/', lastmod: SITE.published, priority: '1.0', image: { loc: '/og/home.jpg', title: 'Arrow Signal: get your brand into AI answers' } },
+    { loc: '/blog/', lastmod: SITE.published, priority: '0.9', image: { loc: '/og/blog.jpg', title: 'Arrow Signal: 15 AI visibility guides' } },
     ...articles.map((a) => ({ loc: a.url, lastmod: a.updated, priority: '0.8', image: { loc: `/og/${a.slug}.jpg`, title: a.title } })),
     { loc: '/glossary/', lastmod: SITE.published, priority: '0.7', image: { loc: '/og/glossary.jpg', title: 'AI visibility glossary' } },
     { loc: '/about/', lastmod: SITE.published, priority: '0.5' },

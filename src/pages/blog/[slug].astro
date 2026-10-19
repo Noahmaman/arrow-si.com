@@ -1,7 +1,5 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Icon from '../../components/Icon.astro';
-import ArticleCover from '../../components/ArticleCover.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import { articles, related, formatDate, type Article } from '../../lib/articles';
 import { SITE, ARROW, ORGANIZATION_ID, askAiLinks, absolute } from '../../lib/site';
@@ -30,7 +28,7 @@ const schema = [
     alternativeHeadline: article.seoTitle,
     description: article.description,
     abstract: article.summary,
-    image: [{ '@type': 'ImageObject', url: absolute(ogImage), width: 1200, height: 630, caption: article.coverAlt }],
+    image: [{ '@type': 'ImageObject', url: absolute(ogImage), width: 1200, height: 630 }],
     datePublished: article.published,
     dateModified: article.updated,
     inLanguage: 'en',
@@ -40,7 +38,7 @@ const schema = [
     keywords: article.keywords.join(', '),
     author: { '@id': ORGANIZATION_ID },
     publisher: { '@id': ORGANIZATION_ID },
-    isPartOf: { '@type': 'Blog', '@id': `${SITE.url}/blog/#blog`, name: 'The Signal Journal', url: `${SITE.url}/blog/` },
+    isPartOf: { '@type': 'Blog', '@id': `${SITE.url}/blog/#blog`, name: 'Arrow Signal guides', url: `${SITE.url}/blog/` },
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     about: article.keywords.slice(0, 3).map((k) => ({ '@type': 'Thing', name: k })),
     citation: article.sources.map((s) => ({ '@type': 'CreativeWork', name: s.title, url: s.url })),
@@ -50,7 +48,7 @@ const schema = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'The Signal Journal', item: `${SITE.url}/blog/` },
+      { '@type': 'ListItem', position: 2, name: 'Guides', item: `${SITE.url}/blog/` },
       { '@type': 'ListItem', position: 3, name: article.title, item: url },
     ],
   },
@@ -65,73 +63,63 @@ const schema = [
   title={`${article.seoTitle} | Arrow Signal`}
   description={article.description}
   image={ogImage}
-  imageAlt={`${article.title} — Arrow Signal journal cover: ${article.coverAlt}`}
+  imageAlt={`${article.title}. A guide from Arrow Signal by Arrow AI.`}
   type="article"
   published={`${article.published}T09:00:00Z`}
   modified={`${article.updated}T09:00:00Z`}
   section={article.category}
   tags={article.keywords}
   schema={schema}
-  progress
 >
   <article>
-    <header class="page-hero night article-hero">
-      <div class="dot-grid" aria-hidden="true"></div>
-      <div class="glow" aria-hidden="true"></div>
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <nav class="crumbs" aria-label="Breadcrumb">
-            <a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Journal</a><span aria-hidden="true">/</span><span aria-current="page">{article.category}</span>
-          </nav>
-          <p class="kicker">{article.category} · Signal {String(article.order).padStart(2, '0')}</p>
-          <h1 class="rise">{article.title}</h1>
-          <p class="lede rise" style="--d:80ms">{article.description}</p>
-          <div class="meta mono rise" style="--d:140ms">
-            <span class="by"><img src="/brand/arrow-icon-192.png" alt="" width="22" height="22" />By <a href={ARROW.about}>Arrow AI</a></span>
-            <span>Published <time datetime={article.published}>{formatDate(article.published)}</time></span>
-            {article.updated !== article.published && <span>Updated <time datetime={article.updated}>{formatDate(article.updated)}</time></span>}
-            <span>{article.minutes} min read</span>
-          </div>
-        </div>
-        <figure class="hero-cover rise" style="--d:120ms">
-          <div class="cover"><ArticleCover slug={article.slug} motif={article.motif} alt={article.coverAlt} label={`ARROW SIGNAL / ${String(article.order).padStart(2, '0')}`} /></div>
-          <figcaption class="mono">{article.coverAlt}</figcaption>
-        </figure>
+    <header class="page-head">
+      <div class="wrap">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/">Home</a><span aria-hidden="true">/</span><a href="/blog/">Guides</a><span aria-hidden="true">/</span><span aria-current="page">{article.category}</span>
+        </nav>
+        <span class="eyebrow">{article.category}</span>
+        <h1>{article.title}</h1>
+        <p class="lede">{article.description}</p>
+        <p class="byline">
+          <img src="/brand/arrow-icon-192.png" alt="" width="22" height="22" />
+          <span>By <a href={ARROW.about}>Arrow AI</a></span>
+          <span aria-hidden="true">·</span>
+          <time datetime={article.updated}>{formatDate(article.updated)}</time>
+          <span aria-hidden="true">·</span>
+          <span>{article.minutes} min read</span>
+        </p>
       </div>
     </header>
 
-    <div class="wrap article-layout">
+    <div class="wrap layout">
       <aside class="toc" aria-label="On this page">
         <div class="toc-inner">
-          <p class="mono toc-title">On this page</p>
+          <p class="toc-title">On this page</p>
           <ol>
             <li><a href="#short-answer">Short answer</a></li>
             {toc.map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#sources">Sources</a></li>
           </ol>
-          <a class="btn btn-heat btn-sm toc-cta" href={ARROW.freeAudit}>Free AI visibility audit <Icon name="arrow" size={13} /></a>
         </div>
       </aside>
 
-      <div class="article-main">
+      <div class="main">
         <section class="short-answer" id="short-answer" aria-labelledby="sa-title">
-          <h2 id="sa-title" class="mono sa-label"><Icon name="spark" size={11} /> Short answer</h2>
+          <h2 id="sa-title">Short answer</h2>
           <p>{article.summary}</p>
         </section>
 
         <section class="takeaways" aria-labelledby="kt-title">
-          <h2 id="kt-title" class="mono">Key takeaways</h2>
-          <ul>
-            {article.takeaways.map((t) => <li><span class="tick" aria-hidden="true"><Icon name="check" size={12} /></span>{t}</li>)}
-          </ul>
+          <h2 id="kt-title">Key points</h2>
+          <ul>{article.takeaways.map((t) => <li>{t}</li>)}</ul>
         </section>
 
         <div class="prose">
           <Content />
         </div>
 
-        <section class="faq-block" id="faq" aria-labelledby="faq-title">
+        <section class="block" id="faq" aria-labelledby="faq-title">
           <h2 id="faq-title">Frequently asked questions</h2>
           {article.faq.map((f) => (
             <div class="qa">
@@ -141,162 +129,116 @@ const schema = [
           ))}
         </section>
 
-        <section class="eco-block" aria-labelledby="eco-title">
-          <p class="kicker">Go deeper in the Arrow ecosystem</p>
-          <h2 id="eco-title" class="sr-only">Related resources from Arrow AI</h2>
-          <ul>
+        <section class="block" aria-labelledby="more-title">
+          <h2 id="more-title">Further reading from Arrow AI</h2>
+          <ul class="more">
             {article.ecosystem.map((e) => (
-              <li>
-                <a href={e.url}>
-                  <span class="mono eco-note">{e.note}</span>
-                  <span class="eco-title">{e.title}</span>
-                  <Icon name="arrow" size={16} />
-                </a>
-              </li>
+              <li><a href={e.url}>{e.title}</a> <span class="muted">({e.note})</span></li>
             ))}
           </ul>
         </section>
 
-        <section class="sources" id="sources" aria-labelledby="src-title">
-          <h2 id="src-title">Sources &amp; further reading</h2>
-          <ol>
+        <section class="block" id="sources" aria-labelledby="src-title">
+          <h2 id="src-title">Sources</h2>
+          <ol class="sources">
             {article.sources.map((s) => <li><a href={s.url} rel="noopener">{s.title}</a></li>)}
           </ol>
-          <p class="note">Recommendations in this guide are Arrow Signal’s editorial view based on the sources above and Arrow AI’s GEO practice. AI engines control their own answers; no tactic guarantees a mention, citation or recommendation.</p>
+          <p class="note">The advice in this guide is Arrow AI’s view, based on the sources above and our GEO work with clients. AI companies control their own answers, so nothing here guarantees a mention, citation or recommendation.</p>
         </section>
 
-        <div class="share-row">
-          <div class="ask-ai">
-            <span class="label">Ask AI about this guide</span>
-            {ask.map((l) => <a href={l.url} target="_blank" rel="noopener">{l.name} <Icon name="arrow" size={12} /></a>)}
+        <div class="share">
+          <div class="inline-links">
+            <span class="label">Share:</span>
+            <a href={share.linkedin} target="_blank" rel="noopener">LinkedIn</a>
+            <a href={share.x} target="_blank" rel="noopener">X</a>
+            <button type="button" data-copy={url}>Copy link</button>
           </div>
-          <div class="ask-ai">
-            <span class="label">Share</span>
-            <a href={share.linkedin} target="_blank" rel="noopener" aria-label="Share this guide on LinkedIn"><Icon name="linkedin" size={14} /> LinkedIn</a>
-            <a href={share.x} target="_blank" rel="noopener" aria-label="Share this guide on X"><Icon name="x" size={13} /> X</a>
-            <button class="share-btn" type="button" data-copy={url}><Icon name="link" size={14} /> <span>Copy link</span></button>
+          <div class="inline-links">
+            <span class="label">Summarize with:</span>
+            {ask.map((l) => <a href={l.url} target="_blank" rel="noopener">{l.name}</a>)}
           </div>
         </div>
+
+        <aside class="cta-box" aria-labelledby="cta-title">
+          <h2 id="cta-title">Want to know what AI says about your brand?</h2>
+          <p>Arrow AI’s free audit checks how AI tools describe your business and tells you what to fix first.</p>
+          <div class="btn-row">
+            <a class="btn btn-primary" href={ARROW.freeAudit}>Get the free audit</a>
+            <a class="btn btn-secondary" href="https://arrow-ai.tech/">See the GEO demo</a>
+          </div>
+        </aside>
       </div>
     </div>
   </article>
 
-  <section class="night article-cta section is-tight" aria-labelledby="cta-title">
-    <div class="dot-grid" aria-hidden="true"></div>
-    <div class="wrap cta-inner">
-      <div>
-        <p class="kicker">Your next signal</p>
-        <h2 id="cta-title" class="h-section">See how AI engines talk about <span class="grad">your brand.</span></h2>
-      </div>
-      <div class="btn-row">
-        <a class="btn btn-heat" href={ARROW.freeAudit}>Run the free audit <Icon name="arrow" size={16} /></a>
-        <a class="btn btn-ghost-dark" href="https://arrow-ai.tech/">Explore the GEO demo</a>
-      </div>
-    </div>
-  </section>
-
-  <section class="section is-tight" aria-labelledby="next-title">
+  <section class="section soft" aria-labelledby="next-title">
     <div class="wrap">
-      <div class="next-head">
-        <h2 id="next-title" class="h-section">Keep reading the <span class="grad">signal.</span></h2>
-        <a class="text-link" href="/blog/">All 15 guides <Icon name="arrow" size={14} /></a>
-      </div>
-      <div class="next-grid">
-        {next.map((a) => <ArticleCard article={a} uid="-rel" />)}
-      </div>
+      <h2 id="next-title" class="next-title">Related guides</h2>
+      <ul class="post-list">
+        {next.map((a) => <ArticleCard article={a} />)}
+      </ul>
     </div>
   </section>
 </Base>
 
 <style>
-  .article-hero { padding-bottom: clamp(40px, 6vw, 64px); }
-  .hero-grid { position: relative; display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
-  .hero-copy h1 { font-size: clamp(2.1rem, 4.4vw, 3.4rem); }
-  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 26px; font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--night-muted); }
-  .meta .by { display: inline-flex; align-items: center; gap: 8px; color: var(--night-text); }
-  .meta .by img { border-radius: 6px; }
-  .meta a { color: inherit; }
-  .hero-cover .cover { border: 1px solid var(--n16); box-shadow: 0 40px 100px -40px rgba(37, 99, 235, 0.6); }
-  .hero-cover figcaption { margin-top: 10px; font-size: 0.66rem; letter-spacing: 0.04em; color: var(--night-faint); line-height: 1.5; }
-  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; } }
+  .page-head h1 { font-size: clamp(2rem, 4.2vw, 2.9rem); line-height: 1.12; }
+  .byline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 22px; font-size: 0.92rem; color: var(--muted); }
+  .byline img { border-radius: 6px; }
+  .byline a { color: var(--ink); font-weight: 600; text-decoration: none; }
 
-  .article-layout { display: grid; grid-template-columns: 240px minmax(0, 720px); gap: clamp(32px, 5vw, 72px); justify-content: center; padding-top: clamp(40px, 6vw, 72px); padding-bottom: clamp(56px, 8vw, 96px); }
-  .toc { position: relative; }
-  .toc-inner { position: sticky; top: calc(var(--header-h) + 28px); }
-  .toc-title { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); margin-bottom: 12px; }
-  .toc ol { list-style: none; display: grid; gap: 2px; border-left: 1px solid var(--a8); }
-  .toc ol a { display: block; padding: 6px 0 6px 14px; margin-left: -1px; border-left: 2px solid transparent; font-size: 0.88rem; line-height: 1.4; color: var(--muted); text-decoration: none; transition: color 0.2s, border-color 0.2s; }
-  .toc ol a:hover { color: var(--ink); }
-  .toc ol a.is-active { color: var(--blue); border-left-color: var(--blue); font-weight: 600; }
-  .toc-cta { margin-top: 22px; }
-  @media (max-width: 1000px) { .article-layout { grid-template-columns: minmax(0, 1fr); } .toc { display: none; } }
+  .layout { display: grid; grid-template-columns: 220px minmax(0, 720px); gap: clamp(32px, 5vw, 64px); justify-content: center; padding-top: 48px; padding-bottom: 72px; }
+  .toc-inner { position: sticky; top: calc(var(--header-h) + 24px); }
+  .toc-title { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+  .toc ol { list-style: none; border-left: 1px solid var(--line); }
+  .toc a { display: block; padding: 5px 0 5px 14px; margin-left: -1px; border-left: 2px solid transparent; font-size: 0.88rem; line-height: 1.4; color: var(--muted); text-decoration: none; }
+  .toc a:hover { color: var(--ink); }
+  .toc a.is-active { color: var(--blue); border-left-color: var(--blue); }
+  @media (max-width: 1000px) { .layout { grid-template-columns: minmax(0, 1fr); } .toc { display: none; } }
 
-  .short-answer {
-    position: relative; padding: 22px 24px; border-radius: var(--r-lg); color: var(--night-text);
-    background: linear-gradient(135deg, #0b1330, #070b1a); border: 1px solid rgba(91, 140, 255, 0.3);
-    box-shadow: 0 24px 60px -30px rgba(37, 99, 235, 0.6);
-  }
-  .sa-label { display: inline-flex; align-items: center; gap: 8px; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue-ice); font-weight: 500; }
-  .short-answer p { margin-top: 10px; font-size: 1.08rem; line-height: 1.65; }
-  .takeaways { margin-top: 18px; padding: 22px 24px; border-radius: var(--r-lg); background: #fff; border: 1px solid var(--a8); }
-  .takeaways h2 { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); font-weight: 500; }
-  .takeaways ul { list-style: none; margin-top: 12px; display: grid; gap: 10px; }
-  .takeaways li { display: flex; gap: 12px; color: var(--ink-soft); }
-  .tick { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--blue-soft); color: var(--blue); margin-top: 2px; }
-  .prose { margin-top: 36px; }
+  .short-answer { padding: 20px 22px; border-radius: var(--radius); background: var(--blue-tint); border: 1px solid var(--blue-line); }
+  .short-answer h2, .takeaways h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--blue); }
+  .short-answer p { margin-top: 8px; color: var(--ink); font-size: 1.05rem; }
+  .takeaways { margin-top: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  .takeaways h2 { color: var(--muted); }
+  .takeaways ul { margin-top: 10px; padding-left: 1.2em; display: grid; gap: 6px; }
+  .prose { margin-top: 32px; }
 
-  .faq-block { margin-top: 56px; }
-  .faq-block > h2, .sources h2 { font-size: clamp(1.55rem, 2.6vw, 1.95rem); letter-spacing: -0.03em; font-weight: 600; }
-  .qa { margin-top: 14px; padding: 18px 20px; border-radius: var(--r-md); background: #fff; border: 1px solid var(--a8); }
-  .qa h3 { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.01em; }
-  .qa p { margin-top: 6px; color: var(--muted); }
-
-  .eco-block { margin-top: 48px; padding: 24px; border-radius: var(--r-lg); background: linear-gradient(120deg, rgba(37, 99, 235, 0.08), rgba(101, 92, 255, 0.05)); border: 1px solid rgba(37, 99, 235, 0.2); }
-  .eco-block ul { list-style: none; display: grid; gap: 8px; }
-  .eco-block a { display: grid; grid-template-columns: 1fr auto; grid-template-rows: auto auto; column-gap: 12px; padding: 14px 16px; border-radius: var(--r-md); background: #fff; border: 1px solid var(--a8); text-decoration: none; transition: border-color 0.2s, transform 0.25s var(--ease); }
-  .eco-block a:hover { border-color: rgba(37, 99, 235, 0.4); transform: translateX(3px); }
-  .eco-note { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); }
-  .eco-title { grid-column: 1; font-weight: 600; color: var(--ink); }
-  .eco-block a :global(svg) { grid-row: 1 / span 2; grid-column: 2; align-self: center; color: var(--blue); }
-
-  .sources { margin-top: 48px; }
-  .sources ol { margin-top: 14px; padding-left: 1.3em; display: grid; gap: 8px; }
-  .sources a { color: var(--blue); }
-  .sources .note { margin-top: 16px; font-size: 0.88rem; color: var(--muted); }
-  .share-row { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--a8); display: grid; gap: 14px; }
-
-  .cta-inner { position: relative; display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; flex-wrap: wrap; }
-  .cta-inner .h-section { max-width: 640px; }
-  .next-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; margin-bottom: 32px; }
-  .next-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  @media (max-width: 960px) { .next-grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 620px) { .next-grid { grid-template-columns: 1fr; } }
+  .block { margin-top: 48px; }
+  .block > h2 { font-size: 1.5rem; }
+  .qa { margin-top: 18px; }
+  .qa h3 { font-size: 1.05rem; }
+  .qa p { margin-top: 4px; }
+  .more, .sources { margin-top: 12px; padding-left: 1.2em; display: grid; gap: 8px; }
+  .more a, .sources a { color: var(--blue); text-underline-offset: 3px; }
+  .note { margin-top: 16px; font-size: 0.9rem; color: var(--muted); }
+  .share { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+  .cta-box { margin-top: 40px; padding: 28px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--bg-soft); }
+  .cta-box h2 { font-size: 1.35rem; }
+  .cta-box p { margin-top: 8px; }
+  .cta-box .btn-row { margin-top: 18px; }
+  .next-title { font-size: 1.5rem; margin-bottom: 20px; }
 </style>
 
 <script>
-  // Table of contents scroll-spy
   const links = Array.from(document.querySelectorAll<HTMLAnchorElement>('.toc a[href^="#"]'));
   const targets = links.map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1)))).filter(Boolean) as HTMLElement[];
   if (targets.length && 'IntersectionObserver' in window) {
-    const setActive = (id: string) => links.forEach((a) => a.classList.toggle('is-active', a.hash === `#${id}`));
     const io = new IntersectionObserver((entries) => {
       const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-      if (visible[0]) setActive(visible[0].target.id);
+      if (visible[0]) links.forEach((a) => a.classList.toggle('is-active', a.hash === `#${visible[0].target.id}`));
     }, { rootMargin: '-15% 0px -70% 0px' });
     targets.forEach((t) => io.observe(t));
   }
-
-  // Copy link
   document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
     btn.addEventListener('click', async () => {
-      const label = btn.querySelector('span');
       try {
         await navigator.clipboard.writeText(btn.dataset.copy || location.href);
-        if (label) label.textContent = 'Link copied';
+        btn.textContent = 'Link copied';
       } catch {
-        if (label) label.textContent = 'Copy from the address bar';
+        btn.textContent = 'Copy from the address bar';
       }
-      setTimeout(() => { if (label) label.textContent = 'Copy link'; }, 2400);
+      setTimeout(() => (btn.textContent = 'Copy link'), 2400);
     });
   });
 </script>

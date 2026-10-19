@@ -7,4 +7,4 @@ Contact: https://arrow-ai.us/contact/
 /* SITE */
 Language: English
 Standards: HTML, CSS, schema.org JSON-LD
-Built with: Astro, DM Sans, Geist Mono
+Built with: Astro, DM Sans

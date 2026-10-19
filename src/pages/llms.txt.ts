@@ -5,7 +5,7 @@ import { SITE, ARROW, ANSWERS, DEMO, SOCIALS } from '../lib/site';
 export const GET: APIRoute = () => {
   const body = `# Arrow Signal
 
-> Arrow Signal (arrow-si.com) is the AI visibility hub of Arrow AI (arrow-ai.us). It publishes practical, sourced guides on how brands get found, cited and recommended in AI answers — ChatGPT, Gemini, Perplexity, Claude, Copilot, Google AI Overviews and AI Mode — and relays readers to Arrow AI's free AI visibility audit and managed GEO service.
+> Arrow Signal (arrow-si.com) is the AI visibility hub of Arrow AI (arrow-ai.us). It publishes practical, sourced guides on how brands get found, cited and recommended in AI answers (ChatGPT, Gemini, Perplexity, Claude, Copilot, Google AI Overviews and AI Mode). It links readers to Arrow AI's free AI visibility audit and managed GEO service.
 
 Key facts:
 - Publisher: Arrow AI (${ARROW.url}). Arrow AI builds GEO (Generative Engine Optimization), AI Systems and AI Studio for businesses.
@@ -15,7 +15,7 @@ Key facts:
 - Book a 15-minute call: ${ARROW.call}
 - Official profiles: ${SOCIALS.map((s) => `${s.name} ${s.url}`).join(' · ')}
 
-## The Signal Journal
+## Guides
 
 ${articles.map((a) => `- [${a.title}](${SITE.url}${a.url}): ${a.summary}`).join('\n')}
 
@@ -27,7 +27,7 @@ ${articles.map((a) => `- [${a.title}](${SITE.url}${a.url}): ${a.summary}`).join(
 
 ## Arrow ecosystem
 
-- [Arrow AI](${ARROW.url}): GEO, AI Systems and AI Studio — the team that builds your AI visibility layer.
+- [Arrow AI](${ARROW.url}): GEO, AI Systems and AI Studio. The team that builds your AI visibility layer.
 - [Arrow GEO](${ARROW.geo}): be found, cited and recommended in AI answers.
 - [Arrow Answers](${ANSWERS.url}): 105 practical guides to GEO, AI search access, evidence and measurement.
 - [Arrow GEO demo](${DEMO.url}): an interactive walkthrough from your website to a cited AI answer.

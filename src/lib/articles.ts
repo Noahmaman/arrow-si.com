@@ -15,8 +15,6 @@ export interface ArticleData {
   sources: LinkRef[];
   ecosystem: LinkRef[];
   keywords: string[];
-  motif: 'wave' | 'rings' | 'bars' | 'nodes' | 'scope' | 'grid';
-  coverAlt: string;
 }
 export interface Article extends ArticleData {
   slug: string;

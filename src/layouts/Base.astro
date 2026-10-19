@@ -1,7 +1,6 @@
 ---
 import '@fontsource-variable/dm-sans';
-import '@fontsource-variable/geist-mono';
-import '../styles/signal.css';
+import '../styles/site.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE, ARROW, SOCIALS, ORGANIZATION_ID, absolute } from '../lib/site';
@@ -18,14 +17,13 @@ interface Props {
   modified?: string;
   section?: string;
   tags?: string[];
-  progress?: boolean;
 }
 
 const {
   title,
   description,
   image = SITE.ogImage,
-  imageAlt = 'Arrow Signal: be the signal in AI answers. Arrow AI blue signal waves converging on the Arrow logo.',
+  imageAlt = 'Arrow Signal, the AI visibility guides from Arrow AI.',
   type = 'website',
   schema = [],
   noindex = false,
@@ -33,7 +31,6 @@ const {
   modified,
   section,
   tags = [],
-  progress = false,
 } = Astro.props;
 
 const canonical = absolute(Astro.url.pathname);
@@ -66,7 +63,7 @@ const graph = { '@context': 'https://schema.org', '@graph': [organization, websi
 const json = JSON.stringify(graph).replace(/</g, '\\u003c');
 ---
 <!doctype html>
-<html lang="en" class="no-js">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -74,8 +71,7 @@ const json = JSON.stringify(graph).replace(/</g, '\\u003c');
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
-    <meta name="theme-color" content="#04060e" />
-    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" />
     <meta name="author" content="Arrow AI" />
     <meta name="generator" content={Astro.generator} />
     <link rel="alternate" hreflang="en" href={canonical} />
@@ -84,7 +80,7 @@ const json = JSON.stringify(graph).replace(/</g, '\\u003c');
     <link rel="icon" href="/brand/arrow-icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="alternate" type="application/rss+xml" title="Arrow Signal — AI visibility journal" href="/feed.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Arrow Signal guides" href="/feed.xml" />
     <link rel="alternate" type="text/plain" title="LLM-readable site summary" href="/llms.txt" />
 
     <meta property="og:site_name" content={SITE.name} />
@@ -110,18 +106,13 @@ const json = JSON.stringify(graph).replace(/</g, '\\u003c');
     <meta name="twitter:image:alt" content={imageAlt} />
 
     <script type="application/ld+json" set:html={json} />
-    <script is:inline>document.documentElement.classList.remove('no-js');</script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
-    <Header progress={progress} />
+    <Header />
     <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
-    <script>
-      import { initReveal } from '../lib/reveal';
-      initReveal();
-    </script>
   </body>
 </html>

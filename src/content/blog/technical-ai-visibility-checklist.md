@@ -6,13 +6,11 @@ category: Technical
 order: 10
 published: "2026-10-13"
 updated: "2026-10-13"
-motif: grid
-coverAlt: "A dark technical grid of rounded squares with a few lit in Arrow blue, representing a crawler checklist with items passing."
 keywords: ["AI crawlers", "robots.txt AI", "OAI-SearchBot", "GPTBot", "PerplexityBot", "Google-Extended", "llms.txt", "technical GEO"]
 summary: "Technical AI visibility comes down to five checks: the crawlers that power AI search (OAI-SearchBot, PerplexityBot, Claude-SearchBot, Googlebot, Bingbot) are allowed in robots.txt and not blocked by your firewall; key pages are indexed in Google and Bing; important text is present in the server HTML; pages are fast and return correct status codes; and sitemaps are current. Training crawlers such as GPTBot and Google-Extended are a separate business decision. llms.txt is optional."
 takeaways:
   - "Separate search/retrieval crawlers (needed for citations) from training crawlers (a policy choice)."
-  - "Check your CDN or firewall — bot protection often blocks AI crawlers silently."
+  - "Check your CDN or firewall: bot protection often blocks AI crawlers silently."
   - "Make sure key text, prices and FAQs are in the raw HTML, not only rendered by JavaScript."
   - "llms.txt is an optional proposal; no major engine has confirmed it as a citation signal."
 faq:
@@ -23,15 +21,15 @@ faq:
   - q: "Do I need an llms.txt file?"
     a: "It's optional. llms.txt is a community proposal for giving language-model tools a clean map of your content. It costs little to add, but don't expect it to change rankings or citations on its own."
 sources:
-  - title: "OpenAI — Overview of OpenAI crawlers"
+  - title: "OpenAI: Overview of OpenAI crawlers"
     url: "https://platform.openai.com/docs/bots"
-  - title: "Google Search Central — Google's common crawlers (incl. Google-Extended)"
+  - title: "Google Search Central: Google's common crawlers (incl. Google-Extended)"
     url: "https://developers.google.com/search/docs/crawling-indexing/google-common-crawlers"
-  - title: "Google Search Central — JavaScript SEO basics"
+  - title: "Google Search Central: JavaScript SEO basics"
     url: "https://developers.google.com/search/docs/crawling-indexing/javascript/javascript-seo-basics"
-  - title: "llms.txt — proposal and specification"
+  - title: "llms.txt: proposal and specification"
     url: "https://llmstxt.org/"
-  - title: "IndexNow — protocol for instant indexing"
+  - title: "IndexNow: protocol for instant indexing"
     url: "https://www.indexnow.org/"
 ecosystem:
   - title: "How do I check whether a crawler can access my page?"
@@ -40,7 +38,7 @@ ecosystem:
   - title: "Should I add an llms.txt file?"
     url: "https://answers.arrow-ai.us/do-i-need-llms-txt-for-geo/"
     note: "Arrow Answers"
-  - title: "Access & indexing — all technical guides"
+  - title: "Access & indexing: all technical guides"
     url: "https://answers.arrow-ai.us/topics/crawlability-and-indexing/"
     note: "Arrow Answers"
 ---
@@ -51,7 +49,7 @@ Content can’t be cited if it can’t be fetched. Before any GEO content work, 
 
 AI crawlers fall into two groups. Treat them differently.
 
-**Search and retrieval crawlers** fetch pages so an AI product can answer — and cite — in real time. Block them and you can’t be a source.
+**Search and retrieval crawlers** fetch pages so an AI product can answer, and cite, in real time. Block them and you can’t be a source.
 
 | Crawler | Used for |
 |---|---|
@@ -68,7 +66,7 @@ AI crawlers fall into two groups. Treat them differently.
 |---|---|
 | **GPTBot** | Use of content for OpenAI model training |
 | **ClaudeBot** | Use of content for Anthropic model training |
-| **Google-Extended** | Use for Gemini training and grounding — *not* Google Search or AI Overviews |
+| **Google-Extended** | Use for Gemini training and grounding: *not* Google Search or AI Overviews |
 | **Applebot-Extended** | Use for Apple’s generative model training |
 | **CCBot** | Common Crawl, a dataset widely used for training |
 
@@ -78,7 +76,7 @@ Vendors update these lists; check each vendor’s documentation (linked below) w
 
 Open `yourdomain.com/robots.txt` and look for:
 
-- a blanket `Disallow: /` under `User-agent: *` (blocks everyone — often left over from staging);
+- a blanket `Disallow: /` under `User-agent: *` (blocks everyone, often left over from staging);
 - explicit disallows for the retrieval crawlers above;
 - disallowed folders that contain pages you want cited (`/pricing/`, `/blog/`, `/docs/`);
 - a `Sitemap:` line pointing to your current sitemap.
@@ -106,7 +104,7 @@ This is the most common silent blocker. Bot-management features at CDNs and fire
 
 - your CDN’s bot settings and any “block AI bots” toggle;
 - WAF rules and rate limits;
-- **server logs** for the user agents above — are they getting `200` responses, or `403`/challenge pages?
+- **server logs** for the user agents above: are they getting `200` responses, or `403`/challenge pages?
 
 ## 4. Confirm indexing
 
@@ -124,7 +122,7 @@ Server-side rendering or static generation removes the doubt. (This site is full
 
 ## 6. Make pages fast and clean
 
-- Correct status codes: `200` for live pages, `301` for moved ones, `404`/`410` for removed ones — not soft 404s.
+- Correct status codes: `200` for live pages, `301` for moved ones, `404`/`410` for removed ones, not soft 404s.
 - One canonical URL per page; `rel="canonical"` consistent with sitemaps and internal links.
 - Fast responses: crawlers with time budgets may give up on slow pages.
 - No interstitials or cookie walls that hide the content from non-browser clients.
@@ -133,9 +131,9 @@ Server-side rendering or static generation removes the doubt. (This site is full
 
 Add `Organization`, `WebSite`, `Article`, `Product`, `FAQPage` or `LocalBusiness` markup where relevant, matching what’s visible. It helps systems interpret your content; it does not force inclusion. Details in [structured data for AI visibility](/blog/schema-markup-ai-visibility/).
 
-## 8. llms.txt — optional extra
+## 8. llms.txt: optional extra
 
-[llms.txt](https://llmstxt.org/) is a proposal: a Markdown file at your root that gives language-model tools a concise map of your most useful content. It’s cheap to add (this site has one at [/llms.txt](/llms.txt)), and some developer tools read it. But no major AI search engine has confirmed it as a ranking or citation signal — don’t prioritise it over steps 1–7.
+[llms.txt](https://llmstxt.org/) is a proposal: a Markdown file at your root that gives language-model tools a concise map of your most useful content. It’s cheap to add (this site has one at [/llms.txt](/llms.txt)), and some developer tools read it. But no major AI search engine has confirmed it as a ranking or citation signal: don’t prioritise it over steps 1–7.
 
 ## The 15-minute version
 
@@ -145,4 +143,4 @@ Add `Organization`, `WebSite`, `Article`, `Product`, `FAQPage` or `LocalBusiness
 4. Key answers present in raw HTML. ✔
 5. Sitemap current and submitted. ✔
 
-If any of these fail, fix them before anything else. Then move on to [entity clarity](/blog/entity-clarity-ai-search/) and [citable content](/blog/content-ai-engines-cite/) — or let Arrow run the full check in the [free AI visibility audit](https://arrow-ai.us/free-audit/).
+If any of these fail, fix them before anything else. Then move on to [entity clarity](/blog/entity-clarity-ai-search/) and [citable content](/blog/content-ai-engines-cite/), or let Arrow run the full check in the [free AI visibility audit](https://arrow-ai.us/free-audit/).

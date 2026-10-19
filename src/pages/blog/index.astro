@@ -1,22 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
-import ArticleCover from '../../components/ArticleCover.astro';
-import Icon from '../../components/Icon.astro';
-import SignalField from '../../components/SignalField.astro';
 import { articles, categories } from '../../lib/articles';
 import { SITE, ORGANIZATION_ID, absolute } from '../../lib/site';
 
-const title = 'The Signal Journal: 15 AI Visibility & GEO Guides | Arrow Signal';
+const title = 'AI Visibility Guides: 15 Practical GEO Articles | Arrow Signal';
 const description =
-  'Fifteen practical guides to AI visibility and GEO: measure your brand in ChatGPT, Gemini and Perplexity, fix what blocks citations and earn AI recommendations.';
-const [lead, ...rest] = articles;
+  'Fifteen practical guides to AI visibility and GEO: measure your brand in ChatGPT, Gemini and Perplexity, fix what blocks citations and earn recommendations.';
 const schema = [
   {
     '@type': ['Blog', 'CollectionPage'],
     '@id': `${SITE.url}/blog/#blog`,
     url: `${SITE.url}/blog/`,
-    name: 'The Signal Journal',
+    name: 'Arrow Signal guides',
     description,
     inLanguage: 'en',
     publisher: { '@id': ORGANIZATION_ID },
@@ -27,43 +23,22 @@ const schema = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE.url}/` },
-      { '@type': 'ListItem', position: 2, name: 'The Signal Journal', item: `${SITE.url}/blog/` },
+      { '@type': 'ListItem', position: 2, name: 'Guides', item: `${SITE.url}/blog/` },
     ],
   },
 ];
 ---
-<Base title={title} description={description} image="/og/blog.jpg" imageAlt="The Signal Journal by Arrow Signal: fifteen guides to AI visibility and GEO." schema={schema}>
-  <header class="page-hero night journal-hero">
-    <SignalField lines={14} mode="calm" />
-    <div class="glow" aria-hidden="true"></div>
+<Base title={title} description={description} image="/og/blog.jpg" imageAlt="Arrow Signal: fifteen guides to AI visibility and GEO." schema={schema}>
+  <header class="page-head">
     <div class="wrap">
-      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Journal</span></nav>
-      <p class="kicker rise">The Signal Journal</p>
-      <h1 class="rise" style="--d:60ms">Fifteen guides to <span class="grad">AI visibility.</span></h1>
-      <p class="lede rise" style="--d:120ms">How AI engines choose what to say — and how to make your brand part of the answer. Practical, sourced and honest about what nobody can guarantee.</p>
-      <div class="stats mono rise" style="--d:180ms">
-        <span><strong>15</strong> guides</span><span><strong>{categories.length}</strong> topics</span><span><strong>{Math.round(articles.reduce((s, a) => s + a.minutes, 0))}</strong> min of reading</span>
-      </div>
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Guides</span></nav>
+      <h1>AI visibility guides</h1>
+      <p class="lede">How AI tools decide what to say about a business, and what you can do about it. Each guide starts with a short answer and links to its sources.</p>
     </div>
   </header>
 
-  <section class="section is-tight" aria-labelledby="lead-title">
+  <section class="section">
     <div class="wrap">
-      <a class="lead reveal" href={lead.url}>
-        <div class="cover"><ArticleCover slug={lead.slug} motif={lead.motif} alt={lead.coverAlt} label="START HERE / 01" uid="-lead" /></div>
-        <div class="lead-body">
-          <span class="mono lead-k">Start here · {lead.category} · {lead.minutes} min read</span>
-          <h2 id="lead-title" class="h-section">{lead.title}</h2>
-          <p>{lead.summary}</p>
-          <span class="text-link">Read the guide <Icon name="arrow" size={15} /></span>
-        </div>
-      </a>
-    </div>
-  </section>
-
-  <section class="section is-tight library" aria-labelledby="lib-title">
-    <div class="wrap">
-      <h2 id="lib-title" class="sr-only">All AI visibility guides</h2>
       <div class="tools">
         <div class="filters" role="group" aria-label="Filter guides by topic">
           <button type="button" class="filter is-active" data-filter="all" aria-pressed="true">All</button>
@@ -71,49 +46,34 @@ const schema = [
         </div>
         <label class="search">
           <span class="sr-only">Search the guides</span>
-          <input type="search" placeholder="Search guides…" data-search autocomplete="off" />
+          <input type="search" placeholder="Search guides" data-search autocomplete="off" />
         </label>
       </div>
-      <p class="count mono" aria-live="polite" data-count-label>{rest.length + 1} guides</p>
-      <div class="grid">
-        <div class="cell" data-cell data-category={lead.category} data-title={`${lead.title} ${lead.description}`.toLowerCase()} hidden><ArticleCard article={lead} uid="-grid" headingLevel="h3" /></div>
-        {rest.map((a) => <div class="cell" data-cell data-category={a.category} data-title={`${a.title} ${a.description}`.toLowerCase()}><ArticleCard article={a} uid="-grid" /></div>)}
-      </div>
-      <p class="empty" hidden data-empty>No guide matches that search. Try “citations”, “ChatGPT” or “schema”.</p>
+      <p class="count" aria-live="polite" data-count-label>{articles.length} guides</p>
+      <ul class="post-list" data-list>
+        {articles.map((a) => <ArticleCard article={a} headingLevel="h2" />)}
+      </ul>
+      <p class="empty" hidden data-empty>No guide matches that search.</p>
     </div>
   </section>
 </Base>
 
 <style>
-  .journal-hero { padding-bottom: clamp(56px, 8vw, 96px); }
-  .journal-hero h1 { font-size: clamp(2.6rem, 6vw, 4.8rem); }
-  .stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 30px; font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--night-muted); }
-  .stats strong { color: #fff; font-size: 1rem; margin-right: 4px; }
-  .lead { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 4vw, 48px); align-items: center; text-decoration: none; padding: 18px; border-radius: var(--r-xl); background: #fff; border: 1px solid var(--a8); transition: box-shadow 0.3s, border-color 0.3s; }
-  .lead:hover { border-color: rgba(37, 99, 235, 0.3); box-shadow: 0 30px 80px -40px rgba(37, 99, 235, 0.5); }
-  .lead .cover { border-radius: var(--r-lg); }
-  .lead-k { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); }
-  .lead h2 { margin-top: 10px; font-size: clamp(1.7rem, 3.2vw, 2.4rem); }
-  .lead p { margin-top: 14px; color: var(--muted); }
-  .lead .text-link { margin-top: 18px; }
-  @media (max-width: 860px) { .lead { grid-template-columns: 1fr; } }
-  .tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px; }
-  .filters { display: flex; flex-wrap: wrap; gap: 8px; }
-  .filter { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--a12); background: #fff; font-size: 0.86rem; font-weight: 500; color: var(--ink-soft); transition: all 0.2s; }
-  .filter:hover { border-color: rgba(37, 99, 235, 0.4); }
-  .filter.is-active { background: var(--ink); color: #fff; border-color: var(--ink); }
-  .search input { width: min(280px, 100%); padding: 10px 14px; border-radius: 999px; border: 1px solid var(--a12); background: #fff; }
-  .search input:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
-  .count { margin: 18px 0; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
-  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .cell[hidden] { display: none; }
-  .empty { padding: 40px 0; text-align: center; color: var(--muted); }
-  @media (max-width: 960px) { .grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } .search, .search input { width: 100%; } }
+  .tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 6px; }
+  .filter { padding: 6px 12px; border-radius: 6px; border: 1px solid var(--line); font-size: 0.9rem; color: var(--text); }
+  .filter:hover { border-color: #c4c8d0; }
+  .filter.is-active { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .search input { width: min(260px, 100%); padding: 8px 12px; border-radius: 6px; border: 1px solid var(--line); }
+  .count { margin: 24px 0 8px; font-size: 0.9rem; color: var(--muted); }
+  .post-list :global(h2) { font-size: 1.25rem; }
+  .post-list :global(li[hidden]) { display: none; }
+  .empty { padding: 32px 0; color: var(--muted); }
+  @media (max-width: 620px) { .search, .search input { width: 100%; } }
 </style>
 
 <script>
-  const cells = Array.from(document.querySelectorAll<HTMLElement>('[data-cell]'));
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-list] > li'));
   const search = document.querySelector<HTMLInputElement>('[data-search]');
   const label = document.querySelector<HTMLElement>('[data-count-label]');
   const empty = document.querySelector<HTMLElement>('[data-empty]');
@@ -121,13 +81,10 @@ const schema = [
   const apply = () => {
     const q = (search?.value || '').trim().toLowerCase();
     let n = 0;
-    cells.forEach((cell, i) => {
-      // The lead article is shown in its own block when nothing is filtered.
-      const isLead = i === 0;
-      const match = (filter === 'all' || cell.dataset.category === filter) && (!q || (cell.dataset.title || '').includes(q));
-      const show = match && !(isLead && filter === 'all' && !q);
-      cell.hidden = !show;
-      if (match) n++;
+    items.forEach((li) => {
+      const show = (filter === 'all' || li.dataset.category === filter) && (!q || (li.dataset.title || '').includes(q));
+      li.hidden = !show;
+      if (show) n++;
     });
     if (label) label.textContent = `${n} guide${n === 1 ? '' : 's'}`;
     if (empty) empty.hidden = n !== 0;
@@ -136,9 +93,8 @@ const schema = [
     btn.addEventListener('click', () => {
       filter = btn.dataset.filter || 'all';
       document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach((b) => {
-        const on = b === btn;
-        b.classList.toggle('is-active', on);
-        b.setAttribute('aria-pressed', String(on));
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-pressed', String(b === btn));
       });
       apply();
     });

@@ -6,15 +6,13 @@ category: Foundations
 order: 3
 published: "2026-10-13"
 updated: "2026-10-13"
-motif: nodes
-coverAlt: "A constellation of blue nodes connected by thin lines to one bright central node, representing a brand linked to the sources that cite it."
 keywords: ["AI mentions", "AI citations", "AI recommendations", "brand mentions in ChatGPT", "AI visibility signals"]
-summary: "A mention means an AI answer names your brand. A citation means the answer links to a source — ideally your own page. A recommendation means the answer suggests your brand for the buyer's need. They overlap but are independent: you can be cited and not recommended, or mentioned without a citation. Score each one separately, plus accuracy, across a fixed set of buyer questions."
+summary: "A mention means an AI answer names your brand. A citation means the answer links to a source, ideally your own page. A recommendation means the answer suggests your brand for the buyer's need. They overlap but are independent: you can be cited and not recommended, or mentioned without a citation. Score each one separately, plus accuracy, across a fixed set of buyer questions."
 takeaways:
   - "Mention = your name appears. Citation = a source is linked. Recommendation = you are suggested."
   - "The signals are independent; one does not imply the others."
   - "Recommendations move pipeline; citations prove your content is used; mentions show awareness."
-  - "Always score accuracy too — being recommended with the wrong price is a liability."
+  - "Always score accuracy too: being recommended with the wrong price is a liability."
 faq:
   - q: "Which AI visibility signal matters most?"
     a: "Recommendations have the most direct commercial value, but citations of your own pages are the signal you can influence most directly through content and technical work. Track all of them."
@@ -23,9 +21,9 @@ faq:
   - q: "Do all AI engines show citations?"
     a: "No. Perplexity, Google AI Overviews, AI Mode, Copilot and ChatGPT search usually show sources; answers generated without live retrieval may show none. Record whether sources were shown at all."
 sources:
-  - title: "Google Search Central — AI features and your website"
+  - title: "Google Search Central: AI features and your website"
     url: "https://developers.google.com/search/docs/appearance/ai-features"
-  - title: "Aggarwal et al. — GEO: Generative Engine Optimization (arXiv:2311.09735)"
+  - title: "Aggarwal et al.: GEO: Generative Engine Optimization (arXiv:2311.09735)"
     url: "https://arxiv.org/abs/2311.09735"
 ecosystem:
   - title: "What is the difference between an AI mention, citation and recommendation?"
@@ -34,12 +32,12 @@ ecosystem:
   - title: "What does Arrow GEO measure today?"
     url: "https://answers.arrow-ai.us/what-does-arrow-geo-measure/"
     note: "Arrow Answers"
-  - title: "Free AI visibility audit — see how AI engines talk about your brand"
+  - title: "Free AI visibility audit: see how AI engines talk about your brand"
     url: "https://arrow-ai.us/free-audit/"
     note: "Arrow AI"
 ---
 
-In the Arrow film, three badges light up one after another: **CITED ✓ — RECOMMENDED ✓ — SOURCE LINKED ✓.** That sequence is the whole game. But most AI visibility reports collapse those signals into one vague score — and then teams fix the wrong thing.
+In the Arrow film, three badges light up one after another: **CITED ✓, RECOMMENDED ✓, SOURCE LINKED ✓.** That sequence is the whole game. But most AI visibility reports collapse those signals into one vague score, and then teams fix the wrong thing.
 
 Here’s how to separate them.
 
@@ -51,7 +49,7 @@ Here’s how to separate them.
 
 **Recommendation.** The answer suggests your brand for the buyer’s situation. *“For a 20-person team, Your Brand is the best fit because…”*
 
-**Accuracy.** Whatever the answer says about you — offer, pricing, locations, audience — is correct and current.
+**Accuracy.** Whatever the answer says about you (offer, pricing, locations, audience) is correct and current.
 
 ## Why they’re independent
 
@@ -59,11 +57,11 @@ The signals come from different mechanisms, so they move independently:
 
 | Situation | Mention | Citation (own URL) | Recommendation | What it usually means |
 |---|---|---|---|---|
-| Engine uses your guide but suggests a rival | — | ✓ | — | Strong content, weak proof or positioning |
-| Engine names you from memory, cites others | ✓ | — | — | Awareness, but your pages aren’t retrieved or aren’t useful |
-| Engine recommends you citing a review site | ✓ | — | ✓ | Third-party evidence is doing the work |
-| Engine recommends you citing your pricing page | ✓ | ✓ | ✓ | Full signal — protect it |
-| Engine describes you wrongly | ✓ | ? | ? | Accuracy problem — urgent |
+| Engine uses your guide but suggests a rival | ✗ | ✓ | ✗ | Strong content, weak proof or positioning |
+| Engine names you from memory, cites others | ✓ | ✗ | ✗ | Awareness, but your pages aren’t retrieved or aren’t useful |
+| Engine recommends you citing a review site | ✓ | ✗ | ✓ | Third-party evidence is doing the work |
+| Engine recommends you citing your pricing page | ✓ | ✓ | ✓ | Full signal: protect it |
+| Engine describes you wrongly | ✓ | ? | ? | Accuracy problem: urgent |
 
 Each row needs a different fix. That’s why one blended number is dangerous: a rising “score” can hide a falling recommendation rate.
 
@@ -79,7 +77,7 @@ To be cited, your page must be fetched and judged useful for the specific questi
 
 ### Recommendations → proof and fit
 
-To be recommended, the engine needs reasons: specialisation, reviews, case studies, transparent pricing, comparisons, awards — evidence that you are the right fit for this buyer. Generic “we’re the best” copy doesn’t help. Specific, verifiable claims do.
+To be recommended, the engine needs reasons: specialisation, reviews, case studies, transparent pricing, comparisons, awards, evidence that you are the right fit for this buyer. Generic “we’re the best” copy doesn’t help. Specific, verifiable claims do.
 
 ### Accuracy → one source of truth
 
@@ -91,11 +89,11 @@ For each question in your panel, on each engine, on each date, record:
 
 - **Mentioned:** yes / no (and position in the list, if any)
 - **Own URL cited:** yes / no, plus which URL
-- **Recommended:** yes / no — use a strict rule, e.g. *named as a top choice for the stated need*
+- **Recommended:** yes / no, use a strict rule, e.g. *named as a top choice for the stated need*
 - **Accuracy:** correct / minor issue / wrong, with a note
 - **Sources shown:** every cited domain, so you can see who shapes the answer
 
-Then roll up per engine and per intent group. You’ll quickly see patterns like *“cited on how-to questions, never recommended on best-of questions”* — which is a precise, fixable diagnosis.
+Then roll up per engine and per intent group. You’ll quickly see patterns like *“cited on how-to questions, never recommended on best-of questions”*, which is a precise, fixable diagnosis.
 
 The full measurement routine is in [how to measure AI visibility](/blog/how-to-measure-ai-visibility/), and the competitive view in [AI share of voice](/blog/ai-share-of-voice/).
 
@@ -108,4 +106,4 @@ The full measurement routine is in [how to measure AI visibility](/blog/how-to-m
 
 ## Start with your own baseline
 
-You don’t need software to start: a spreadsheet, 20 questions and an hour per engine will show you which of the three signals is weakest. Or let the Arrow team do it — the [free AI visibility audit](https://arrow-ai.us/free-audit/) reviews how AI engines describe your brand and where the signal breaks.
+You don’t need software to start: a spreadsheet, 20 questions and an hour per engine will show you which of the three signals is weakest. Or let the Arrow team do it: the [free AI visibility audit](https://arrow-ai.us/free-audit/) reviews how AI engines describe your brand and where the signal breaks.

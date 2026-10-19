@@ -11,7 +11,7 @@ const agents = [
 
 export const GET: APIRoute = () => {
   const body = [
-    '# Arrow Signal — arrow-si.com',
+    '# Arrow Signal (arrow-si.com)',
     '# The AI visibility hub of Arrow AI (arrow-ai.us). AI and search crawlers are welcome.',
     '',
     'User-agent: *',

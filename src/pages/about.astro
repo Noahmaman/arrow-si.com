@@ -1,11 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import Ecosystem from '../components/Ecosystem.astro';
 import { SITE, ARROW, ANSWERS, DEMO, SOCIALS, ORGANIZATION_ID } from '../lib/site';
 
-const title = 'About Arrow Signal: the AI Visibility Hub of Arrow AI';
-const description = 'Arrow Signal (arrow-si.com) is the AI visibility hub of Arrow AI: guides, a glossary and a free audit to get brands found, cited and recommended by AI.';
+const title = 'About Arrow Signal: AI Visibility Guides by Arrow AI';
+const description = 'Arrow Signal (arrow-si.com) publishes practical guides on AI visibility. It is run by Arrow AI, which builds GEO, AI systems and AI Studio for businesses.';
 const icons = { LinkedIn: 'linkedin', Instagram: 'instagram', YouTube: 'youtube', TikTok: 'tiktok' } as const;
 const schema = [
   {
@@ -28,73 +27,58 @@ const schema = [
 ];
 ---
 <Base title={title} description={description} schema={schema}>
-  <header class="page-hero night">
-    <div class="dot-grid" aria-hidden="true"></div>
-    <div class="glow" aria-hidden="true"></div>
+  <header class="page-head">
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">About</span></nav>
-      <p class="kicker rise">About Arrow Signal</p>
-      <h1 class="rise" style="--d:60ms">Less noise. <span class="grad">More signal.</span></h1>
-      <p class="lede rise" style="--d:120ms">Arrow Signal is the AI visibility hub of <a class="text-link" href={ARROW.url}>Arrow AI</a>. One topic, covered properly: how brands get found, cited and recommended in AI answers.</p>
+      <h1>About Arrow Signal</h1>
+      <p class="lede">Arrow Signal publishes practical guides on one topic: how businesses get found, cited and recommended in AI answers.</p>
     </div>
   </header>
 
-  <section class="section is-tight">
-    <div class="wrap about-grid">
-      <div class="about-copy">
-        <h2 class="h-section">Why this site exists</h2>
-        <p>Buyers now ask ChatGPT, Gemini, Perplexity, Claude and Google’s AI features to explain categories, compare providers and recommend a shortlist. Most brands have no idea what those answers say about them.</p>
-        <p>Arrow AI builds GEO, AI Systems and AI Studio for businesses. Arrow Signal (arrow-si.com) focuses on a single part of that work — <strong>AI visibility</strong> — and relays it to the rest of the Arrow ecosystem: the <a href={ARROW.geo}>Arrow GEO service</a>, the practical library at <a href={ANSWERS.url}>Arrow Answers</a> and the interactive <a href={DEMO.url}>GEO demo</a>.</p>
-        <h2 class="h-section">Editorial standards</h2>
-        <ul class="standards">
-          <li><Icon name="check" size={14} /> <span><strong>Answer first.</strong> Every guide opens with a short, direct answer.</span></li>
-          <li><Icon name="check" size={14} /> <span><strong>Primary sources.</strong> Claims about how engines work link to official documentation or research.</span></li>
-          <li><Icon name="check" size={14} /> <span><strong>No guarantees.</strong> AI products control their own answers. We never promise rankings, mentions or recommendations.</span></li>
-          <li><Icon name="check" size={14} /> <span><strong>Illustrations are labelled.</strong> Dashboards and answer examples on this site use sample data and say so.</span></li>
-          <li><Icon name="check" size={14} /> <span><strong>Transparent ecosystem links.</strong> Links to Arrow AI properties are our own — not independent endorsements.</span></li>
-          <li><Icon name="check" size={14} /> <span><strong>Honest dates.</strong> We update “last updated” only when the content really changes.</span></li>
+  <section class="section">
+    <div class="wrap about">
+      <div class="prose">
+        <h2>Why this site exists</h2>
+        <p>More and more buyers ask ChatGPT, Gemini, Perplexity, Claude or Google’s AI features to explain a category, compare providers and suggest a shortlist. Most companies have never checked what those answers say about them.</p>
+        <p>Arrow Signal is run by <a href={ARROW.url}>Arrow AI</a>, which builds GEO, AI systems and AI Studio for businesses. This site covers the AI visibility part of that work. For specific questions, see <a href={ANSWERS.url}>Arrow Answers</a>. To see the process step by step, try the <a href={DEMO.url}>GEO demo</a>. To have it done for you, see <a href={ARROW.geo}>Arrow GEO</a>.</p>
+        <h2>How we write</h2>
+        <ul>
+          <li>Every guide starts with a short, direct answer.</li>
+          <li>Claims about how AI tools work link to official documentation or published research.</li>
+          <li>We don’t promise rankings, mentions or recommendations. AI companies control their own answers.</li>
+          <li>Examples that use made-up companies or data are labelled as examples.</li>
+          <li>Links to other Arrow AI sites are our own, not independent endorsements.</li>
+          <li>We only change the “updated” date when the content changes.</li>
         </ul>
-        <h2 class="h-section">Who we are</h2>
-        <p>Arrow Signal is written by the Arrow AI team. Arrow AI (arrow-ai.us) is independent from Arrow Electronics (arrow.com), ArrowAI (arrowai.com) and other companies named Arrow.</p>
+        <h2>Who we are</h2>
+        <p>The guides are written by the Arrow AI team. Arrow AI (arrow-ai.us) is independent from Arrow Electronics (arrow.com), ArrowAI (arrowai.com) and other companies named Arrow.</p>
         <div class="btn-row">
-          <a class="btn btn-heat" href={ARROW.freeAudit}>Get your free AI visibility audit <Icon name="arrow" size={15} /></a>
-          <a class="btn btn-outline" href={ARROW.call}>Book 15 minutes with Noah</a>
+          <a class="btn btn-primary" href={ARROW.freeAudit}>Get a free AI visibility audit</a>
+          <a class="btn btn-secondary" href={ARROW.call}>Book a 15-minute call</a>
         </div>
       </div>
-      <aside class="card follow">
-        <p class="kicker">Follow Arrow</p>
+      <aside class="follow">
+        <h2>Follow Arrow AI</h2>
         <ul>
           {SOCIALS.map((s) => (
-            <li><a href={s.url} target="_blank" rel="noopener me"><Icon name={icons[s.name]} size={18} /> <span>{s.name}</span><span class="mono h">{s.handle}</span></a></li>
+            <li><a href={s.url} target="_blank" rel="noopener me"><Icon name={icons[s.name]} size={16} /> {s.name} <span class="muted">{s.handle}</span></a></li>
           ))}
         </ul>
       </aside>
     </div>
   </section>
-
-  <section class="section is-tight hairline-top">
-    <div class="wrap">
-      <div class="section-head"><p class="kicker">The Arrow ecosystem</p><h2 class="h-section">One signal. <span class="grad">Four frequencies.</span></h2></div>
-      <Ecosystem />
-    </div>
-  </section>
 </Base>
 
 <style>
-  .about-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: clamp(28px, 5vw, 64px); align-items: start; }
-  .about-copy { max-width: 720px; }
-  .about-copy .h-section { font-size: clamp(1.6rem, 3vw, 2.1rem); margin-top: 40px; }
-  .about-copy .h-section:first-child { margin-top: 0; }
-  .about-copy p { margin-top: 14px; color: var(--ink-soft); font-size: 1.05rem; }
-  .about-copy a:not(.btn) { color: var(--blue); }
-  .standards { list-style: none; margin-top: 16px; display: grid; gap: 12px; }
-  .standards li { display: flex; gap: 12px; color: var(--ink-soft); }
-  .standards :global(svg) { flex-shrink: 0; margin-top: 5px; color: var(--blue); }
-  .btn-row { margin-top: 28px; }
-  .follow { position: sticky; top: calc(var(--header-h) + 24px); }
-  .follow ul { list-style: none; display: grid; gap: 6px; }
-  .follow a { display: flex; align-items: center; gap: 12px; padding: 12px 12px; border-radius: 10px; text-decoration: none; color: var(--ink); transition: background 0.2s; }
-  .follow a:hover { background: var(--blue-soft); }
-  .follow .h { margin-left: auto; font-size: 0.74rem; color: var(--faint); }
-  @media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; } .follow { position: static; } }
+  .about { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: clamp(32px, 6vw, 72px); align-items: start; }
+  .about .prose { max-width: 680px; }
+  .about .prose h2:first-child { margin-top: 0; }
+  .about .btn-row { margin-top: 28px; }
+  .follow { border: 1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+  .follow h2 { font-size: 1rem; margin-bottom: 10px; }
+  .follow ul { list-style: none; }
+  .follow a { display: flex; align-items: center; gap: 10px; padding: 8px 0; color: var(--ink); text-decoration: none; }
+  .follow a:hover { color: var(--blue); }
+  .follow .muted { margin-left: auto; font-size: 0.85rem; }
+  @media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
 </style>

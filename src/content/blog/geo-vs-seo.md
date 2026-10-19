@@ -6,10 +6,8 @@ category: Foundations
 order: 2
 published: "2026-10-13"
 updated: "2026-10-13"
-motif: scope
-coverAlt: "An oscilloscope trace on a dark grid shifting from scattered noise into a clean Arrow-blue wave, symbolising the move from SEO to GEO."
 keywords: ["GEO vs SEO", "generative engine optimization", "SEO and AI search", "AEO", "AI search optimization"]
-summary: "SEO earns a position in a list of search results; GEO (Generative Engine Optimization) earns a place inside AI-generated answers. They share one foundation — crawlable pages, clear content and credible evidence — but GEO adds entity clarity, answer-first writing, third-party evidence and a different measurement layer: mentions, citations, recommendations and accuracy across a fixed set of buyer questions."
+summary: "SEO earns a position in a list of search results; GEO (Generative Engine Optimization) earns a place inside AI-generated answers. They share one foundation (crawlable pages, clear content and credible evidence) but GEO adds entity clarity, answer-first writing, third-party evidence and a different measurement layer: mentions, citations, recommendations and accuracy across a fixed set of buyer questions."
 takeaways:
   - "GEO does not replace SEO: AI answers still depend on crawlable, indexable, useful pages."
   - "The output changes: from ranked links to a synthesized answer with a short list of sources."
@@ -21,16 +19,16 @@ faq:
   - q: "What is the difference between GEO and AEO?"
     a: "Answer Engine Optimization (AEO) usually refers to winning direct answers such as featured snippets and voice results. GEO covers generative engines that write new answers from several sources. In practice the terms overlap and the work is similar."
   - q: "Do I need a separate team for GEO?"
-    a: "Not necessarily. Most GEO work happens in the same places as SEO — site, content, PR — with a new measurement routine. What you need is someone accountable for the AI answer baseline."
+    a: "Not necessarily. Most GEO work happens in the same places as SEO (site, content, PR) with a new measurement routine. What you need is someone accountable for the AI answer baseline."
 sources:
-  - title: "Google Search Central — AI features and your website"
+  - title: "Google Search Central: AI features and your website"
     url: "https://developers.google.com/search/docs/appearance/ai-features"
-  - title: "Google Search Central — SEO starter guide"
+  - title: "Google Search Central: SEO starter guide"
     url: "https://developers.google.com/search/docs/fundamentals/seo-starter-guide"
-  - title: "Aggarwal et al. — GEO: Generative Engine Optimization (arXiv:2311.09735)"
+  - title: "Aggarwal et al.: GEO: Generative Engine Optimization (arXiv:2311.09735)"
     url: "https://arxiv.org/abs/2311.09735"
 ecosystem:
-  - title: "GEO vs SEO — the Arrow AI comparison"
+  - title: "GEO vs SEO: the Arrow AI comparison"
     url: "https://arrow-ai.us/geo-vs-seo/"
     note: "Arrow AI"
   - title: "Do I need separate work if I already rank in search?"
@@ -41,13 +39,13 @@ ecosystem:
     note: "Arrow Answers"
 ---
 
-The Arrow film opens with three words: *SEO is dead.* It’s a provocation, and like every good provocation it’s half true. The ranking-only mindset is dying. The work underneath SEO is not — it’s the foundation GEO stands on.
+The Arrow film opens with three words: *SEO is dead.* It’s a provocation, and like every good provocation it’s half true. The ranking-only mindset is dying. The work underneath SEO is not: it’s the foundation GEO stands on.
 
 Here is what actually changes, and what doesn’t.
 
 ## The one-sentence difference
 
-**SEO** optimizes for a position in a list of results. **GEO** — Generative Engine Optimization — optimizes for a place inside the answer an AI system writes.
+**SEO** optimizes for a position in a list of results. **GEO**, Generative Engine Optimization, optimizes for a place inside the answer an AI system writes.
 
 In SEO, the user picks among links. In GEO, the engine has already picked, summarized and recommended before the user sees anything. Your job shifts from *“be clicked”* to *“be chosen as part of the answer.”*
 
@@ -55,7 +53,7 @@ In SEO, the user picks among links. In GEO, the engine has already picked, summa
 
 Generative engines don’t invent the web from scratch. Most of them retrieve real pages at question time:
 
-- **Google AI Overviews and AI Mode** draw on Google’s search index. Google states that there are no special requirements beyond being indexed and eligible to appear with a snippet — standard SEO best practices still apply.
+- **Google AI Overviews and AI Mode** draw on Google’s search index. Google states that there are no special requirements beyond being indexed and eligible to appear with a snippet: standard SEO best practices still apply.
 - **Microsoft Copilot** is grounded in Bing’s index.
 - **ChatGPT search** and **Perplexity** use their own crawlers and search partners to fetch pages.
 
@@ -84,15 +82,15 @@ Three of those rows deserve a closer look.
 
 ### From pages to passages
 
-A search engine ranks a page. A generative engine often lifts a **passage**: a definition, a price, a comparison, a statistic. That rewards writing where each section can stand on its own — a clear claim, its evidence, its limits. We cover the craft in [writing content AI engines cite](/blog/content-ai-engines-cite/).
+A search engine ranks a page. A generative engine often lifts a **passage**: a definition, a price, a comparison, a statistic. That rewards writing where each section can stand on its own: a clear claim, its evidence, its limits. We cover the craft in [writing content AI engines cite](/blog/content-ai-engines-cite/).
 
 ### From backlinks to evidence
 
-Backlinks still matter for search. For answers, what matters is whether credible sources **describe you** — reviews, industry publications, comparison pages, communities. A link without context is weaker than a sentence in a trusted article that explains what you do and for whom. See [third-party sources AI trusts](/blog/third-party-sources-ai-trust/).
+Backlinks still matter for search. For answers, what matters is whether credible sources **describe you**: reviews, industry publications, comparison pages, communities. A link without context is weaker than a sentence in a trusted article that explains what you do and for whom. See [third-party sources AI trusts](/blog/third-party-sources-ai-trust/).
 
 ### From keywords to entities
 
-Engines need to know *who you are* before they can recommend you: your category, audience, locations, offer and proof — consistently, everywhere. That’s [entity clarity](/blog/entity-clarity-ai-search/), and it’s the most underrated part of GEO.
+Engines need to know *who you are* before they can recommend you: your category, audience, locations, offer and proof, consistently, everywhere. That’s [entity clarity](/blog/entity-clarity-ai-search/), and it’s the most underrated part of GEO.
 
 ## What GEO adds to your SEO playbook
 
@@ -100,7 +98,7 @@ If your SEO is healthy, GEO is mostly additive. Four workstreams:
 
 1. **A buyer-question baseline.** 20–50 real questions, run across the engines your buyers use, scored for mentions, citations, recommendations and accuracy. See [how to measure AI visibility](/blog/how-to-measure-ai-visibility/).
 2. **Entity and fact consistency.** One description of your business across your site, structured data and profiles.
-3. **Answer-ready pages.** Pages built around decisions — pricing, comparisons, “is X right for Y” — with the answer up front.
+3. **Answer-ready pages.** Pages built around decisions (pricing, comparisons, “is X right for Y”) with the answer up front.
 4. **Off-site evidence.** Earning mentions in the sources engines retrieve for your category.
 
 ## How to run both without doubling the work

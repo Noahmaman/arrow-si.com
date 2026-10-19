@@ -2,22 +2,21 @@
 import Base from '../layouts/Base.astro';
 import { ARROW } from '../lib/site';
 ---
-<Base title="Privacy | Arrow Signal" description="Privacy notice for arrow-si.com, the Arrow Signal AI visibility site by Arrow AI.">
-  <header class="page-hero night">
-    <div class="dot-grid" aria-hidden="true"></div>
+<Base title="Privacy | Arrow Signal" description="Privacy notice for arrow-si.com, the Arrow Signal AI visibility guides published by Arrow AI. No cookies, no tracking scripts.">
+  <header class="page-head">
     <div class="wrap">
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Privacy</span></nav>
       <h1>Privacy</h1>
-      <p class="lede">Short version: this site doesn’t track you.</p>
+      <p class="lede">This site does not track you.</p>
     </div>
   </header>
-  <section class="section is-tight">
-    <div class="wrap prose" style="max-width:760px">
-      <p>Arrow Signal (arrow-si.com) is a static editorial website published by Arrow AI. It does not use cookies, advertising pixels or third-party analytics scripts, and it has no forms that collect personal data.</p>
-      <p>Our hosting provider processes standard technical request data (such as IP address and user agent) to deliver pages securely and protect the service.</p>
-      <p>Links to Arrow AI properties — including the free audit and booking pages — and to social networks take you to sites with their own privacy policies. For Arrow AI, see the <a href="https://arrow-ai.us/privacy/">Arrow AI privacy policy</a>.</p>
-      <p>Questions: <a href={ARROW.contact}>contact Arrow AI</a>.</p>
-      <p><em>Last updated: October 13, 2026.</em></p>
+  <section class="section">
+    <div class="wrap narrow prose">
+      <p>Arrow Signal (arrow-si.com) is a static website published by Arrow AI. It does not use cookies, advertising pixels or third-party analytics scripts, and it has no forms that collect personal data.</p>
+      <p>Our hosting provider processes standard technical request data, such as IP address and browser type, to deliver pages securely.</p>
+      <p>Links to Arrow AI sites, including the free audit and booking pages, and to social networks take you to services with their own privacy policies. For Arrow AI, see the <a href="https://arrow-ai.us/privacy/">Arrow AI privacy policy</a>.</p>
+      <p>Questions? <a href={ARROW.contact}>Contact Arrow AI</a>.</p>
+      <p class="muted">Last updated October 19, 2026.</p>
     </div>
   </section>
 </Base>

@@ -1,19 +1,17 @@
 ---
-title: "Why ChatGPT doesn't mention your brand — and how to fix it"
+title: "Why ChatGPT doesn't mention your brand: and how to fix it"
 seoTitle: "Why ChatGPT Doesn't Mention Your Brand (+ Fixes)"
 description: "Seven reasons ChatGPT, Gemini or Perplexity leave your brand out of their answers, how to diagnose which one applies, and what to fix first."
 category: Diagnosis
 order: 7
 published: "2026-10-13"
 updated: "2026-10-13"
-motif: rings
-coverAlt: "A radar screen of concentric Arrow-blue rings with a sweeping beam and a few bright blips, representing a diagnostic scan of why a brand is missing from AI answers."
 keywords: ["why ChatGPT doesn't mention my brand", "brand not showing in ChatGPT", "get mentioned by ChatGPT", "AI visibility diagnosis", "ChatGPT recommendations"]
 summary: "ChatGPT and other AI engines usually leave a brand out for one of seven reasons: crawlers can't access your pages, your pages aren't indexed by the search systems engines rely on, your category and offer are unclear, no page answers the buyer's question directly, third-party sources rarely describe you, competitors have stronger proof, or the question you tested doesn't match how buyers ask. Diagnose with a fixed question panel before changing anything."
 takeaways:
-  - "One missing mention proves nothing — test a panel of questions on several engines first."
+  - "One missing mention proves nothing: test a panel of questions on several engines first."
   - "Check access and indexing before content: a page that can't be fetched can't be cited."
-  - "Look at which sources the engine cites for competitors — that's your evidence roadmap."
+  - "Look at which sources the engine cites for competitors: that's your evidence roadmap."
   - "Fix in order: access → entity clarity → answer pages → third-party proof."
 faq:
   - q: "Can I ask ChatGPT to add my brand to its answers?"
@@ -23,11 +21,11 @@ faq:
   - q: "Does blocking GPTBot stop ChatGPT from mentioning us?"
     a: "GPTBot relates to training. ChatGPT search relies on OAI-SearchBot to surface and link pages. If you want to be cited in ChatGPT search, make sure OAI-SearchBot is not blocked, whatever you decide about GPTBot."
 sources:
-  - title: "OpenAI — Overview of OpenAI crawlers"
+  - title: "OpenAI: Overview of OpenAI crawlers"
     url: "https://platform.openai.com/docs/bots"
-  - title: "Google Search Central — AI features and your website"
+  - title: "Google Search Central: AI features and your website"
     url: "https://developers.google.com/search/docs/appearance/ai-features"
-  - title: "Google Search Central — Introduction to robots.txt"
+  - title: "Google Search Central: Introduction to robots.txt"
     url: "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
 ecosystem:
   - title: "Why does ChatGPT not mention my company?"
@@ -77,7 +75,7 @@ If your key text, prices or FAQs only appear after client-side rendering, some c
 
 ### 4. Engines don’t know what you are
 
-If your site, LinkedIn, directories and press each describe you differently — or vaguely (“we empower growth”) — the engine can’t confidently associate you with the category and the need.
+If your site, LinkedIn, directories and press each describe you differently, or vaguely (“we empower growth”), the engine can’t confidently associate you with the category and the need.
 
 **Fix:** one precise description of who you serve, what you do and where, repeated consistently. → [Entity clarity](/blog/entity-clarity-ai-search/)
 
@@ -97,23 +95,23 @@ When an engine recommends a competitor, it often cites review sites, “best of�
 
 To *recommend*, an engine needs reasons: specialisation, reviews, case studies, clear pricing. Competitors with public proof win shortlists even with weaker products.
 
-**Fix:** publish verifiable proof — outcomes, customer examples, certifications, transparent pricing.
+**Fix:** publish verifiable proof such as outcomes, customer examples, certifications and transparent pricing.
 
 ## A diagnostic order that saves time
 
 Work in this order; each step is a prerequisite for the next:
 
-1. **Access** — crawlers allowed, pages indexed, text in HTML.
-2. **Identity** — one consistent description of the business.
-3. **Answers** — pages for the questions buyers actually ask.
-4. **Evidence** — third-party sources and public proof.
-5. **Re-measure** — same panel, same protocol.
+1. **Access**: crawlers allowed, pages indexed, text in HTML.
+2. **Identity**: one consistent description of the business.
+3. **Answers**: pages for the questions buyers actually ask.
+4. **Evidence**: third-party sources and public proof.
+5. **Re-measure**: same panel, same protocol.
 
 Fixing step 4 while step 1 is broken wastes months.
 
 ## When the answer is wrong, not missing
 
-Sometimes ChatGPT mentions you — incorrectly. Old prices, discontinued products, the wrong city. Treat it as a source problem: save the answer, find where the wrong fact lives (your old pages, a directory, an article), fix it there, make the correct fact prominent on your site, and re-test. Arrow Answers has the full process for [correcting wrong AI answers about your business](https://answers.arrow-ai.us/how-to-correct-wrong-ai-answers-about-your-business/).
+Sometimes ChatGPT mentions you, but incorrectly. Old prices, discontinued products, the wrong city. Treat it as a source problem: save the answer, find where the wrong fact lives (your old pages, a directory, an article), fix it there, make the correct fact prominent on your site, and re-test. Arrow Answers has the full process for [correcting wrong AI answers about your business](https://answers.arrow-ai.us/how-to-correct-wrong-ai-answers-about-your-business/).
 
 ## Get a diagnosis
 

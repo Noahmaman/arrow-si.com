@@ -6,28 +6,26 @@ category: Foundations
 order: 1
 published: "2026-10-13"
 updated: "2026-10-13"
-motif: wave
-coverAlt: "Arrow-blue signal lines resolving from noise on the left into a clean waveform on the right, illustrating a brand's AI visibility."
 keywords: ["AI visibility", "what is AI visibility", "AI search visibility", "brand visibility in AI answers", "GEO"]
-summary: "AI visibility is the presence and accurate representation of your brand inside AI-generated answers — in ChatGPT, Gemini, Perplexity, Claude, Copilot and Google AI Overviews. It is made of four signals (mentions, citations, recommendations and accuracy), it is measured across a fixed set of buyer questions rather than one ranking, and it improves when your public information is clear, accessible and backed by credible sources."
+summary: "AI visibility is the presence and accurate representation of your brand inside AI-generated answers, in ChatGPT, Gemini, Perplexity, Claude, Copilot and Google AI Overviews. It is made of four signals (mentions, citations, recommendations and accuracy), it is measured across a fixed set of buyer questions rather than one ranking, and it improves when your public information is clear, accessible and backed by credible sources."
 takeaways:
   - "AI visibility is measured inside the answer, not by a position in a list of links."
   - "Track four signals separately: mentioned, cited, recommended and accurate."
-  - "Answers vary by wording, engine, location and date — measure patterns, not screenshots."
+  - "Answers vary by wording, engine, location and date: measure patterns, not screenshots."
   - "You control the source material: pages, entity facts, evidence and crawler access."
 faq:
   - q: "Is AI visibility the same as SEO?"
-    a: "No. SEO earns a position among search results; AI visibility earns a place inside a generated answer. They share foundations — crawlable pages, clear content, credible evidence — but their outcomes are measured differently."
+    a: "No. SEO earns a position among search results; AI visibility earns a place inside a generated answer. They share foundations (crawlable pages, clear content, credible evidence) but their outcomes are measured differently."
   - q: "Which AI engines matter for AI visibility?"
     a: "The ones your buyers use. For most brands that means ChatGPT, Google AI Overviews and AI Mode, Gemini, Perplexity, Claude and Microsoft Copilot. Pick two to four and track them consistently."
   - q: "How long does it take to improve AI visibility?"
     a: "There is no universal timeline. Engines that retrieve live web pages can reflect a fixed page within days or weeks of recrawling; changes that depend on third-party sources or model updates take longer. Measure on a fixed monthly rhythm."
 sources:
-  - title: "Google Search Central — AI features and your website"
+  - title: "Google Search Central: AI features and your website"
     url: "https://developers.google.com/search/docs/appearance/ai-features"
-  - title: "Aggarwal et al. — GEO: Generative Engine Optimization (arXiv:2311.09735)"
+  - title: "Aggarwal et al.: GEO: Generative Engine Optimization (arXiv:2311.09735)"
     url: "https://arxiv.org/abs/2311.09735"
-  - title: "OpenAI — Overview of OpenAI crawlers"
+  - title: "OpenAI: Overview of OpenAI crawlers"
     url: "https://platform.openai.com/docs/bots"
 ecosystem:
   - title: "What is generative engine optimization (GEO)?"
@@ -36,12 +34,12 @@ ecosystem:
   - title: "Arrow GEO: be found, cited and recommended in AI answers"
     url: "https://arrow-ai.us/geo/"
     note: "Arrow AI"
-  - title: "See your brand become the answer — interactive GEO demo"
+  - title: "See your brand become the answer: interactive GEO demo"
     url: "https://arrow-ai.tech/"
     note: "GEO demo"
 ---
 
-A buyer opens ChatGPT and types: *“Which accounting firm should a 20-person startup in Austin use?”* Ten seconds later they have a summary, a shortlist of three names and a couple of sources. They never saw a page of results. They never scrolled. If your firm wasn’t one of those three names, you weren’t considered — and you’ll never see it in your analytics.
+A buyer opens ChatGPT and types: *“Which accounting firm should a 20-person startup in Austin use?”* Ten seconds later they have a summary, a shortlist of three names and a couple of sources. They never saw a page of results. They never scrolled. If your firm wasn’t one of those three names, you weren’t considered, and you’ll never see it in your analytics.
 
 That moment is what **AI visibility** is about.
 
@@ -74,7 +72,7 @@ A brand can be cited without being recommended (an engine uses your guide as a s
 
 Three shifts make this urgent rather than theoretical:
 
-- **The answer comes before the click.** Many AI answers resolve the question on the page. A buyer can form an opinion of you — or never hear of you — without visiting any website.
+- **The answer comes before the click.** Many AI answers resolve the question on the page. A buyer can form an opinion of you, or never hear of you, without visiting any website.
 - **Shortlists are shorter.** A results page shows ten links and ads. An AI answer often names two to five options. Being sixth is the same as being absent.
 - **The answer sounds neutral.** Buyers tend to treat a synthesized answer as advice rather than advertising. Being recommended there carries weight that a ranking never did.
 
@@ -85,20 +83,20 @@ This is the story Arrow tells in one line: **SEO ranked you. GEO gets you answer
 Every engine works differently, and none publishes a ranking formula. But the broad mechanics are well understood:
 
 - **Training data.** Large language models learn associations between brands, categories and attributes from the text they were trained on. That shapes which names “come to mind”.
-- **Live retrieval.** Many answers are grounded in pages fetched at question time — through a search index (Google’s for AI Overviews, Bing’s for Copilot) or the engine’s own crawler (OpenAI’s OAI-SearchBot for ChatGPT search, PerplexityBot for Perplexity). If your page can’t be fetched, it can’t be cited.
+- **Live retrieval.** Many answers are grounded in pages fetched at question time: through a search index (Google’s for AI Overviews, Bing’s for Copilot) or the engine’s own crawler (OpenAI’s OAI-SearchBot for ChatGPT search, PerplexityBot for Perplexity). If your page can’t be fetched, it can’t be cited.
 - **Synthesis.** The model combines what it retrieved with what it knows, then writes an answer. Pages that state facts clearly, support claims with evidence and are easy to quote tend to be easier to use.
 
-Research supports that last point. In the original *GEO: Generative Engine Optimization* paper (Aggarwal et al., KDD 2024), adding citations, quotations and statistics to source content measurably increased how visible that content was in generated answers in the authors’ benchmark. It’s not a guarantee for any specific engine — but it’s a strong hint about what “citable” looks like.
+Research supports that last point. In the original *GEO: Generative Engine Optimization* paper (Aggarwal et al., KDD 2024), adding citations, quotations and statistics to source content measurably increased how visible that content was in generated answers in the authors’ benchmark. It’s not a guarantee for any specific engine, but it’s a strong hint about what “citable” looks like.
 
 ## How to measure your AI visibility
 
 Measurement is where most teams go wrong. One screenshot of one answer proves nothing: answers change with wording, location, engine version and date. A reliable baseline looks like this:
 
 1. **Write 20–50 real buyer questions**, grouped by intent: category discovery (“best X for Y”), problem diagnosis, comparisons, alternatives and brand questions.
-2. **Pick the engines your buyers use** — usually two to four.
+2. **Pick the engines your buyers use**, usually two to four.
 3. **Run each question on a fixed schedule** and save the full answer, the date, the engine and every cited URL.
 4. **Score each answer** for the four signals: mentioned, cited, recommended, accurate.
-5. **Compute share of voice** against your real competitors — see [AI share of voice](/blog/ai-share-of-voice/).
+5. **Compute share of voice** against your real competitors: see [AI share of voice](/blog/ai-share-of-voice/).
 
 Our step-by-step method is in [how to measure AI visibility](/blog/how-to-measure-ai-visibility/). If you’d rather have it done for you, the [free Arrow AI visibility audit](https://arrow-ai.us/free-audit/) shows how AI engines talk about your brand today.
 
@@ -107,7 +105,7 @@ Our step-by-step method is in [how to measure AI visibility](/blog/how-to-measur
 Improvement follows diagnosis. Fix what blocks the signal before you publish more content:
 
 - **Make sure engines can reach you.** Check robots.txt rules for search and AI crawlers, server-rendered text and indexation. Start with the [technical AI visibility checklist](/blog/technical-ai-visibility-checklist/).
-- **Make your identity unambiguous.** One name, one description, one set of facts everywhere — your site, your profiles, directories. See [entity clarity](/blog/entity-clarity-ai-search/).
+- **Make your identity unambiguous.** One name, one description, one set of facts everywhere: your site, your profiles, directories. See [entity clarity](/blog/entity-clarity-ai-search/).
 - **Publish answers, not just pages.** Pages that state the answer in the first lines, back it with evidence and cover the questions buyers actually ask. See [content AI engines cite](/blog/content-ai-engines-cite/).
 - **Earn evidence beyond your own domain.** Reviews, credible publications and communities your buyers trust. See [third-party sources AI trusts](/blog/third-party-sources-ai-trust/).
 - **Measure again, on the same questions.** Keep what moves the signal.
@@ -116,10 +114,10 @@ Improvement follows diagnosis. Fix what blocks the signal before you publish mor
 
 A few honest limits, because the market is full of promises:
 
-- **Nobody can guarantee a recommendation.** Each AI product controls its own output. A provider can commit to research, fixes and measurement — not to what ChatGPT will say tomorrow.
+- **Nobody can guarantee a recommendation.** Each AI product controls its own output. A provider can commit to research, fixes and measurement, not to what ChatGPT will say tomorrow.
 - **It isn’t a hack.** Hidden text, fake reviews or keyword-stuffed “AI pages” are risky and tend to backfire, in search and in answers.
 - **It isn’t separate from your business.** If your offer is unclear, your pricing hidden and your proof thin, the answers will reflect that.
 
 ## Where to go next
 
-If you’re starting from zero, read [GEO vs SEO](/blog/geo-vs-seo/) to see how this fits with your existing search work, then follow the [90-day AI visibility roadmap](/blog/ai-visibility-roadmap-90-days/). For a deeper library of practical answers, [Arrow Answers](https://answers.arrow-ai.us/) covers 105 specific GEO questions — and the [Arrow GEO demo](https://arrow-ai.tech/) shows the path from your website to a cited answer, step by step.
+If you’re starting from zero, read [GEO vs SEO](/blog/geo-vs-seo/) to see how this fits with your existing search work, then follow the [90-day AI visibility roadmap](/blog/ai-visibility-roadmap-90-days/). For a deeper library of practical answers, [Arrow Answers](https://answers.arrow-ai.us/) covers 105 specific GEO questions, and the [Arrow GEO demo](https://arrow-ai.tech/) shows the path from your website to a cited answer, step by step.
