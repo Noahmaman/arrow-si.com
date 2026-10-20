@@ -41,7 +41,7 @@ const highlight = (t) => {
 };
 
 const jobs = [
-  { file: 'home', label: 'Arrow Signal', title: 'Be the answer in ChatGPT, Gemini and Perplexity' },
+  { file: 'home', label: 'Arrow Signal', title: 'Get found in AI answers: guides from Arrow AI' },
   { file: 'blog', label: 'Guides', title: '15 practical guides to AI visibility and GEO' },
   { file: 'glossary', label: 'Glossary', title: 'AI visibility glossary' },
 ];
