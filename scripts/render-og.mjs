@@ -16,18 +16,15 @@ const icon = 'data:image/png;base64,' + readFileSync(join(root, 'public/brand/ar
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const decode = (s) => s.replace(/&amp;/g, '&').replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/<[^>]+>/g, '');
 
-const mono = pathToFileURL(join(root, 'node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2')).href;
 const card = ({ label, title }) => `<!doctype html><html><head><meta charset="utf-8"><style>
   @font-face { font-family: DM; src: url(${font}); font-weight: 100 1000; }
-  @font-face { font-family: GM; src: url(${mono}); font-weight: 100 900; }
   * { margin: 0; box-sizing: border-box; }
   body { width: 1200px; height: 630px; overflow: hidden; background: #ffffff; color: #1d1d1f; font-family: DM; display: flex; flex-direction: column; padding: 64px 72px 0; }
-  .brand { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 30px; letter-spacing: -0.02em; }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 600; font-size: 28px; }
   .brand img { width: 46px; height: 46px; border-radius: 12px; }
-  .label { margin-top: auto; display: flex; align-items: center; gap: 14px; font-family: GM; font-size: 18px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: #707070; }
-  .label::before { content: ''; width: 11px; height: 11px; border-radius: 3px; background: #2563eb; }
-  h1 { margin-top: 18px; font-size: ${title.length > 60 ? 56 : 66}px; line-height: 1.05; letter-spacing: -0.045em; font-weight: 600; max-width: 1020px; }
-  h1 em { font-style: normal; background: linear-gradient(92deg, #2563eb 5%, #655cff 95%); -webkit-background-clip: text; color: transparent; }
+  .label { margin-top: auto; font-size: 28px; font-weight: 600; letter-spacing: 0.007em; color: #1d1d1f; }
+  h1 { margin-top: 14px; font-size: ${title.length > 60 ? 58 : 70}px; line-height: 1.06; letter-spacing: -0.01em; font-weight: 600; max-width: 1040px; }
+  h1 em { font-style: normal; color: #86868b; }
   .band { margin: 48px -72px 0; padding: 24px 72px 26px; background: #f5f5f7; display: flex; justify-content: space-between; font-size: 20px; color: #707070; }
   .band b { color: #1d1d1f; font-weight: 600; }
 </style></head><body>
@@ -44,7 +41,7 @@ const highlight = (t) => {
 };
 
 const jobs = [
-  { file: 'home', label: 'AI visibility by Arrow AI', title: 'Be the answer in ChatGPT, Gemini and Perplexity' },
+  { file: 'home', label: 'Arrow Signal', title: 'Be the answer in ChatGPT, Gemini and Perplexity' },
   { file: 'blog', label: 'Guides', title: '15 practical guides to AI visibility and GEO' },
   { file: 'glossary', label: 'Glossary', title: 'AI visibility glossary' },
 ];

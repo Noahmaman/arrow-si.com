@@ -31,7 +31,7 @@ const schema = [
   <header class="page-head">
     <div>
       <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Glossary</span></nav>
-      <p class="kicker blue">Glossary</p>
+      <p class="kicker">Glossary</p>
       <h1>The language of <span class="hl">AI visibility</span></h1>
       <p class="lede">{glossary.length} terms you will meet when working on AI visibility, each with a short definition. Arrow AI keeps a longer <a class="link" href={ARROW.glossary}>GEO glossary</a> too.</p>
     </div>
@@ -58,7 +58,7 @@ const schema = [
   .term { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid var(--hairline); scroll-margin-top: calc(var(--lnav-h) + 16px); }
   .term:last-child { border-bottom: 1px solid var(--hairline); }
   .term:target dt { color: var(--link); }
-  dt { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; }
+  dt { font-size: 17px; font-weight: 600; }
   dd { color: var(--slate); }
   dd .link { white-space: nowrap; }
   @media (max-width: 640px) { .term { grid-template-columns: 1fr; gap: 6px; } }

@@ -1,86 +1,42 @@
 ---
-// The four AI visibility signals as flat feature cards, each with a small
-// illustration (sample data).
+// The four AI visibility signals as Apple-style spec cards: a name, one big
+// typographic figure and a short line of copy (illustrative values).
 ---
-<div class="cards">
-  <article class="card reveal">
-    <p class="idx">01 · Mentioned</p>
-    <h3 class="t-card">Your brand is named in the answer.</h3>
-    <p class="txt">When buyers ask about your category or their problem, the answer says your name.</p>
-    <div class="vis answer" aria-hidden="true">
-      <span class="who"><img src="/logos/chatgpt.svg" alt="" width="16" height="16" loading="lazy" />ChatGPT</span>
-      <p>The strongest options for a 20-person team are <mark>Your Brand</mark>, Northwind and Contoso. Your Brand focuses on startups and publishes clear pricing.</p>
-    </div>
+<div class="specs">
+  <article class="spec reveal">
+    <h3>Mentioned</h3>
+    <p class="big quote" aria-hidden="true">“…the strongest fit is <b>Your&nbsp;Brand</b>.”</p>
+    <p class="desc"><strong>Your name is in the answer.</strong> When buyers ask about your category or their problem, the assistant says who you are.</p>
   </article>
-
-  <article class="card reveal" style="--d:80ms">
-    <p class="idx">02 · Cited</p>
-    <h3 class="t-card">Your page is the source.</h3>
-    <p class="txt">The answer links to your site as evidence.</p>
-    <ul class="vis rows" aria-hidden="true">
-      <li><span>review-site.example</span></li>
-      <li class="you"><span>yourbrand.com/pricing</span><span class="chip ok">Cited</span></li>
-      <li><span>industry-news.example</span></li>
-    </ul>
+  <article class="spec reveal" style="--d:80ms">
+    <h3>Cited</h3>
+    <p class="big site" aria-hidden="true">yourbrand.com<sup>1</sup></p>
+    <p class="desc"><strong>Your page is the source.</strong> The answer links to your site as its evidence.</p>
   </article>
-
-  <article class="card reveal" style="--d:120ms">
-    <p class="idx">03 · Recommended</p>
-    <h3 class="t-card">You make the shortlist.</h3>
-    <p class="txt">The answer suggests you for the buyer’s situation.</p>
-    <ol class="vis rows rank" aria-hidden="true">
-      <li class="r-you"><span class="pos">1</span>Your Brand</li>
-      <li class="r-a"><span class="pos">2</span>Competitor A</li>
-      <li class="r-b"><span class="pos">3</span>Competitor B</li>
-    </ol>
+  <article class="spec reveal" style="--d:120ms">
+    <h3>Recommended</h3>
+    <p class="big num" aria-hidden="true">#1</p>
+    <p class="desc"><strong>You make the shortlist.</strong> The answer suggests you for the buyer’s situation, not just in a list.</p>
   </article>
-
-  <article class="card reveal" style="--d:160ms">
-    <p class="idx">04 · Accurate</p>
-    <h3 class="t-card">What AI says about you is true.</h3>
-    <p class="txt">Offer, prices and locations match your site. Outdated facts get fixed at the source.</p>
-    <ul class="vis rows facts" aria-hidden="true">
-      <li><span>Core offer</span><span class="chip ok">Correct</span></li>
-      <li><span>Locations served</span><span class="chip ok">Correct</span></li>
-      <li><span>Pricing</span><span class="swap"><span class="chip heat old">2024 price</span><span class="chip ok new">Updated</span></span></li>
-    </ul>
+  <article class="spec reveal" style="--d:160ms">
+    <h3>Accurate</h3>
+    <p class="big num" aria-hidden="true">3/3</p>
+    <p class="desc"><strong>What AI says is true.</strong> Offer, prices and locations match your site. Outdated facts get fixed at the source.</p>
   </article>
 </div>
 
 <style>
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
-  .card { display: flex; flex-direction: column; padding: 40px 40px 36px; border-radius: var(--r-card); background: var(--mist); }
-  .idx { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); }
-  .idx::before { content: ''; width: 7px; height: 7px; border-radius: 2px; background: var(--blue); }
-  .card h3 { margin-top: 16px; }
-  .txt { margin-top: 10px; color: var(--slate); max-width: 420px; }
-  .vis { margin-top: 32px; }
-
-  .answer { padding: 20px 22px; border-radius: 18px; background: var(--white); }
-  .who { display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 600; }
-  .who img { width: 16px; height: 16px; }
-  .answer p { margin-top: 8px; font-size: 0.95rem; color: var(--slate); }
-  .answer mark { background: var(--blue-tint); color: var(--ink); font-weight: 600; padding: 0 4px; border-radius: 4px; }
-
-  .rows { list-style: none; display: grid; gap: 1px; border-radius: 18px; overflow: hidden; background: var(--control); }
-  .rows li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 14px 18px; background: var(--white); font-size: 0.95rem; color: var(--slate); transition: transform 0.9s var(--ease) 0.3s; }
-  .rows li.you, .rank .r-you { color: var(--ink); font-weight: 600; }
-  .rank li { justify-content: flex-start; }
-  .pos { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 0.75rem; font-weight: 600; background: var(--mist); color: var(--slate); }
-  .rank .r-you .pos { background: var(--blue); color: #fff; }
-  /* Your Brand starts third, then climbs to first */
-  :global(html:not(.no-js)) .rank .r-you { transform: translateY(200%); }
-  :global(html:not(.no-js)) .rank .r-a, :global(html:not(.no-js)) .rank .r-b { transform: translateY(-100%); }
-  :global(html:not(.no-js)) .card.in .rank li { transform: none; }
-
-  .swap { display: grid; }
-  .swap > * { grid-area: 1 / 1; justify-self: end; transition: opacity 0.4s ease 1.2s, transform 0.4s var(--ease) 1.2s; }
-  .swap .new { opacity: 0; transform: translateY(6px); }
-  .card.in .swap .old { opacity: 0; transform: translateY(-6px); }
-  .card.in .swap .new { opacity: 1; transform: none; }
-  :global(.no-js) .swap .old { opacity: 0; }
-  :global(.no-js) .swap .new { opacity: 1; transform: none; }
-
-  @media (max-width: 834px) { .cards { grid-template-columns: 1fr; } }
-  @media (max-width: 734px) { .card { padding: 28px 24px 24px; } }
+  .specs { display: grid; grid-template-columns: 1fr 1fr; gap: var(--gap); }
+  .spec { display: flex; flex-direction: column; min-height: 440px; padding: 40px 44px; border-radius: var(--r-card); background: var(--white); }
+  .spec h3 { font-size: 21px; line-height: 1.19; letter-spacing: 0.011em; }
+  .big { margin: auto 0; padding: 36px 0; font-weight: 600; color: var(--ink); }
+  .quote { font-size: 34px; line-height: 1.18; letter-spacing: 0.004em; color: var(--steel); }
+  .quote b { color: var(--ink); font-weight: 600; }
+  .site { font-size: 40px; line-height: 1.1; }
+  .site sup { display: inline-grid; place-items: center; width: 30px; height: 30px; margin-left: 6px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 15px; vertical-align: 18px; }
+  .num { font-size: 120px; line-height: 1; letter-spacing: -0.02em; }
+  .desc { font-size: 17px; font-weight: 600; line-height: 1.47; letter-spacing: -0.022em; color: var(--steel); }
+  .desc strong { color: var(--ink); }
+  @media (max-width: 834px) { .specs { grid-template-columns: 1fr; } .spec { min-height: 0; } }
+  @media (max-width: 734px) { .spec { padding: 32px 28px; } .num { font-size: 96px; } .quote { font-size: 28px; } .site { font-size: 30px; } }
 </style>

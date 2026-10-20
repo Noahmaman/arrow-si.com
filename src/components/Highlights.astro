@@ -1,38 +1,34 @@
 ---
-// "Get the highlights": a horizontally advancing set of large white cards on
+// "Get the highlights": a horizontally advancing set of large media cards on
 // the mist band, built from the Arrow AI film, with dots and a pause control.
 import { ENGINE_LOGOS } from '../lib/site';
 const engines = ENGINE_LOGOS.filter((l) => l.name !== 'Google AI Mode');
 const cards = [
-  { lead: 'SEO ranked you.', rest: 'Now buyers ask AI first, and the answer names two or three brands.', img: '/media/film-seo-is-dead.webp', alt: 'Film still: the words “SEO is dead.” struck through by a blue line.', t: 0, at: '0:00' },
-  { lead: 'Enter GEO.', rest: 'Generative engine optimization makes your brand easy for AI tools to find, trust and quote.', img: '/media/film-enter-geo.webp', alt: 'Film still: “Enter GEO, Generative Engine Optimization” in Arrow blue.', t: 16, at: '0:16' },
-  { lead: 'Get recommended.', rest: 'The goal is the shortlist: the answer that suggests you for the buyer’s situation.', img: '/media/film-make-ai-recommend-you.webp', alt: 'Film still: an AI answer card citing Arrow AI as the most recommended option.', t: 20, at: '0:20' },
-  { lead: 'Build authority.', rest: 'Reviews, third-party sources and consistent facts are what AI answers lean on.', img: '/media/film-build-authority.webp', alt: 'Film still: “Build synthetic authority” with Cited, Recommended and Source linked badges.', t: 24, at: '0:24' },
+  { cap: 'SEO ranked you. Now AI answers for you.', img: '/media/film-seo-is-dead.webp', alt: 'Film still: the words “SEO is dead.” struck through by a blue line.', dark: true, bg: '#07060b' },
+  { cap: 'GEO puts your brand inside the answer.', img: '/media/film-enter-geo.webp', alt: 'Film still: “Enter GEO, Generative Engine Optimization” in Arrow blue.', dark: true, bg: '#0b0d18' },
+  { cap: 'Go from mentioned to recommended.', img: '/media/film-make-ai-recommend-you.webp', alt: 'Film still: an AI answer card citing Arrow AI as the most recommended option.', dark: false, bg: '#edecf2' },
+  { cap: 'Earn the sources AI trusts.', img: '/media/film-build-authority.webp', alt: 'Film still: “Build synthetic authority” with Cited, Recommended and Source linked badges.', dark: false, bg: '#edecf2' },
 ];
 const total = cards.length + 1;
 ---
 <section class="section mist hls" id="highlights" aria-labelledby="hls-title" data-hls>
   <div class="head-row">
     <h2 id="hls-title" class="h-section">Get the highlights.</h2>
-    <button class="link" type="button" data-watch data-t="0">Watch the film <span class="arr" aria-hidden="true">›</span></button>
+    <button class="play-link" type="button" data-film-open data-t="0">
+      <span class="ic"><svg viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><path d="M0 0v12l10-6z" /></svg></span>Watch the film
+    </button>
   </div>
   <ul class="track" data-track aria-label="Highlights">
     {cards.map((c, i) => (
-      <li class="card" aria-label={`${i + 1} of ${total}`}>
-        <div class="copy">
-          <p class="t-card"><strong>{c.lead}</strong> <span>{c.rest}</span></p>
-          <button class="link" type="button" data-watch data-t={c.t}>Watch from {c.at} <span class="arr" aria-hidden="true">›</span></button>
-        </div>
+      <li class:list={['card', { dark: c.dark }]} style={`background:${c.bg}`} aria-label={`${i + 1} of ${total}`}>
+        <p class="t-card cap">{c.cap}</p>
         <img src={c.img} alt={c.alt} width="1280" height="720" loading="lazy" decoding="async" />
       </li>
     ))}
     <li class="card" aria-label={`${total} of ${total}`}>
-      <div class="copy">
-        <p class="t-card"><strong>Every assistant.</strong> <span>The same work shows up in ChatGPT, Gemini, Perplexity, Claude, Copilot and Google AI Overviews.</span></p>
-        <a class="link" href="/blog/what-is-ai-visibility/">What is AI visibility? <span class="arr" aria-hidden="true">›</span></a>
-      </div>
+      <p class="t-card cap">One brand. Every assistant.</p>
       <div class="logos">
-        {engines.map((l) => <span><img src={l.src} alt="" width="56" height="56" loading="lazy" />{l.name}</span>)}
+        {engines.map((l) => <span><img src={l.src} alt="" width="64" height="64" loading="lazy" />{l.name}</span>)}
       </div>
     </li>
   </ul>
@@ -52,14 +48,14 @@ const total = cards.length + 1;
   .hls .head-row { padding: 0 var(--gutter); }
   .track { list-style: none; display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding: 0 var(--gutter); scrollbar-width: none; }
   .track::-webkit-scrollbar { display: none; }
-  .card { flex: 0 0 min(860px, 84vw); scroll-snap-align: start; display: flex; flex-direction: column; border-radius: var(--r-card); background: var(--white); overflow: hidden; }
-  .copy { padding: 40px 44px 32px; display: grid; gap: 16px; justify-items: start; }
-  .copy .t-card { max-width: 620px; }
-  .copy .t-card span { color: var(--slate); font-weight: 600; }
-  .card > img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin-top: auto; }
-  .logos { margin-top: auto; aspect-ratio: 16 / 9; display: grid; grid-template-columns: repeat(3, 1fr); align-content: center; gap: 36px 12px; padding: 24px; background: var(--mist); }
-  .logos span { display: grid; justify-items: center; gap: 12px; font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; }
-  .logos img { width: 56px; height: 56px; }
+  .card { flex: 0 0 min(980px, 86vw); scroll-snap-align: start; display: flex; flex-direction: column; border-radius: var(--r-card); background: var(--white); overflow: hidden; }
+  .card.dark { background: #000; }
+  .cap { padding: 48px 52px 0; max-width: 640px; }
+  .card.dark .cap { color: #f5f5f7; }
+  .card > img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin-top: auto; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%); mask-image: linear-gradient(to bottom, transparent, #000 18%); }
+  .logos { margin-top: auto; aspect-ratio: 16 / 9; display: grid; grid-template-columns: repeat(3, 1fr); align-content: center; gap: 48px 12px; padding: 32px; }
+  .logos span { display: grid; justify-items: center; gap: 14px; font-size: 17px; font-weight: 600; }
+  .logos img { width: 64px; height: 64px; }
 
   .ctrls { display: flex; justify-content: center; gap: 12px; margin-top: 32px; }
   .dots, .pp { height: 56px; border-radius: 36px; background: rgba(210, 210, 215, 0.64); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); }
@@ -78,10 +74,10 @@ const total = cards.length + 1;
   .pp.paused .i-pause { display: none; }
 
   @media (max-width: 734px) {
-    .copy { padding: 28px 26px 24px; }
-    .logos { gap: 20px 8px; }
+    .cap { padding: 32px 28px 0; }
+    .logos { gap: 24px 8px; }
     .logos img { width: 40px; height: 40px; }
-    .logos span { font-size: 0.8rem; }
+    .logos span { font-size: 12px; }
   }
 </style>
 

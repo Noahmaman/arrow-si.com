@@ -1,157 +1,93 @@
 ---
-// Launch-style hero: centred name and headline, the Arrow AI film as the
-// visual event, a floating audit capsule and a quiet row of assistant logos.
-// Any element with data-watch (and optional data-t seconds) plays the film
-// with sound from that point.
-import Icon from './Icon.astro';
-import { ARROW, ENGINE_LOGOS } from '../lib/site';
-const engines = ENGINE_LOGOS.filter((l) => l.name !== 'Google AI Mode');
+// Launch hero: product name, one-line statement, then the "product render"
+// (two phones showing AI answers that name your brand) with a floating audit
+// capsule. "Watch the film" opens the Arrow AI film full screen; any element
+// with data-film-open (and optional data-t seconds) does the same.
+import Phone from './Phone.astro';
+import { ARROW } from '../lib/site';
 ---
-<section class="hero" aria-labelledby="hero-title" data-hero>
-  <p class="launch">New · 15 guides</p>
-  <p class="product"><img src="/brand/arrow-icon-192.png" alt="Arrow AI logo" width="30" height="30" fetchpriority="high" />Arrow Signal</p>
-  <h1 id="hero-title" class="t-hero">Be <span class="hl">the answer</span><br /> when buyers ask AI.</h1>
-  <p class="lede">AI visibility guides from Arrow AI: how brands get found, cited and recommended in ChatGPT, Gemini, Perplexity, Claude and Google AI Overviews.</p>
-  <div class="btn-row center">
-    <a class="btn btn-primary" href={ARROW.freeAudit}>Get your free audit</a>
-    <a class="link" href="/blog/">Read the 15 guides <span class="arr" aria-hidden="true">›</span></a>
+<section class="hero" aria-labelledby="hero-title">
+  <p class="launch">New</p>
+  <p class="product">Arrow Signal</p>
+  <h1 id="hero-title" class="t-hero">Be the answer.</h1>
+  <p class="lede">Get your brand named, cited and recommended when buyers ask ChatGPT, Gemini, Perplexity and Claude.</p>
+  <button class="play-link" type="button" data-film-open data-t="0">
+    <span class="ic"><svg viewBox="0 0 10 12" fill="currentColor" aria-hidden="true"><path d="M0 0v12l10-6z" /></svg></span>Watch the film
+  </button>
+
+  <div class="render">
+    <Phone kind="chatgpt" class="p1" size={320} label="Illustrative example: a ChatGPT answer that recommends Your Brand and cites yourbrand.com." />
+    <Phone kind="perplexity" class="p2" size={320} label="Illustrative example: a Perplexity answer that cites yourbrand.com as its first source." />
   </div>
 
-  <figure class="stage" id="film">
-    <div class="frame-v" data-frame>
-      <video data-film muted loop playsinline preload="none" width="1280" height="720" poster="/media/arrow-ai-geo-film-poster.webp" aria-label="Arrow AI film, 36 seconds: SEO ranked you. GEO gets you answered.">
-        <source src="/media/arrow-ai-geo-film.webm" type="video/webm" />
-        <source src="/media/arrow-ai-geo-film.mp4" type="video/mp4" />
-        <track kind="captions" src="/media/arrow-ai-geo-film.en.vtt" srclang="en" label="English" />
-      </video>
-      <div class="controls" data-controls>
-        <button class="ctl watch" type="button" data-watch data-t="0"><Icon name="play" size={14} />Watch the film</button>
-        <button class="ctl round" type="button" data-toggle aria-label="Pause the preview">
-          <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="3.6" height="14" rx="1" /><rect x="13.9" y="5" width="3.6" height="14" rx="1" /></svg>
-          <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>
-        </button>
-      </div>
-    </div>
-    <figcaption class="sr-only">Arrow AI in 36 seconds: SEO ranked you. GEO gets you answered.</figcaption>
-    <div class="capsule">
-      <img src="/brand/arrow-icon-192.png" alt="" width="36" height="36" loading="lazy" />
-      <p><strong>Free AI visibility audit</strong><span>See what AI says about your brand.</span></p>
-      <a class="btn btn-primary btn-sm" href={ARROW.freeAudit}>Get started</a>
-    </div>
-  </figure>
-
-  <div class="engines">
-    <p class="eyebrow">Built for answers in</p>
-    <ul aria-label="AI assistants covered by these guides">
-      {engines.map((l) => <li><img src={l.src} alt="" width="22" height="22" loading="lazy" />{l.name}</li>)}
-    </ul>
+  <div class="callout">
+    <p><strong>Free AI visibility audit</strong><span>From the Arrow AI team. See what AI says about you.</span></p>
+    <a class="btn btn-primary btn-sm" href={ARROW.freeAudit}>Get started</a>
   </div>
+  <p class="footnote note">Illustrative answers. Real answers vary by assistant, question and date.</p>
 </section>
+
+<dialog class="film" data-film-modal aria-label="Arrow AI film">
+  <button class="close" type="button" data-film-close aria-label="Close the film">
+    <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15" /></svg>
+  </button>
+  <video data-film controls playsinline preload="none" width="1280" height="720" poster="/media/arrow-ai-geo-film-poster.webp" aria-label="Arrow AI film, 36 seconds: SEO ranked you. GEO gets you answered.">
+    <source src="/media/arrow-ai-geo-film.webm" type="video/webm" />
+    <source src="/media/arrow-ai-geo-film.mp4" type="video/mp4" />
+    <track kind="captions" src="/media/arrow-ai-geo-film.en.vtt" srclang="en" label="English" />
+  </video>
+</dialog>
 
 <style>
   .hero { padding: 64px var(--pad) 0; text-align: center; }
-  .launch { display: block; margin-bottom: 14px; }
-  .product { display: inline-flex; align-items: center; gap: 10px; font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
-  .product img { width: 30px; height: 30px; border-radius: 8px; }
-  .t-hero { margin: 18px auto 0; max-width: 900px; }
-  .hero .lede { margin: 22px auto 0; max-width: 600px; }
-  .hero .btn-row { margin-top: 30px; }
+  .launch { font-size: 17px; line-height: 1.47; letter-spacing: -0.022em; margin-bottom: 4px; }
+  .product { font-size: 28px; font-weight: 600; line-height: 1.14; letter-spacing: 0.007em; }
+  .t-hero { margin-top: 10px; }
+  .hero .lede { margin: 18px auto 0; max-width: 560px; }
+  .play-link { margin-top: 22px; }
 
-  .stage { position: relative; max-width: var(--wide); margin: 64px auto 0; }
-  .frame-v { position: relative; border-radius: var(--r-card); overflow: hidden; background: #0b0d1d; aspect-ratio: 16 / 9; }
-  .frame-v video { width: 100%; height: 100%; object-fit: cover; }
-  .controls { position: absolute; right: 20px; bottom: 20px; display: flex; gap: 10px; transition: opacity 0.3s; }
-  .ctl { height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 36px; background: rgba(210, 210, 215, 0.64); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); color: rgba(0, 0, 0, 0.72); font-size: 0.85rem; font-weight: 600; transition: background 0.2s, color 0.2s; }
-  .ctl:hover { background: rgba(223, 223, 227, 0.82); color: #000; }
-  .ctl.watch { padding: 0 18px 0 15px; }
-  .ctl.round { width: 44px; }
-  .ctl svg { width: 16px; height: 16px; }
-  .ctl .i-play { display: none; }
-  .ctl.paused .i-play { display: block; }
-  .ctl.paused .i-pause { display: none; }
-  .stage.is-playing .controls { opacity: 0; pointer-events: none; }
+  .render { display: flex; justify-content: center; align-items: flex-start; gap: 36px; margin-top: 64px; }
+  .render :global(.p2) { margin-top: 64px; }
 
-  .capsule { position: absolute; left: 50%; bottom: 0; transform: translate(-50%, 50%); display: flex; align-items: center; gap: 14px; padding: 12px 12px 12px 14px; border-radius: var(--r-card); background: var(--white); box-shadow: var(--ring); text-align: left; white-space: nowrap; }
-  .capsule img { width: 36px; height: 36px; border-radius: 10px; }
-  .capsule p { display: grid; line-height: 1.3; }
-  .capsule strong { font-size: 0.92rem; font-weight: 600; letter-spacing: -0.01em; }
-  .capsule span { font-size: 0.8rem; color: var(--slate); }
-  .capsule .btn { margin-left: 10px; }
+  .callout { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 24px; margin-top: -96px; padding: 14px 14px 14px 24px; border-radius: var(--r-card); background: var(--white); box-shadow: var(--ring); text-align: left; }
+  .callout p { display: grid; }
+  .callout strong { font-size: 14px; font-weight: 600; line-height: 1.43; letter-spacing: -0.016em; }
+  .callout span { font-size: 12px; line-height: 1.33; letter-spacing: -0.01em; color: var(--slate); }
+  .note { margin-top: 28px; }
 
-  .engines { max-width: var(--content); margin: 92px auto 0; padding-bottom: 8px; }
-  .engines ul { list-style: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 14px 34px; margin-top: 18px; }
-  .engines li { display: inline-flex; align-items: center; gap: 9px; font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; }
-  .engines img { width: 22px; height: 22px; }
+  .film { width: min(1180px, 92vw); max-width: none; max-height: none; margin: auto; padding: 0; border: 0; background: transparent; overflow: visible; }
+  .film::backdrop { background: rgba(0, 0, 0, 0.94); }
+  .film video { width: 100%; height: auto; border-radius: 18px; background: #000; }
+  .close { position: fixed; top: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: #333336; color: rgba(255, 255, 255, 0.8); transition: background 0.2s; }
+  .close:hover { background: #48484a; color: #fff; }
+  .close svg { width: 18px; height: 18px; }
 
+  @media (max-width: 1068px) { .render { gap: 24px; } }
   @media (max-width: 734px) {
-    .hero { padding-top: 44px; }
-    .t-hero br { display: none; }
-    .stage { margin-top: 44px; margin-inline: calc(-1 * var(--pad) + 12px); }
-    .frame-v { border-radius: 20px; }
-    .controls { right: 12px; bottom: 12px; }
-    .ctl { height: 36px; font-size: 0.78rem; }
-    .ctl.round { width: 36px; }
-    .capsule { position: static; transform: none; margin: 16px 0 0; white-space: normal; }
-    .capsule .btn { margin-left: auto; }
-    .engines { margin-top: 52px; }
-    .engines ul { gap: 12px 22px; }
+    .hero { padding-top: 40px; }
+    .render { gap: 0; margin-top: 44px; }
+    .render :global(.phone) { --w: 186px !important; }
+    .render :global(.p2) { margin-top: 36px; margin-left: -26px; }
+    .callout { display: flex; margin-top: 24px; gap: 14px; }
+    .callout .btn { margin-left: auto; }
   }
 </style>
 
 <script>
-  import { reduced } from '../lib/motion';
-  const hero = document.querySelector<HTMLElement>('[data-hero]');
-  if (hero) {
-    const stage = hero.querySelector<HTMLElement>('.stage')!;
-    const frame = hero.querySelector<HTMLElement>('[data-frame]')!;
-    const video = hero.querySelector<HTMLVideoElement>('[data-film]')!;
-    const toggle = hero.querySelector<HTMLButtonElement>('[data-toggle]')!;
-    const calm = reduced() || (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData === true;
-    let withSound = false;
-    let userPaused = calm;
-
-    const setToggle = () => {
-      const paused = video.paused;
-      toggle.classList.toggle('paused', paused);
-      toggle.setAttribute('aria-label', paused ? 'Play the preview' : 'Pause the preview');
-    };
-    const preview = () => {
-      if (userPaused || withSound) return;
-      video.preload = 'auto';
-      video.play().then(setToggle).catch(setToggle);
-    };
-    setToggle();
-    new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) preview();
-      else if (!withSound) { video.pause(); setToggle(); }
-    }, { threshold: 0.3 }).observe(frame);
-    toggle.addEventListener('click', () => {
-      if (video.paused) { userPaused = false; preview(); }
-      else { userPaused = true; video.pause(); setToggle(); }
-    });
-
-    // play the film with sound, from the start or from a highlight
-    const watch = (from: number) => {
-      withSound = true;
-      video.currentTime = from;
-      video.muted = false;
-      video.loop = false;
-      video.controls = true;
-      video.preload = 'auto';
-      stage.classList.add('is-playing');
-      video.play().catch(() => {});
-      frame.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
-    };
-    document.querySelectorAll<HTMLElement>('[data-watch]').forEach((el) =>
-      el.addEventListener('click', () => watch(Number(el.dataset.t || 0))),
+  const modal = document.querySelector<HTMLDialogElement>('[data-film-modal]');
+  const video = modal?.querySelector<HTMLVideoElement>('[data-film]');
+  if (modal && video) {
+    const close = () => { video.pause(); if (modal.open) modal.close(); };
+    document.querySelectorAll<HTMLElement>('[data-film-open]').forEach((el) =>
+      el.addEventListener('click', () => {
+        modal.showModal();
+        video.preload = 'auto';
+        video.currentTime = Number(el.dataset.t || 0);
+        video.play().catch(() => {});
+      }),
     );
-    video.addEventListener('ended', () => {
-      withSound = false;
-      video.controls = false;
-      video.muted = true;
-      video.loop = true;
-      stage.classList.remove('is-playing');
-      preview();
-    });
+    modal.querySelector('[data-film-close]')?.addEventListener('click', close);
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    modal.addEventListener('close', () => video.pause());
   }
 </script>
