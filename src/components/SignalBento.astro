@@ -10,7 +10,7 @@
       <p>When buyers ask about your category or their problem, the answer says your name.</p>
     </div>
     <div class="t-vis answer" aria-hidden="true">
-      <span class="who mono">ChatGPT · answer</span>
+      <span class="who mono"><img src="/logos/chatgpt.svg" alt="" width="14" height="14" loading="lazy" />ChatGPT · answer</span>
       <p>The strongest options for a 20-person team are <mark>Your Brand</mark>, Northwind and Contoso. Your Brand focuses on startups and publishes clear pricing.</p>
     </div>
   </article>
@@ -65,7 +65,8 @@
   .tile p { margin-top: 6px; color: var(--muted); font-size: 0.94rem; }
   .t-vis { position: relative; border-radius: var(--r-md); background: var(--bg); border: 1px solid var(--a8); padding: 14px; font-size: 0.88rem; }
 
-  .answer .who { font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
+  .answer .who img { width: 14px; height: 14px; }
+  .answer .who { display: inline-flex; align-items: center; gap: 6px; font-size: 0.64rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); }
   .answer p { margin-top: 6px; color: var(--ink-soft); font-size: 0.9rem; }
   .answer mark { color: #fff; background: linear-gradient(var(--heat), var(--heat)) no-repeat 0 0 / 0% 100%; color: var(--ink); padding: 0 3px; border-radius: 3px; transition: background-size 0.9s var(--ease) 0.5s, color 0.3s ease 0.9s; }
   .tile.in .answer mark { background-size: 100% 100%; color: #fff; }

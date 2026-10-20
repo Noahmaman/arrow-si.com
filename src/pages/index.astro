@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import HeroSignal from '../components/HeroSignal.astro';
+import HeroReel from '../components/HeroReel.astro';
 import SignalBento from '../components/SignalBento.astro';
 import MethodTabs from '../components/MethodTabs.astro';
 import EcoBeam from '../components/EcoBeam.astro';
@@ -20,13 +20,6 @@ const faqs = [
   { q: 'How do you measure AI visibility?', a: 'Write 20 to 50 real buyer questions, run them on the AI tools your customers use, and record each full answer with its date and sources. Note whether you are mentioned, cited and recommended, and whether the facts are right. Repeat every month with the same questions.' },
   { q: 'Can anyone guarantee that ChatGPT will recommend us?', a: 'No. Each AI company controls its own answers, and answers change with wording, location and time. What you can control is your own information and an honest record of what the answers say.' },
   { q: 'How do I get started with Arrow?', a: 'Request the free AI visibility audit on arrow-ai.us. The Arrow AI team reviews how AI tools describe your business and sends you a plan. You can also book a 15-minute call.' },
-];
-
-const chapters = [
-  { t: 0, label: '0:00', title: 'SEO is dead', img: '/media/film-seo-is-dead.webp', alt: 'Film still: the words “SEO is dead.” struck through by a blue line on a dark background.' },
-  { t: 16, label: '0:16', title: 'Enter GEO', img: '/media/film-enter-geo.webp', alt: 'Film still: “Enter GEO, Generative Engine Optimization” in Arrow blue.' },
-  { t: 20, label: '0:20', title: 'Make AI recommend you', img: '/media/film-make-ai-recommend-you.webp', alt: 'Film still: an AI answer card where a citation names Arrow AI as the most recommended option.' },
-  { t: 24, label: '0:24', title: 'Build authority', img: '/media/film-build-authority.webp', alt: 'Film still: “Build synthetic authority” with badges reading Cited, Recommended and Source linked.' },
 ];
 
 const stats = [
@@ -49,7 +42,7 @@ const schema = [
     primaryImageOfPage: { '@type': 'ImageObject', url: absolute(SITE.ogImage), width: 1200, height: 630 },
     video: { '@id': `${SITE.url}/#geo-film` },
     datePublished: SITE.published,
-    dateModified: '2026-10-19',
+    dateModified: '2026-10-20',
     publisher: { '@id': ORGANIZATION_ID },
   },
   {
@@ -72,7 +65,7 @@ const schema = [
 const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
 ---
 <Base title={title} description={description} schema={schema}>
-  <HeroSignal />
+  <HeroReel />
 
   <!-- STATS -->
   <section class="section tight stats" aria-label="Arrow Signal in numbers">
@@ -131,32 +124,6 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
       <p class="lede reveal" style="--d:120ms">Start with what the answers say today, fix what stops AI tools from using your site, then check again on the same questions every month.</p>
     </div>
     <div class="reveal" style="--d:160ms"><MethodTabs /></div>
-  </section>
-
-  <!-- FILM -->
-  <section class="section" id="film" aria-labelledby="film-title">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
-    <div class="section-head center">
-      <p class="kicker reveal">The Arrow story</p>
-      <h2 id="film-title" class="h-section reveal" style="--d:60ms">Arrow AI in <span class="hl">36 seconds.</span></h2>
-    </div>
-    <div class="film reveal" style="--d:100ms">
-      <video data-film controls playsinline preload="none" width="1280" height="720" poster="/media/arrow-ai-geo-film-poster.webp" aria-label="Arrow AI film, 36 seconds: SEO ranked you. GEO gets you answered.">
-        <source src="/media/arrow-ai-geo-film.webm" type="video/webm" />
-        <source src="/media/arrow-ai-geo-film.mp4" type="video/mp4" />
-        <track kind="captions" src="/media/arrow-ai-geo-film.en.vtt" srclang="en" label="English" />
-      </video>
-    </div>
-    <ol class="chapters">
-      {chapters.map((c, i) => (
-        <li class="reveal" style={`--d:${i * 70}ms`}>
-          <button type="button" data-seek={c.t} aria-label={`Play from ${c.label}: ${c.title}`}>
-            <img src={c.img} alt={c.alt} width="1280" height="720" loading="lazy" decoding="async" />
-            <span><span class="mono">{c.label}</span>{c.title}</span>
-          </button>
-        </li>
-      ))}
-    </ol>
   </section>
 
   <!-- GUIDES -->
@@ -260,17 +227,6 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
   @media (max-width: 520px) { .compare { grid-template-columns: 1fr; } }
   .after { margin-top: 28px; }
 
-  /* film */
-  .film { max-width: 920px; margin: 0 auto; border-radius: 20px; padding: 6px; background: linear-gradient(160deg, rgba(37, 99, 235, 0.5), var(--a10) 45%, rgba(255, 100, 47, 0.45)); box-shadow: 0 30px 80px -40px rgba(18, 20, 40, 0.45); }
-  .film video { width: 100%; height: auto; aspect-ratio: 16 / 9; border-radius: 15px; background: #000; }
-  .chapters { list-style: none; max-width: 920px; margin: 14px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-  .chapters button { width: 100%; text-align: left; border-radius: var(--r-md); overflow: hidden; background: var(--bg-card); border: 1px solid var(--a8); transition: transform 0.2s var(--ease), border-color 0.2s; }
-  .chapters button:hover, .chapters button.on { transform: translateY(-2px); border-color: var(--geo); }
-  .chapters img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
-  .chapters button > span { display: grid; gap: 1px; padding: 8px 10px 10px; font-size: 0.85rem; font-weight: 600; }
-  .chapters .mono { font-size: 0.64rem; font-weight: 500; color: var(--heat-strong); letter-spacing: 0.08em; }
-  @media (max-width: 700px) { .chapters { grid-template-columns: 1fr 1fr; } }
-
   /* guides */
   .head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
   .head-row .btn { margin-bottom: clamp(36px, 5vw, 56px); }
@@ -300,24 +256,3 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
   .cta .btn-row { margin-top: 28px; }
   .center-row { justify-content: center; margin-top: 22px; }
 </style>
-
-<script>
-  import { reduced } from '../lib/motion';
-  const video = document.querySelector<HTMLVideoElement>('[data-film]');
-  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-seek]');
-  buttons.forEach((btn) => btn.addEventListener('click', () => {
-    if (!video) return;
-    video.preload = 'auto';
-    video.currentTime = Number(btn.dataset.seek);
-    video.play().catch(() => {});
-    video.scrollIntoView({ behavior: reduced() ? 'auto' : 'smooth', block: 'center' });
-  }));
-  video?.addEventListener('timeupdate', () => {
-    const t = video.currentTime;
-    buttons.forEach((b, i) => {
-      const start = Number(b.dataset.seek);
-      const next = buttons[i + 1] ? Number(buttons[i + 1].dataset.seek) : Infinity;
-      b.classList.toggle('on', t >= start && t < next);
-    });
-  });
-</script>

@@ -151,6 +151,13 @@ h1, h2, h3 { font-weight: 600; color: var(--ink); text-wrap: balance; }
 .socials { display: flex; gap: 8px; margin-top: 18px; }
 .socials a { width: 36px; height: 36px; border-radius: 9px; border: 1px solid var(--a10); display: inline-flex; align-items: center; justify-content: center; color: var(--ink); transition: border-color 0.15s, color 0.15s, transform 0.15s; }
 .socials a:hover { border-color: var(--geo); color: var(--geo); transform: translateY(-1px); }
+/* giant brand mark, cut by the footer line */
+.footer-mark { max-width: var(--frame); margin: 0 auto; padding: 8px var(--pad) 0; display: flex; align-items: flex-end; gap: clamp(12px, 2vw, 24px); height: clamp(84px, 15vw, 196px); overflow: hidden; text-decoration: none; color: var(--ink); }
+.footer-mark img { width: clamp(64px, 11.5vw, 150px); height: auto; aspect-ratio: 1; border-radius: 24%; transform: rotate(-8deg) translateY(16%); flex-shrink: 0; transition: transform 0.5s var(--ease); box-shadow: 0 20px 40px -20px rgba(37, 99, 235, 0.6); }
+.footer-mark .word { font-size: clamp(104px, 20vw, 262px); font-weight: 700; letter-spacing: -0.075em; line-height: 0.74; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; transform: translateY(12%); }
+.footer-mark .tag { align-self: center; font-size: clamp(0.62rem, 1vw, 0.78rem); letter-spacing: 0.16em; text-transform: uppercase; color: var(--faint); line-height: 1.6; }
+.footer-mark:hover img { transform: rotate(0deg) translateY(6%); }
+@media (max-width: 560px) { .footer-mark .tag { display: none; } }
 .footer-bottom { max-width: var(--frame); margin: 0 auto; padding: 18px var(--pad) 28px; border-top: 1px solid var(--a8); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: 0.82rem; color: var(--faint); }
 .footer-bottom .mono { letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.7rem; }
 @media (max-width: 820px) { .footer-grid { grid-template-columns: 1fr 1fr; } .footer-grid > :first-child { grid-column: 1 / -1; } }

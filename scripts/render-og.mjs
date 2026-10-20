@@ -61,7 +61,7 @@ if (existsSync(blogDir)) {
     if (!existsSync(html)) continue;
     const page = readFileSync(html, 'utf8');
     const title = decode(page.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? slug);
-    const label = decode(page.match(/<span class="eyebrow"[^>]*>([\s\S]*?)<\/span>/)?.[1] ?? 'Guide');
+    const label = decode(page.match(/<p class="kicker[^"]*"[^>]*>([\s\S]*?)<\/p>/)?.[1] ?? 'Guide');
     jobs.push({ file: slug, label, title });
   }
 }

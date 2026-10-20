@@ -20,7 +20,7 @@ const bars = [12, 17, 24, 31];
   </div>
   <div class="panels">
     <div class="panel" role="tabpanel" id="panel-baseline" aria-labelledby="tab-baseline" tabindex="0">
-      <div class="p-head mono"><span>buyer questions</span><span>GPT · GEM · PPLX</span></div>
+      <div class="p-head mono"><span>buyer questions</span><span class="eng-logos"><img src="/logos/chatgpt.svg" alt="ChatGPT" width="14" height="14" loading="lazy" /><img src="/logos/gemini.svg" alt="Gemini" width="14" height="14" loading="lazy" /><img src="/logos/perplexity.svg" alt="Perplexity" width="14" height="14" loading="lazy" /></span></div>
       <ul class="qs">
         <li><span>best accounting firm for startups in Austin</span><span class="dots"><i class="ok"></i><i class="ok"></i><i></i></span></li>
         <li><span>fixed-fee bookkeeping for SaaS</span><span class="dots"><i class="ok"></i><i></i><i class="ok"></i></span></li>
@@ -85,6 +85,8 @@ const bars = [12, 17, 24, 31];
   .p-foot { margin-top: 12px; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
   .qs, .checks { list-style: none; display: grid; gap: 8px; }
   .qs li, .checks li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; background: var(--bg); border: 1px solid var(--a6); font-size: 0.9rem; color: var(--ink-soft); }
+  .eng-logos { display: inline-flex; gap: 5px; margin-right: 10.5px; }
+  .eng-logos img { width: 14px; height: 14px; }
   .dots { display: inline-flex; gap: 10px; }
   .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--a10); }
   .dots i.ok { background: var(--geo); }

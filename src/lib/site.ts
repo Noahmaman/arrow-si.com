@@ -56,6 +56,17 @@ export const SOCIALS = [
 
 export const ENGINES = ['ChatGPT', 'Gemini', 'Perplexity', 'Claude', 'Copilot', 'Google AI Overviews', 'Google AI Mode'];
 
+// Marks for the assistants above (MIT-licensed SVGs from LobeHub, see public/logos/README.txt).
+export const ENGINE_LOGOS = [
+  { name: 'ChatGPT', src: '/logos/chatgpt.svg' },
+  { name: 'Gemini', src: '/logos/gemini.svg' },
+  { name: 'Perplexity', src: '/logos/perplexity.svg' },
+  { name: 'Claude', src: '/logos/claude.svg' },
+  { name: 'Copilot', src: '/logos/copilot.svg' },
+  { name: 'Google AI Overviews', src: '/logos/google.svg' },
+  { name: 'Google AI Mode', src: '/logos/google.svg' },
+] as const;
+
 export const ECOSYSTEM = [
   {
     key: 'signal',
