@@ -5,10 +5,10 @@ const { article, headingLevel = 'h3' } = Astro.props;
 const Heading = headingLevel;
 ---
 <li data-category={article.category} data-title={`${article.title} ${article.description}`.toLowerCase()}>
-  <a class="guide" href={article.url} data-spot>
-    <span class="top"><span class="chip geo">{article.category}</span><span class="num">{String(article.order).padStart(2, '0')}</span></span>
+  <a class="guide" href={article.url}>
+    <span class="eyebrow">{article.category} · {String(article.order).padStart(2, '0')}</span>
     <Heading>{article.title}</Heading>
     <p>{article.description}</p>
-    <span class="foot"><span>{article.minutes} min read</span><span class="go">Read <span class="arr" aria-hidden="true">→</span></span></span>
+    <span class="foot"><span>{article.minutes} min read</span><span class="go">Read <span aria-hidden="true">›</span></span></span>
   </a>
 </li>

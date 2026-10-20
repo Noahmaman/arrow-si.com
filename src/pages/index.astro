@@ -1,13 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-import HeroReel from '../components/HeroReel.astro';
+import HeroStage from '../components/HeroStage.astro';
+import Highlights from '../components/Highlights.astro';
 import SignalBento from '../components/SignalBento.astro';
 import MethodTabs from '../components/MethodTabs.astro';
-import EcoBeam from '../components/EcoBeam.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import { articles } from '../lib/articles';
 import { glossary } from '../lib/glossary';
-import { SITE, ARROW, ANSWERS, ENGINES, ORGANIZATION_ID, askAiLinks, absolute } from '../lib/site';
+import { SITE, ARROW, ANSWERS, DEMO, ENGINES, ORGANIZATION_ID, askAiLinks, absolute } from '../lib/site';
 
 const title = 'AI Visibility Guides: Get Your Brand Into AI Answers | Arrow Signal';
 const description =
@@ -63,61 +63,73 @@ const schema = [
   { '@type': 'ItemList', '@id': `${SITE.url}/#guides`, name: 'AI visibility guides', itemListElement: articles.slice(0, 6).map((a, i) => ({ '@type': 'ListItem', position: i + 1, url: absolute(a.url), name: a.title })) },
 ];
 const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
+const anchors = [
+  { href: '#highlights', label: 'Highlights' },
+  { href: '#changed', label: 'What changed' },
+  { href: '#signals', label: 'Signals' },
+  { href: '#method', label: 'Method' },
+  { href: '#guides', label: 'Guides' },
+  { href: '#ecosystem', label: 'Ecosystem' },
+  { href: '#faq', label: 'FAQ' },
+];
+const sites = [
+  { host: 'arrow-ai.us', name: 'Arrow AI', d: 'The team behind this site. GEO, AI systems and AI Studio for businesses.', url: ARROW.url, cta: 'Visit Arrow AI' },
+  { host: 'answers.arrow-ai.us', name: 'Arrow Answers', d: 'Short, sourced answers to more than a hundred specific GEO questions.', url: ANSWERS.url, cta: 'Browse the answers' },
+  { host: 'arrow-ai.tech', name: 'GEO demo', d: 'An interactive walkthrough from a website to a cited AI answer.', url: DEMO.url, cta: 'Try the demo' },
+];
 ---
 <Base title={title} description={description} schema={schema}>
-  <HeroReel />
+  <HeroStage />
 
-  <!-- STATS -->
-  <section class="section tight stats" aria-label="Arrow Signal in numbers">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
-    <ul>
-      {stats.map((s, i) => <li class="reveal" style={`--d:${i * 70}ms`}><strong data-count={s.n}>{s.n}</strong><span>{s.label}</span></li>)}
-    </ul>
-  </section>
+  <nav class="anchors" aria-label="On this page">
+    <ul>{anchors.map((a) => <li><a href={a.href}>{a.label}</a></li>)}</ul>
+  </nav>
 
-  <!-- SHIFT -->
-  <section class="section" id="visibility" aria-labelledby="shift-title">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+  <Highlights />
+
+  <!-- WHAT CHANGED -->
+  <section class="section" id="changed" aria-labelledby="shift-title">
     <div class="shift">
       <div>
         <p class="kicker blue reveal">What changed</p>
-        <h2 id="shift-title" class="h-section reveal" style="--d:60ms"><span class="strike">SEO ranked you.</span><br /><span class="hl">GEO gets you answered.</span></h2>
+        <h2 id="shift-title" class="h-section reveal" style="--d:60ms">SEO ranked you.<br /><span class="hl">GEO gets you answered.</span></h2>
         <p class="lede reveal" style="--d:120ms">Rankings still matter: Google’s AI Overviews and Microsoft Copilot are built on search indexes, and ChatGPT and Perplexity read web pages. But someone reading an AI answer sees a short list, not a page of results. GEO is the work of earning a place on that list.</p>
-        <a class="link reveal" style="--d:160ms" href="/blog/geo-vs-seo/">GEO and SEO compared <span class="arr" aria-hidden="true">→</span></a>
+        <a class="link reveal" style="--d:160ms" href="/blog/geo-vs-seo/">GEO and SEO compared <span class="arr" aria-hidden="true">›</span></a>
       </div>
       <div class="compare reveal" style="--d:120ms">
-        <div class="c-col before">
-          <span class="mono c-h">Search results</span>
+        <div class="c-col">
+          <span class="c-h">Search results</span>
           <ol>
-            {Array.from({ length: 6 }, (_, i) => <li class:list={{ you: i === 4 }}><span class="mono">{i === 4 ? 'yourbrand.com' : `result-${i + 1}.example`}</span><i></i></li>)}
+            {Array.from({ length: 6 }, (_, i) => <li class:list={{ you: i === 4 }}><span>{i === 4 ? 'yourbrand.com' : `result-${i + 1}.example`}</span><i></i></li>)}
           </ol>
           <span class="c-foot">You are result #5. One of ten.</span>
         </div>
         <div class="c-col after">
-          <span class="mono c-h">AI answer</span>
+          <span class="c-h"><img src="/logos/chatgpt.svg" alt="" width="14" height="14" loading="lazy" />AI answer</span>
           <p class="bubble">Which firm should we choose?</p>
           <p class="reply">For your situation, <mark>Your Brand</mark> is the best fit. It specialises in this and publishes clear pricing.<sup>1</sup></p>
-          <div class="c-chips"><span class="chip ok">mentioned</span><span class="chip ok">cited</span><span class="chip ok">recommended</span></div>
+          <div class="c-chips"><span class="chip ok">Mentioned</span><span class="chip ok">Cited</span><span class="chip ok">Recommended</span></div>
         </div>
       </div>
     </div>
+    <ul class="stats">
+      {stats.map((s, i) => <li class="reveal" style={`--d:${i * 70}ms`}><strong data-count={s.n}>{s.n}</strong><span>{s.label}</span></li>)}
+    </ul>
   </section>
 
   <!-- SIGNALS -->
-  <section class="section" aria-labelledby="signals-title">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+  <section class="section" id="signals" aria-labelledby="signals-title">
     <div class="section-head">
       <p class="kicker blue reveal">What to measure</p>
       <h2 id="signals-title" class="h-section reveal" style="--d:60ms">Four signals in every answer. <span class="hl">Track them separately.</span></h2>
       <p class="lede reveal" style="--d:120ms">A brand can be cited often and still never be recommended. Each signal needs different work, so a single score hides the real problem.</p>
     </div>
     <SignalBento />
-    <p class="after"><a class="link" href="/blog/mentions-citations-recommendations/">Mentions, citations and recommendations explained <span class="arr" aria-hidden="true">→</span></a></p>
+    <p class="after"><a class="link" href="/blog/mentions-citations-recommendations/">Mentions, citations and recommendations explained <span class="arr" aria-hidden="true">›</span></a></p>
   </section>
 
   <!-- METHOD -->
-  <section class="section" id="method" aria-labelledby="method-title">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+  <section class="section mist" id="method" aria-labelledby="method-title">
     <div class="section-head">
       <p class="kicker reveal">How Arrow works</p>
       <h2 id="method-title" class="h-section reveal" style="--d:60ms">From audit to <span class="hl">answers.</span></h2>
@@ -127,14 +139,13 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
   </section>
 
   <!-- GUIDES -->
-  <section class="section" aria-labelledby="guides-title">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+  <section class="section" id="guides" aria-labelledby="guides-title">
     <div class="head-row">
-      <div class="section-head">
+      <div>
         <p class="kicker blue reveal">Guides</p>
         <h2 id="guides-title" class="h-section reveal" style="--d:60ms">Start with <span class="hl">these.</span></h2>
       </div>
-      <a class="btn btn-blue reveal" href="/blog/">All 15 guides <span class="arr" aria-hidden="true">→</span></a>
+      <a class="link reveal" href="/blog/">All 15 guides <span class="arr" aria-hidden="true">›</span></a>
     </div>
     <ul class="guide-grid">
       {articles.slice(0, 6).map((a) => <ArticleCard article={a} />)}
@@ -142,19 +153,27 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
   </section>
 
   <!-- ECOSYSTEM -->
-  <section class="section" aria-labelledby="eco-title">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
+  <section class="section mist" id="ecosystem" aria-labelledby="eco-title">
     <div class="section-head">
       <p class="kicker reveal">The Arrow ecosystem</p>
       <h2 id="eco-title" class="h-section reveal" style="--d:60ms">Three Arrow sites. <span class="hl">One goal.</span></h2>
       <p class="lede reveal" style="--d:120ms">Learn here, go deeper on Arrow Answers, see the process in the demo, and let the Arrow AI team do the work.</p>
     </div>
-    <EcoBeam />
+    <ul class="sites">
+      {sites.map((c, i) => (
+        <li class="reveal" style={`--d:${i * 80}ms`}>
+          <img src="/brand/arrow-icon-192.png" alt="" width="44" height="44" loading="lazy" />
+          <span class="eyebrow">{c.host}</span>
+          <h3 class="t-card">{c.name}</h3>
+          <p>{c.d}</p>
+          <a class="link" href={c.url}>{c.cta} <span class="arr" aria-hidden="true">›</span></a>
+        </li>
+      ))}
+    </ul>
   </section>
 
   <!-- FAQ -->
   <section class="section" id="faq" aria-labelledby="faq-title">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
     <div class="faq-layout">
       <div>
         <p class="kicker reveal">FAQ</p>
@@ -163,7 +182,7 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
       </div>
       <div class="faq">
         {faqs.map((f, i) => (
-          <details class="reveal" style={`--d:${i * 50}ms`} open={i === 0}>
+          <details open={i === 0}>
             <summary>{f.q}<span class="plus" aria-hidden="true"></span></summary>
             <p>{f.a}</p>
           </details>
@@ -174,14 +193,13 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
 
   <!-- CTA -->
   <section class="section" aria-labelledby="cta-title">
-    <span class="cross l" aria-hidden="true"></span><span class="cross r" aria-hidden="true"></span>
     <div class="cta reveal">
-      <p class="kicker">Work with Arrow</p>
+      <img src="/brand/arrow-icon-192.png" alt="" width="56" height="56" loading="lazy" />
       <h2 id="cta-title" class="h-section">See what AI says <span class="hl">about your brand.</span></h2>
       <p class="lede">The free audit shows how AI tools describe your business today, with a clear plan for what to fix first.</p>
       <div class="btn-row center">
-        <a class="btn btn-heat" href={ARROW.freeAudit}>Get the free audit <span class="arr" aria-hidden="true">→</span></a>
-        <a class="btn btn-ghost" href={ARROW.call}>Book 15 minutes with Noah</a>
+        <a class="btn btn-primary" href={ARROW.freeAudit}>Get the free audit</a>
+        <a class="link" href={ARROW.call}>Book 15 minutes with Noah <span class="arr" aria-hidden="true">›</span></a>
       </div>
       <div class="inline-links center-row">
         <span class="label">Ask AI about this site</span>
@@ -192,67 +210,73 @@ const ask = askAiLinks('https://arrow-si.com/', 'AI visibility and GEO');
 </Base>
 
 <style>
-  /* stats */
-  .stats ul { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--a8); border: 1px solid var(--a8); border-radius: var(--r-lg); overflow: hidden; }
-  .stats li { background: var(--bg-card); padding: 22px 24px; display: grid; gap: 4px; }
-  .stats strong { font-size: clamp(2rem, 3.6vw, 2.8rem); font-weight: 600; letter-spacing: -0.04em; line-height: 1; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .stats span { color: var(--muted); font-size: 0.92rem; }
-  @media (max-width: 760px) { .stats ul { grid-template-columns: 1fr 1fr; } }
+  /* in-page anchors */
+  .anchors { padding: 64px var(--pad) 8px; }
+  .anchors ul { list-style: none; display: flex; justify-content: center; gap: 8px 36px; overflow-x: auto; scrollbar-width: none; padding: 20px 0 28px; }
+  .anchors ul::-webkit-scrollbar { display: none; }
+  .anchors a { font-size: 1rem; font-weight: 500; color: var(--ink); text-decoration: none; white-space: nowrap; }
+  .anchors a:hover { color: var(--link); }
+  @media (max-width: 734px) { .anchors { padding-top: 40px; } .anchors ul { justify-content: flex-start; gap: 24px; } }
 
-  /* shift */
-  .shift { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+  /* what changed */
+  .shift { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
   .shift .lede { margin-top: 18px; }
   .shift .link { margin-top: 20px; }
-  .strike { position: relative; color: var(--faint); }
-  .strike::after { content: ''; position: absolute; left: -2%; right: -2%; top: 55%; height: 0.08em; border-radius: 99px; background: var(--geo); transform: scaleX(0) rotate(-2deg); transform-origin: 0 50%; transition: transform 0.8s var(--ease) 0.5s; }
-  .h-section.in .strike::after { transform: scaleX(1) rotate(-2deg); }
-  :global(.no-js) .strike::after { transform: scaleX(1) rotate(-2deg); }
   .compare { display: grid; grid-template-columns: 1fr 1.15fr; gap: 12px; }
-  .c-col { padding: 18px; border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--a8); display: flex; flex-direction: column; gap: 10px; }
-  .c-col.after { border-color: transparent; background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box, linear-gradient(160deg, var(--geo), var(--violet) 50%, var(--heat)) border-box; box-shadow: 0 20px 50px -30px rgba(37, 99, 235, 0.5); }
-  .c-h { font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint); }
-  .c-col ol { list-style: none; display: grid; gap: 8px; }
-  .c-col li { display: grid; gap: 4px; opacity: 0.55; }
-  .c-col li .mono { font-size: 0.66rem; color: var(--muted); }
-  .c-col li i { height: 7px; border-radius: 4px; background: var(--a10); width: 85%; }
-  .c-col li.you { opacity: 1; padding: 6px 8px; margin: 0 -8px; border-radius: 8px; background: var(--geo-soft); }
-  .c-col li.you i { background: var(--geo); }
-  .c-foot { font-size: 0.8rem; color: var(--muted); margin-top: auto; }
-  .bubble { align-self: flex-end; padding: 8px 12px; border-radius: 12px 12px 2px 12px; background: var(--ink); color: #fff; font-size: 0.85rem; }
-  .reply { font-size: 0.9rem; color: var(--ink-soft); }
-  .reply mark { background: var(--heat); color: #fff; padding: 0 4px; border-radius: 4px; }
-  .reply sup { color: var(--geo); font-weight: 600; }
-  .c-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
-  @media (max-width: 900px) { .shift { grid-template-columns: 1fr; } }
+  .c-col { padding: 22px; border-radius: var(--r-card); background: var(--mist); display: flex; flex-direction: column; gap: 12px; }
+  .c-col.after { background: var(--white); box-shadow: var(--ring); }
+  .c-h { display: inline-flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 0.64rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel); }
+  .c-h img { width: 14px; height: 14px; }
+  .c-col ol { list-style: none; display: grid; gap: 9px; }
+  .c-col li { display: grid; gap: 4px; opacity: 0.5; }
+  .c-col li span { font-family: var(--mono); font-size: 0.66rem; color: var(--slate); }
+  .c-col li i { height: 7px; border-radius: 4px; background: var(--hairline); width: 85%; }
+  .c-col li.you { opacity: 1; }
+  .c-col li.you span { color: var(--ink); }
+  .c-col li.you i { background: var(--blue); }
+  .c-foot { font-size: 0.82rem; color: var(--slate); margin-top: auto; }
+  .bubble { align-self: flex-end; padding: 8px 13px; border-radius: 16px 16px 4px 16px; background: var(--blue); color: #fff; font-size: 0.86rem; }
+  .reply { font-size: 0.92rem; color: var(--slate); }
+  .reply mark { background: var(--blue-tint); color: var(--ink); font-weight: 600; padding: 0 4px; border-radius: 4px; }
+  .reply sup { color: var(--link); font-weight: 600; }
+  .c-chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: auto; }
+  .stats { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--hairline); }
+  .stats li { display: grid; gap: 6px; }
+  .stats strong { font-size: clamp(2.4rem, 4.4vw, 3.4rem); font-weight: 600; letter-spacing: -0.045em; line-height: 1; }
+  .stats span { color: var(--slate); font-size: 0.93rem; }
+  @media (max-width: 900px) { .shift { grid-template-columns: 1fr; } .stats { grid-template-columns: 1fr 1fr; } }
   @media (max-width: 520px) { .compare { grid-template-columns: 1fr; } }
-  .after { margin-top: 28px; }
+  .after { margin-top: 36px; }
 
-  /* guides */
-  .head-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
-  .head-row .btn { margin-bottom: clamp(36px, 5vw, 56px); }
+  /* ecosystem */
+  .sites { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+  .sites li { display: flex; flex-direction: column; align-items: flex-start; padding: 36px 32px 32px; border-radius: var(--r-card); background: var(--white); }
+  .sites img { width: 44px; height: 44px; border-radius: 12px; margin-bottom: 28px; }
+  .sites h3 { margin-top: 8px; }
+  .sites p { margin-top: 10px; color: var(--slate); flex: 1; }
+  .sites .link { margin-top: 24px; }
+  @media (max-width: 900px) { .sites { grid-template-columns: 1fr; } }
 
   /* faq */
-  .faq-layout { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+  .faq-layout { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 56px; align-items: start; }
   .faq-layout .lede { margin-top: 14px; }
-  .faq { display: grid; gap: 8px; }
-  .faq details { border-radius: var(--r-md); background: var(--bg-card); border: 1px solid var(--a8); transition: border-color 0.2s; }
-  .faq details[open] { border-color: var(--a16); }
-  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 18px; font-weight: 600; letter-spacing: -0.01em; }
+  .faq details { border-top: 1px solid var(--hairline); }
+  .faq details:last-child { border-bottom: 1px solid var(--hairline); }
+  .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 22px 0; font-size: 1.1rem; font-weight: 600; letter-spacing: -0.02em; }
   .faq summary::-webkit-details-marker { display: none; }
-  .faq details p { padding: 0 18px 18px; color: var(--muted); }
-  .plus { position: relative; width: 12px; height: 12px; flex-shrink: 0; }
-  .plus::before, .plus::after { content: ''; position: absolute; background: var(--heat); border-radius: 2px; transition: transform 0.2s var(--ease); }
-  .plus::before { left: 0; right: 0; top: 5px; height: 2px; }
-  .plus::after { top: 0; bottom: 0; left: 5px; width: 2px; }
+  .faq summary:hover { color: var(--link); }
+  .faq details p { padding: 0 40px 24px 0; color: var(--slate); }
+  .plus { position: relative; width: 14px; height: 14px; flex-shrink: 0; }
+  .plus::before, .plus::after { content: ''; position: absolute; background: var(--slate); border-radius: 2px; transition: transform 0.3s var(--ease); }
+  .plus::before { left: 0; right: 0; top: 6px; height: 2px; }
+  .plus::after { top: 0; bottom: 0; left: 6px; width: 2px; }
   .faq details[open] .plus::after { transform: scaleY(0); }
-  @media (max-width: 860px) { .faq-layout { grid-template-columns: 1fr; } }
+  @media (max-width: 860px) { .faq-layout { grid-template-columns: 1fr; gap: 32px; } }
 
   /* cta */
-  .cta { position: relative; text-align: center; padding: clamp(48px, 7vw, 80px) clamp(20px, 5vw, 64px); border-radius: 24px; background: var(--bg-card); border: 1px solid var(--a8); overflow: hidden; display: flex; flex-direction: column; align-items: center; }
-  .cta::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(var(--a8) 1px, transparent 1px); background-size: 22px 22px; mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 20%, transparent 75%); -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, #000 20%, transparent 75%); }
-  .cta::after { content: ''; position: absolute; bottom: -260px; left: 50%; transform: translateX(-50%); width: 760px; height: 420px; background: radial-gradient(closest-side at 40% 50%, rgba(255, 100, 47, 0.14), transparent 70%), radial-gradient(closest-side at 62% 50%, rgba(37, 99, 235, 0.12), transparent 70%); pointer-events: none; }
-  .cta > * { position: relative; z-index: 1; }
+  .cta { text-align: center; padding: 72px clamp(24px, 6vw, 72px); border-radius: var(--r-card); background: var(--mist); display: flex; flex-direction: column; align-items: center; }
+  .cta img { width: 56px; height: 56px; border-radius: 14px; margin-bottom: 28px; }
   .cta .lede { margin: 16px auto 0; }
-  .cta .btn-row { margin-top: 28px; }
-  .center-row { justify-content: center; margin-top: 22px; }
+  .cta .btn-row { margin-top: 30px; }
+  .center-row { justify-content: center; margin-top: 28px; }
 </style>

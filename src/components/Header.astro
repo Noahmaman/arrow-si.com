@@ -1,36 +1,54 @@
 ---
-import { ARROW } from '../lib/site';
+// Two bars: a quiet global navigation that scrolls away, then a sticky local
+// bar with the site name and the two conversion pills.
+import { ARROW, ANSWERS, DEMO } from '../lib/site';
 const path = Astro.url.pathname;
-const links = [
+const global = [
   { href: '/blog/', label: 'Guides', match: '/blog' },
   { href: '/#method', label: 'Method' },
   { href: '/glossary/', label: 'Glossary', match: '/glossary' },
   { href: '/about/', label: 'About', match: '/about' },
   { href: ARROW.url, label: 'Arrow AI' },
+  { href: ARROW.geo, label: 'GEO' },
+  { href: ANSWERS.url, label: 'Arrow Answers' },
+  { href: DEMO.url, label: 'GEO demo' },
+  { href: ARROW.contact, label: 'Contact' },
+];
+const local = [
+  { href: '/', label: 'Overview', current: path === '/' },
+  { href: '/blog/', label: 'Guides', current: path === '/blog/' },
+  { href: '/glossary/', label: 'Glossary', current: path.startsWith('/glossary') },
 ];
 ---
-<header class="site-header">
+<header class="gnav">
   <div class="bar">
-    <a class="brand" href="/" aria-label="Arrow Signal home">
-      <img src="/brand/arrow-icon-192.png" alt="" width="26" height="26" />
-      Arrow <span class="sub" aria-hidden="true">SIGNAL</span>
-    </a>
-    <nav class="nav" aria-label="Primary">
-      {links.map((l) => <a href={l.href} aria-current={l.match && path.startsWith(l.match) ? 'page' : undefined}>{l.label}</a>)}
+    <a class="gnav-logo" href="/" aria-label="Arrow Signal home"><img src="/brand/arrow-icon-192.png" alt="" width="20" height="20" /></a>
+    <nav class="gnav-links" aria-label="Primary">
+      {global.map((l) => <a href={l.href} aria-current={l.match && path.startsWith(l.match) ? 'page' : undefined}>{l.label}</a>)}
     </nav>
-    <div class="header-actions">
-      <a class="btn btn-blue btn-sm hide-sm" href={ARROW.freeAudit}>Free audit</a>
-      <a class="btn btn-dark btn-sm hide-sm" href={ARROW.call}>Book a call</a>
-      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
-        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 5h14M2 9h14M2 13h14" /></svg>
-      </button>
-    </div>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+      <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M2.5 6h13M2.5 12h13" /></svg>
+    </button>
   </div>
 </header>
 <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" hidden>
-  {links.map((l) => <a href={l.href}>{l.label}</a>)}
-  <a class="btn btn-heat" href={ARROW.freeAudit}>Get a free AI visibility audit</a>
-  <a class="btn btn-ghost" href={ARROW.call}>Book a 15-minute call</a>
+  {global.slice(0, 4).map((l) => <a href={l.href}>{l.label}</a>)}
+  <div class="sub">
+    {global.slice(4).map((l) => <a href={l.href}>{l.label}</a>)}
+    <a href={ARROW.call}>Book a 15-minute call</a>
+  </div>
+</nav>
+<nav class="lnav" aria-label="Arrow Signal">
+  <div class="bar">
+    <a class="lnav-title" href="/">Arrow Signal</a>
+    <div class="lnav-links">
+      {local.map((l) => <a href={l.href} aria-current={l.current ? 'page' : undefined}>{l.label}</a>)}
+      <span class="btns">
+        <a class="btn btn-outline btn-sm" href={ARROW.call}>Book a call</a>
+        <a class="btn btn-primary btn-sm" href={ARROW.freeAudit}>Free audit</a>
+      </span>
+    </div>
+  </div>
 </nav>
 
 <script>
@@ -42,11 +60,12 @@ const links = [
     btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     menu.hidden = !open;
     document.body.style.overflow = open ? 'hidden' : '';
+    scrollTo({ top: 0 });
   };
   btn?.addEventListener('click', () => setOpen(btn.getAttribute('aria-expanded') !== 'true'));
   menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && btn?.getAttribute('aria-expanded') === 'true') { setOpen(false); btn.focus(); }
   });
-  window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => e.matches && setOpen(false));
+  window.matchMedia('(min-width: 834px)').addEventListener('change', (e) => e.matches && setOpen(false));
 </script>

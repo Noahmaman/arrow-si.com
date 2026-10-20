@@ -9,15 +9,17 @@ import { ARROW } from '../lib/site';
       <h1>Page <span class="hl">not found</span></h1>
       <p class="lede">The page may have moved or never existed.</p>
       <div class="btn-row">
-        <a class="btn btn-heat" href="/">Go to the homepage</a>
-        <a class="btn btn-blue" href="/blog/">Browse the guides</a>
-        <a class="btn btn-ghost" href={ARROW.url}>Visit Arrow AI</a>
+        <a class="btn btn-primary" href="/">Go to the homepage</a>
+        <a class="link" href="/blog/">Browse the guides <span class="arr" aria-hidden="true">›</span></a>
+        <a class="link" href={ARROW.url}>Visit Arrow AI <span class="arr" aria-hidden="true">›</span></a>
       </div>
     </div>
   </section>
 </Base>
 
 <style>
-  .lost { min-height: 60vh; }
+  .lost { min-height: 60vh; text-align: center; }
+  .lost h1, .lost .lede { margin-left: auto; margin-right: auto; }
+  .lost .btn-row { justify-content: center; }
   .lost .btn-row { margin-top: 28px; }
 </style>

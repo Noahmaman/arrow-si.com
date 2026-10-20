@@ -1,0 +1,147 @@
+---
+// "Get the highlights": a horizontally advancing set of large white cards on
+// the mist band, built from the Arrow AI film, with dots and a pause control.
+import { ENGINE_LOGOS } from '../lib/site';
+const engines = ENGINE_LOGOS.filter((l) => l.name !== 'Google AI Mode');
+const cards = [
+  { lead: 'SEO ranked you.', rest: 'Now buyers ask AI first, and the answer names two or three brands.', img: '/media/film-seo-is-dead.webp', alt: 'Film still: the words “SEO is dead.” struck through by a blue line.', t: 0, at: '0:00' },
+  { lead: 'Enter GEO.', rest: 'Generative engine optimization makes your brand easy for AI tools to find, trust and quote.', img: '/media/film-enter-geo.webp', alt: 'Film still: “Enter GEO, Generative Engine Optimization” in Arrow blue.', t: 16, at: '0:16' },
+  { lead: 'Get recommended.', rest: 'The goal is the shortlist: the answer that suggests you for the buyer’s situation.', img: '/media/film-make-ai-recommend-you.webp', alt: 'Film still: an AI answer card citing Arrow AI as the most recommended option.', t: 20, at: '0:20' },
+  { lead: 'Build authority.', rest: 'Reviews, third-party sources and consistent facts are what AI answers lean on.', img: '/media/film-build-authority.webp', alt: 'Film still: “Build synthetic authority” with Cited, Recommended and Source linked badges.', t: 24, at: '0:24' },
+];
+const total = cards.length + 1;
+---
+<section class="section mist hls" id="highlights" aria-labelledby="hls-title" data-hls>
+  <div class="head-row">
+    <h2 id="hls-title" class="h-section">Get the highlights.</h2>
+    <button class="link" type="button" data-watch data-t="0">Watch the film <span class="arr" aria-hidden="true">›</span></button>
+  </div>
+  <ul class="track" data-track aria-label="Highlights">
+    {cards.map((c, i) => (
+      <li class="card" aria-label={`${i + 1} of ${total}`}>
+        <div class="copy">
+          <p class="t-card"><strong>{c.lead}</strong> <span>{c.rest}</span></p>
+          <button class="link" type="button" data-watch data-t={c.t}>Watch from {c.at} <span class="arr" aria-hidden="true">›</span></button>
+        </div>
+        <img src={c.img} alt={c.alt} width="1280" height="720" loading="lazy" decoding="async" />
+      </li>
+    ))}
+    <li class="card" aria-label={`${total} of ${total}`}>
+      <div class="copy">
+        <p class="t-card"><strong>Every assistant.</strong> <span>The same work shows up in ChatGPT, Gemini, Perplexity, Claude, Copilot and Google AI Overviews.</span></p>
+        <a class="link" href="/blog/what-is-ai-visibility/">What is AI visibility? <span class="arr" aria-hidden="true">›</span></a>
+      </div>
+      <div class="logos">
+        {engines.map((l) => <span><img src={l.src} alt="" width="56" height="56" loading="lazy" />{l.name}</span>)}
+      </div>
+    </li>
+  </ul>
+  <div class="ctrls">
+    <div class="dots" data-dots>
+      {Array.from({ length: total }, (_, i) => <button type="button" aria-label={`Show highlight ${i + 1}`} aria-current={i === 0 ? 'true' : undefined}><i></i></button>)}
+    </div>
+    <button class="pp" type="button" data-pp aria-label="Pause the highlights">
+      <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6.5" y="5" width="3.6" height="14" rx="1" /><rect x="13.9" y="5" width="3.6" height="14" rx="1" /></svg>
+      <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" /></svg>
+    </button>
+  </div>
+</section>
+
+<style>
+  .hls { padding-left: 0; padding-right: 0; overflow: hidden; }
+  .hls .head-row { padding: 0 var(--gutter); }
+  .track { list-style: none; display: flex; gap: var(--gap); overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-inline: var(--gutter); padding: 0 var(--gutter); scrollbar-width: none; }
+  .track::-webkit-scrollbar { display: none; }
+  .card { flex: 0 0 min(860px, 84vw); scroll-snap-align: start; display: flex; flex-direction: column; border-radius: var(--r-card); background: var(--white); overflow: hidden; }
+  .copy { padding: 40px 44px 32px; display: grid; gap: 16px; justify-items: start; }
+  .copy .t-card { max-width: 620px; }
+  .copy .t-card span { color: var(--slate); font-weight: 600; }
+  .card > img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; margin-top: auto; }
+  .logos { margin-top: auto; aspect-ratio: 16 / 9; display: grid; grid-template-columns: repeat(3, 1fr); align-content: center; gap: 36px 12px; padding: 24px; background: var(--mist); }
+  .logos span { display: grid; justify-items: center; gap: 12px; font-size: 0.95rem; font-weight: 600; letter-spacing: -0.02em; }
+  .logos img { width: 56px; height: 56px; }
+
+  .ctrls { display: flex; justify-content: center; gap: 12px; margin-top: 32px; }
+  .dots, .pp { height: 56px; border-radius: 36px; background: rgba(210, 210, 215, 0.64); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); }
+  .dots { display: flex; align-items: center; gap: 2px; padding: 0 16px; }
+  .dots button { width: 18px; height: 32px; display: grid; place-items: center; transition: width 0.4s var(--ease); }
+  .dots i { position: relative; display: block; width: 8px; height: 8px; border-radius: 8px; background: rgba(0, 0, 0, 0.42); overflow: hidden; transition: width 0.4s var(--ease), background 0.3s; }
+  .dots button[aria-current='true'] { width: 56px; }
+  .dots button[aria-current='true'] i { width: 48px; background: rgba(0, 0, 0, 0.24); }
+  .dots i::after { content: ''; position: absolute; inset: 0; width: 0; background: rgba(0, 0, 0, 0.56); }
+  .dots button[aria-current='true'] i::after { width: calc(var(--p, 1) * 100%); }
+  .pp { width: 56px; display: grid; place-items: center; color: rgba(0, 0, 0, 0.56); }
+  .pp:hover { color: #000; }
+  .pp svg { width: 20px; height: 20px; }
+  .pp .i-play { display: none; }
+  .pp.paused .i-play { display: block; }
+  .pp.paused .i-pause { display: none; }
+
+  @media (max-width: 734px) {
+    .copy { padding: 28px 26px 24px; }
+    .logos { gap: 20px 8px; }
+    .logos img { width: 40px; height: 40px; }
+    .logos span { font-size: 0.8rem; }
+  }
+</style>
+
+<script>
+  import { reduced } from '../lib/motion';
+  document.querySelectorAll<HTMLElement>('[data-hls]').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]')!;
+    const cards = Array.from(track.children) as HTMLElement[];
+    const dots = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dots] button'));
+    const pp = root.querySelector<HTMLButtonElement>('[data-pp]')!;
+    const DURATION = 6000;
+    let index = 0;
+    let progress = 0;
+    let paused = reduced();
+    let visible = false;
+    let last = 0;
+
+    const mark = (i: number) => {
+      index = i;
+      dots.forEach((d, j) => (j === i ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+    };
+    const go = (i: number) => {
+      const n = (i + cards.length) % cards.length;
+      progress = 0;
+      mark(n);
+      track.scrollTo({ left: cards[n].offsetLeft - cards[0].offsetLeft, behavior: reduced() ? 'auto' : 'smooth' });
+    };
+    const setPaused = (p: boolean) => {
+      paused = p;
+      pp.classList.toggle('paused', p);
+      pp.setAttribute('aria-label', p ? 'Play the highlights' : 'Pause the highlights');
+      dots[index].style.setProperty('--p', p ? '1' : String(progress));
+    };
+    setPaused(paused);
+    dots.forEach((d, i) => d.addEventListener('click', () => { go(i); setPaused(true); }));
+    pp.addEventListener('click', () => setPaused(!paused));
+
+    // keep the dots in step when the user swipes
+    let t = 0;
+    track.addEventListener('scroll', () => {
+      clearTimeout(t);
+      t = window.setTimeout(() => {
+        const x = track.scrollLeft;
+        const i = cards.reduce((best, c, j) => (Math.abs(c.offsetLeft - cards[0].offsetLeft - x) < Math.abs(cards[best].offsetLeft - cards[0].offsetLeft - x) ? j : best), 0);
+        if (i !== index) { progress = 0; mark(i); }
+      }, 120);
+    }, { passive: true });
+    track.addEventListener('pointerdown', () => setPaused(true));
+
+    new IntersectionObserver(([e]) => (visible = e.isIntersecting), { threshold: 0.4 }).observe(track);
+    const loop = (now: number) => {
+      const dt = last ? now - last : 0;
+      last = now;
+      if (visible && !paused) {
+        progress += dt / DURATION;
+        dots[index].style.setProperty('--p', String(Math.min(1, progress)));
+        if (progress >= 1) go(index + 1);
+      }
+      requestAnimationFrame(loop);
+    };
+    requestAnimationFrame(loop);
+  });
+</script>

@@ -2,12 +2,6 @@
 export const reduced = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export function initMotion() {
-  // header border once the page scrolls
-  const header = document.querySelector<HTMLElement>('.site-header');
-  const onScroll = () => header?.classList.toggle('scrolled', scrollY > 8);
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-
   // fade-up reveals
   const items = document.querySelectorAll<HTMLElement>('.reveal');
   if (!('IntersectionObserver' in window) || reduced()) {
@@ -40,13 +34,4 @@ export function initMotion() {
     }, { threshold: 0.5 });
     counters.forEach((el) => cio.observe(el));
   }
-
-  // cursor spotlight on cards
-  document.querySelectorAll<HTMLElement>('[data-spot]').forEach((el) => {
-    el.addEventListener('pointermove', (e) => {
-      const r = el.getBoundingClientRect();
-      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-      el.style.setProperty('--my', `${e.clientY - r.top}px`);
-    });
-  });
 }

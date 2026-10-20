@@ -57,56 +57,56 @@ const bars = [12, 17, 24, 31];
       </div>
     </div>
     <div class="links">
-      {steps.map((s, i) => <a class="link" href={s.href} data-link={i} hidden={i !== 0}>{s.link} <span class="arr" aria-hidden="true">→</span></a>)}
+      {steps.map((s, i) => <a class="link" href={s.href} data-link={i} hidden={i !== 0}>{s.link} <span class="arr" aria-hidden="true">›</span></a>)}
     </div>
   </div>
 </div>
 
 <style>
-  .tabs { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 20px; align-items: start; }
-  .tab-list { display: grid; gap: 8px; }
-  .tab { position: relative; display: grid; grid-template-columns: 34px 1fr; gap: 10px; text-align: left; padding: 16px 18px; border-radius: var(--r-md); border: 1px solid var(--a8); background: transparent; overflow: hidden; transition: background 0.2s, border-color 0.2s; }
-  .tab:hover { background: var(--bg-card); }
-  .tab[aria-selected='true'] { background: var(--bg-card); border-color: var(--a10); box-shadow: 0 10px 30px -22px rgba(18, 20, 40, 0.4); }
-  .t-n { font-size: 0.72rem; color: var(--faint); padding-top: 3px; }
-  .tab[aria-selected='true'] .t-n { color: var(--heat-strong); }
-  .t-body strong { display: block; font-size: 1.02rem; letter-spacing: -0.01em; color: var(--ink); }
-  .t-d { display: block; margin-top: 4px; font-size: 0.9rem; color: var(--muted); max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.4s var(--ease), opacity 0.3s; }
-  .tab[aria-selected='true'] .t-d { max-height: 120px; opacity: 1; }
-  .t-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: transparent; }
-  .t-bar i { display: block; height: 100%; width: 0; background: var(--grad); }
+  .tabs { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: start; }
+  .tab-list { display: grid; }
+  .tab { position: relative; display: grid; grid-template-columns: 40px 1fr; gap: 8px; text-align: left; padding: 22px 0; border-top: 1px solid var(--hairline); }
+  .tab:last-child { border-bottom: 1px solid var(--hairline); }
+  .t-n { font-family: var(--mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em; color: var(--steel); padding-top: 4px; }
+  .tab[aria-selected='true'] .t-n { color: var(--blue); }
+  .t-body strong { display: block; font-size: 1.2rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; color: var(--slate); transition: color 0.2s; }
+  .tab:hover strong, .tab[aria-selected='true'] strong { color: var(--ink); }
+  .t-d { display: block; margin-top: 8px; color: var(--slate); max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.5s var(--ease), opacity 0.3s; }
+  .tab[aria-selected='true'] .t-d { max-height: 140px; opacity: 1; }
+  .t-bar { position: absolute; left: 0; right: 0; top: -1px; height: 2px; }
+  .t-bar i { display: block; height: 100%; width: 0; background: var(--blue); }
   .tab[aria-selected='true'] .t-bar i { width: var(--p, 0%); }
 
-  .panels { position: relative; border-radius: var(--r-lg); padding: 20px; min-height: 340px; border: 1px solid transparent; background: linear-gradient(var(--bg-card), var(--bg-card)) padding-box, linear-gradient(160deg, rgba(37, 99, 235, 0.3), var(--a8) 45%, rgba(255, 100, 47, 0.25)) border-box; box-shadow: 0 20px 50px -30px rgba(18, 20, 40, 0.3); }
-  .panel { animation: fade 0.45s var(--ease); }
+  .panels { position: relative; border-radius: var(--r-card); padding: 32px; min-height: 380px; background: var(--white); }
+  .panel { animation: fade 0.5s var(--ease); }
   .panel:focus-visible { outline-offset: 6px; }
-  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-  .p-head { display: flex; justify-content: space-between; gap: 10px; font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--faint); padding-bottom: 12px; border-bottom: 1px solid var(--a8); margin-bottom: 12px; }
-  .p-foot { margin-top: 12px; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
-  .qs, .checks { list-style: none; display: grid; gap: 8px; }
-  .qs li, .checks li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; background: var(--bg); border: 1px solid var(--a6); font-size: 0.9rem; color: var(--ink-soft); }
-  .eng-logos { display: inline-flex; gap: 5px; margin-right: 10.5px; }
+  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .p-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); padding-bottom: 14px; margin-bottom: 14px; border-bottom: 1px solid var(--control); }
+  .p-foot { margin-top: 14px; font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--steel); }
+  .qs, .checks { list-style: none; display: grid; gap: 1px; border-radius: 16px; overflow: hidden; background: var(--control); }
+  .qs li, .checks li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 13px 16px; background: var(--mist); font-size: 0.93rem; }
+  .eng-logos { display: inline-flex; gap: 5px; margin-right: 13.5px; }
   .eng-logos img { width: 14px; height: 14px; }
   .dots { display: inline-flex; gap: 10px; }
-  .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--a10); }
-  .dots i.ok { background: var(--geo); }
-  .page { padding: 14px; border-radius: 10px; background: var(--bg); border: 1px solid var(--a6); display: grid; gap: 10px; }
-  .page strong { font-size: 1.05rem; color: var(--ink); }
-  .short { font-size: 0.9rem; color: var(--ink); padding: 10px 12px; border-radius: 8px; background: var(--geo-soft); border: 1px solid rgba(37, 99, 235, 0.2); }
-  .short .mono { display: block; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--geo); margin-bottom: 2px; }
-  .line { display: block; height: 8px; border-radius: 4px; background: var(--a8); }
+  .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--hairline); }
+  .dots i.ok { background: var(--blue); }
+  .page { padding: 18px; border-radius: 16px; background: var(--mist); display: grid; gap: 12px; }
+  .page strong { font-size: 1.1rem; letter-spacing: -0.02em; }
+  .short { font-size: 0.93rem; padding: 12px 14px; border-radius: 12px; background: var(--white); }
+  .short .mono { display: block; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 2px; }
+  .line { display: block; height: 8px; border-radius: 4px; background: var(--control); }
   .w90 { width: 90%; } .w75 { width: 75%; } .w82 { width: 82%; }
-  .faq-mini { display: flex; gap: 8px; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
-  .faq-mini span { padding: 3px 8px; border-radius: 999px; border: 1px solid var(--a10); background: #fff; }
-  .chart { height: 220px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: end; padding: 8px 6px 0; }
+  .faq-mini { display: flex; gap: 14px; font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--slate); }
+  .chart { height: 240px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; align-items: end; padding: 8px 6px 0; }
   .col { display: flex; flex-direction: column; align-items: center; gap: 8px; height: 100%; justify-content: flex-end; }
-  .bar { width: 100%; max-width: 64px; height: var(--h); border-radius: 8px 8px 3px 3px; background: linear-gradient(180deg, var(--violet), var(--geo)); animation: grow 0.9s var(--ease) both; }
-  .col:last-child .bar { background: linear-gradient(180deg, var(--heat), var(--geo)); }
+  .bar { width: 100%; max-width: 64px; height: var(--h); border-radius: 10px 10px 4px 4px; background: var(--hairline); animation: grow 0.9s var(--ease) both; }
+  .col:last-child .bar { background: var(--blue); }
   @keyframes grow { from { height: 0; } }
-  .val { font-size: 0.72rem; color: var(--ink); }
-  .m { font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); }
-  .links { margin-top: 16px; }
-  @media (max-width: 900px) { .tabs { grid-template-columns: 1fr; } }
+  .val { font-size: 0.75rem; font-weight: 600; }
+  .m { font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--steel); }
+  .links { margin-top: 20px; }
+  @media (max-width: 900px) { .tabs { grid-template-columns: 1fr; gap: 24px; } }
+  @media (max-width: 734px) { .panels { padding: 22px; min-height: 0; } }
 </style>
 
 <script>

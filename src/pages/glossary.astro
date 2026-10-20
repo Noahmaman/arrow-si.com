@@ -36,7 +36,7 @@ const schema = [
       <p class="lede">{glossary.length} terms you will meet when working on AI visibility, each with a short definition. Arrow AI keeps a longer <a class="link" href={ARROW.glossary}>GEO glossary</a> too.</p>
     </div>
   </header>
-  <section class="section tight">
+  <section class="section">
     <div class="narrow">
       <dl class="terms">
         {sorted.map((g) => (
@@ -55,12 +55,11 @@ const schema = [
 
 <style>
   .narrow { max-width: 860px; }
-  .terms { border-radius: var(--r-lg); background: var(--bg-card); border: 1px solid var(--a8); padding: 0 24px; }
-  .term { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--a6); scroll-margin-top: calc(var(--header-h) + 16px); }
-  .term:last-child { border-bottom: 0; }
-  .term:target dt { color: var(--geo); }
-  dt { font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
-  dd { color: var(--ink-soft); }
-  dd .link { font-size: 0.93rem; white-space: nowrap; }
+  .term { display: grid; grid-template-columns: 240px 1fr; gap: 24px; padding: 22px 0; border-top: 1px solid var(--hairline); scroll-margin-top: calc(var(--lnav-h) + 16px); }
+  .term:last-child { border-bottom: 1px solid var(--hairline); }
+  .term:target dt { color: var(--link); }
+  dt { font-size: 1.05rem; font-weight: 600; letter-spacing: -0.015em; }
+  dd { color: var(--slate); }
+  dd .link { white-space: nowrap; }
   @media (max-width: 640px) { .term { grid-template-columns: 1fr; gap: 6px; } }
 </style>
